@@ -1,4 +1,4 @@
-package com.example.photoshare.android.photoshareandroid;
+package com.example.photoshare.android;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
