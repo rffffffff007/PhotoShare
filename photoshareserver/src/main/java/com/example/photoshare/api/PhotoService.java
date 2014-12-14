@@ -1,48 +1,48 @@
 package com.example.photoshare.api;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.thrift.TException;
-import org.apache.thrift.TProcessor;
 
 import com.example.photoshare.thrift.AException;
 import com.example.photoshare.thrift.Feed;
+import com.example.photoshare.thrift.IPhotoService;
 
 public class PhotoService extends BaseServlet {
-	public PhotoService() {
-        super();
-    }
 
     private static final long serialVersionUID = 1L;
 
-	public static class PhotoServiceImpl implements com.example.photoshare.thrift.PhotoService.Iface {
+    public PhotoService() {
+        super(new IPhotoService.Processor<PhotoServiceImpl>(
+                new PhotoServiceImpl()));
+    }
 
+    public static class PhotoServiceImpl implements IPhotoService.Iface {
+        
         @Override
         public String hello(String name) throws AException, TException {
-            // TODO Auto-generated method stub
-            return null;
+            return "Hello " + name;
         }
 
         @Override
         public List<Feed> getFeedList(int page, int page_count)
                 throws AException, TException {
-            // TODO Auto-generated method stub
-            return null;
+            List<Feed> feeds = new ArrayList<Feed>();
+            Feed feed = new Feed();
+            feed.setFeed_id("test1");
+            feed.setUser_name("robot");
+            feed.setFeed_desc("This is for test");
+            feed.setPhoto_url("http://211.155.92.122:8080/images/test.jpg");
+            feeds.add(feed);
+            return feeds;
         }
 
         @Override
         public Feed uploadFeed(Feed feed) throws AException, TException {
-            // TODO Auto-generated method stub
-            return null;
+            feed.setFeed_id("new generated id");
+            return feed;
         }
-	    
-	    
-	}
+
+    }
 }
