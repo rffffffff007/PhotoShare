@@ -18,4 +18,14 @@
         <servlet-name>PhotoService</servlet-name>
         <url-pattern>/photoservice</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Test</servlet-name>
+        <servlet-class>com.example.photoshare.api.TestServlet</servlet-class>
+    </servlet>
+ 
+    <servlet-mapping>
+        <servlet-name>Test</servlet-name>
+        <url-pattern>/test</url-pattern>
+    </servlet-mapping>
 </web-app>
