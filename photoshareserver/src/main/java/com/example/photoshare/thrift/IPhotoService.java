@@ -36,7 +36,7 @@ public class IPhotoService {
 
     public String hello(String name) throws AException, org.apache.thrift.TException;
 
-    public List<Feed> getFeedList(int page, int page_count) throws AException, org.apache.thrift.TException;
+    public FeedList getFeedList(int page_num, int page_count) throws AException, org.apache.thrift.TException;
 
     public Feed uploadFeed(Feed feed) throws AException, org.apache.thrift.TException;
 
@@ -46,7 +46,7 @@ public class IPhotoService {
 
     public void hello(String name, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.hello_call> resultHandler) throws org.apache.thrift.TException;
 
-    public void getFeedList(int page, int page_count, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.getFeedList_call> resultHandler) throws org.apache.thrift.TException;
+    public void getFeedList(int page_num, int page_count, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.getFeedList_call> resultHandler) throws org.apache.thrift.TException;
 
     public void uploadFeed(Feed feed, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.uploadFeed_call> resultHandler) throws org.apache.thrift.TException;
 
@@ -98,21 +98,21 @@ public class IPhotoService {
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "hello failed: unknown result");
     }
 
-    public List<Feed> getFeedList(int page, int page_count) throws AException, org.apache.thrift.TException
+    public FeedList getFeedList(int page_num, int page_count) throws AException, org.apache.thrift.TException
     {
-      send_getFeedList(page, page_count);
+      send_getFeedList(page_num, page_count);
       return recv_getFeedList();
     }
 
-    public void send_getFeedList(int page, int page_count) throws org.apache.thrift.TException
+    public void send_getFeedList(int page_num, int page_count) throws org.apache.thrift.TException
     {
       getFeedList_args args = new getFeedList_args();
-      args.setPage(page);
+      args.setPage_num(page_num);
       args.setPage_count(page_count);
       sendBase("getFeedList", args);
     }
 
-    public List<Feed> recv_getFeedList() throws AException, org.apache.thrift.TException
+    public FeedList recv_getFeedList() throws AException, org.apache.thrift.TException
     {
       getFeedList_result result = new getFeedList_result();
       receiveBase(result, "getFeedList");
@@ -201,32 +201,32 @@ public class IPhotoService {
       }
     }
 
-    public void getFeedList(int page, int page_count, org.apache.thrift.async.AsyncMethodCallback<getFeedList_call> resultHandler) throws org.apache.thrift.TException {
+    public void getFeedList(int page_num, int page_count, org.apache.thrift.async.AsyncMethodCallback<getFeedList_call> resultHandler) throws org.apache.thrift.TException {
       checkReady();
-      getFeedList_call method_call = new getFeedList_call(page, page_count, resultHandler, this, ___protocolFactory, ___transport);
+      getFeedList_call method_call = new getFeedList_call(page_num, page_count, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
       ___manager.call(method_call);
     }
 
     public static class getFeedList_call extends org.apache.thrift.async.TAsyncMethodCall {
-      private int page;
+      private int page_num;
       private int page_count;
-      public getFeedList_call(int page, int page_count, org.apache.thrift.async.AsyncMethodCallback<getFeedList_call> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+      public getFeedList_call(int page_num, int page_count, org.apache.thrift.async.AsyncMethodCallback<getFeedList_call> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
-        this.page = page;
+        this.page_num = page_num;
         this.page_count = page_count;
       }
 
       public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
         prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("getFeedList", org.apache.thrift.protocol.TMessageType.CALL, 0));
         getFeedList_args args = new getFeedList_args();
-        args.setPage(page);
+        args.setPage_num(page_num);
         args.setPage_count(page_count);
         args.write(prot);
         prot.writeMessageEnd();
       }
 
-      public List<Feed> getResult() throws AException, org.apache.thrift.TException {
+      public FeedList getResult() throws AException, org.apache.thrift.TException {
         if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
           throw new IllegalStateException("Method call not finished!");
         }
@@ -327,7 +327,7 @@ public class IPhotoService {
       public getFeedList_result getResult(I iface, getFeedList_args args) throws org.apache.thrift.TException {
         getFeedList_result result = new getFeedList_result();
         try {
-          result.success = iface.getFeedList(args.page, args.page_count);
+          result.success = iface.getFeedList(args.page_num, args.page_count);
         } catch (AException ae) {
           result.ae = ae;
         }
@@ -1174,7 +1174,7 @@ public class IPhotoService {
   public static class getFeedList_args implements org.apache.thrift.TBase<getFeedList_args, getFeedList_args._Fields>, java.io.Serializable, Cloneable   {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("getFeedList_args");
 
-    private static final org.apache.thrift.protocol.TField PAGE_FIELD_DESC = new org.apache.thrift.protocol.TField("page", org.apache.thrift.protocol.TType.I32, (short)1);
+    private static final org.apache.thrift.protocol.TField PAGE_NUM_FIELD_DESC = new org.apache.thrift.protocol.TField("page_num", org.apache.thrift.protocol.TType.I32, (short)1);
     private static final org.apache.thrift.protocol.TField PAGE_COUNT_FIELD_DESC = new org.apache.thrift.protocol.TField("page_count", org.apache.thrift.protocol.TType.I32, (short)2);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
@@ -1183,12 +1183,12 @@ public class IPhotoService {
       schemes.put(TupleScheme.class, new getFeedList_argsTupleSchemeFactory());
     }
 
-    public int page; // required
+    public int page_num; // required
     public int page_count; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-      PAGE((short)1, "page"),
+      PAGE_NUM((short)1, "page_num"),
       PAGE_COUNT((short)2, "page_count");
 
       private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
@@ -1204,8 +1204,8 @@ public class IPhotoService {
        */
       public static _Fields findByThriftId(int fieldId) {
         switch(fieldId) {
-          case 1: // PAGE
-            return PAGE;
+          case 1: // PAGE_NUM
+            return PAGE_NUM;
           case 2: // PAGE_COUNT
             return PAGE_COUNT;
           default:
@@ -1248,13 +1248,13 @@ public class IPhotoService {
     }
 
     // isset id assignments
-    private static final int __PAGE_ISSET_ID = 0;
+    private static final int __PAGE_NUM_ISSET_ID = 0;
     private static final int __PAGE_COUNT_ISSET_ID = 1;
     private byte __isset_bitfield = 0;
     public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
     static {
       Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-      tmpMap.put(_Fields.PAGE, new org.apache.thrift.meta_data.FieldMetaData("page", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+      tmpMap.put(_Fields.PAGE_NUM, new org.apache.thrift.meta_data.FieldMetaData("page_num", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32)));
       tmpMap.put(_Fields.PAGE_COUNT, new org.apache.thrift.meta_data.FieldMetaData("page_count", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32)));
@@ -1266,12 +1266,12 @@ public class IPhotoService {
     }
 
     public getFeedList_args(
-      int page,
+      int page_num,
       int page_count)
     {
       this();
-      this.page = page;
-      setPageIsSet(true);
+      this.page_num = page_num;
+      setPage_numIsSet(true);
       this.page_count = page_count;
       setPage_countIsSet(true);
     }
@@ -1281,7 +1281,7 @@ public class IPhotoService {
      */
     public getFeedList_args(getFeedList_args other) {
       __isset_bitfield = other.__isset_bitfield;
-      this.page = other.page;
+      this.page_num = other.page_num;
       this.page_count = other.page_count;
     }
 
@@ -1291,33 +1291,33 @@ public class IPhotoService {
 
     @Override
     public void clear() {
-      setPageIsSet(false);
-      this.page = 0;
+      setPage_numIsSet(false);
+      this.page_num = 0;
       setPage_countIsSet(false);
       this.page_count = 0;
     }
 
-    public int getPage() {
-      return this.page;
+    public int getPage_num() {
+      return this.page_num;
     }
 
-    public getFeedList_args setPage(int page) {
-      this.page = page;
-      setPageIsSet(true);
+    public getFeedList_args setPage_num(int page_num) {
+      this.page_num = page_num;
+      setPage_numIsSet(true);
       return this;
     }
 
-    public void unsetPage() {
-      __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __PAGE_ISSET_ID);
+    public void unsetPage_num() {
+      __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __PAGE_NUM_ISSET_ID);
     }
 
-    /** Returns true if field page is set (has been assigned a value) and false otherwise */
-    public boolean isSetPage() {
-      return EncodingUtils.testBit(__isset_bitfield, __PAGE_ISSET_ID);
+    /** Returns true if field page_num is set (has been assigned a value) and false otherwise */
+    public boolean isSetPage_num() {
+      return EncodingUtils.testBit(__isset_bitfield, __PAGE_NUM_ISSET_ID);
     }
 
-    public void setPageIsSet(boolean value) {
-      __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __PAGE_ISSET_ID, value);
+    public void setPage_numIsSet(boolean value) {
+      __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __PAGE_NUM_ISSET_ID, value);
     }
 
     public int getPage_count() {
@@ -1345,11 +1345,11 @@ public class IPhotoService {
 
     public void setFieldValue(_Fields field, Object value) {
       switch (field) {
-      case PAGE:
+      case PAGE_NUM:
         if (value == null) {
-          unsetPage();
+          unsetPage_num();
         } else {
-          setPage((Integer)value);
+          setPage_num((Integer)value);
         }
         break;
 
@@ -1366,8 +1366,8 @@ public class IPhotoService {
 
     public Object getFieldValue(_Fields field) {
       switch (field) {
-      case PAGE:
-        return Integer.valueOf(getPage());
+      case PAGE_NUM:
+        return Integer.valueOf(getPage_num());
 
       case PAGE_COUNT:
         return Integer.valueOf(getPage_count());
@@ -1383,8 +1383,8 @@ public class IPhotoService {
       }
 
       switch (field) {
-      case PAGE:
-        return isSetPage();
+      case PAGE_NUM:
+        return isSetPage_num();
       case PAGE_COUNT:
         return isSetPage_count();
       }
@@ -1404,12 +1404,12 @@ public class IPhotoService {
       if (that == null)
         return false;
 
-      boolean this_present_page = true;
-      boolean that_present_page = true;
-      if (this_present_page || that_present_page) {
-        if (!(this_present_page && that_present_page))
+      boolean this_present_page_num = true;
+      boolean that_present_page_num = true;
+      if (this_present_page_num || that_present_page_num) {
+        if (!(this_present_page_num && that_present_page_num))
           return false;
-        if (this.page != that.page)
+        if (this.page_num != that.page_num)
           return false;
       }
 
@@ -1438,12 +1438,12 @@ public class IPhotoService {
       int lastComparison = 0;
       getFeedList_args typedOther = (getFeedList_args)other;
 
-      lastComparison = Boolean.valueOf(isSetPage()).compareTo(typedOther.isSetPage());
+      lastComparison = Boolean.valueOf(isSetPage_num()).compareTo(typedOther.isSetPage_num());
       if (lastComparison != 0) {
         return lastComparison;
       }
-      if (isSetPage()) {
-        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.page, typedOther.page);
+      if (isSetPage_num()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.page_num, typedOther.page_num);
         if (lastComparison != 0) {
           return lastComparison;
         }
@@ -1478,8 +1478,8 @@ public class IPhotoService {
       StringBuilder sb = new StringBuilder("getFeedList_args(");
       boolean first = true;
 
-      sb.append("page:");
-      sb.append(this.page);
+      sb.append("page_num:");
+      sb.append(this.page_num);
       first = false;
       if (!first) sb.append(", ");
       sb.append("page_count:");
@@ -1530,10 +1530,10 @@ public class IPhotoService {
             break;
           }
           switch (schemeField.id) {
-            case 1: // PAGE
+            case 1: // PAGE_NUM
               if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-                struct.page = iprot.readI32();
-                struct.setPageIsSet(true);
+                struct.page_num = iprot.readI32();
+                struct.setPage_numIsSet(true);
               } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
@@ -1561,8 +1561,8 @@ public class IPhotoService {
         struct.validate();
 
         oprot.writeStructBegin(STRUCT_DESC);
-        oprot.writeFieldBegin(PAGE_FIELD_DESC);
-        oprot.writeI32(struct.page);
+        oprot.writeFieldBegin(PAGE_NUM_FIELD_DESC);
+        oprot.writeI32(struct.page_num);
         oprot.writeFieldEnd();
         oprot.writeFieldBegin(PAGE_COUNT_FIELD_DESC);
         oprot.writeI32(struct.page_count);
@@ -1585,15 +1585,15 @@ public class IPhotoService {
       public void write(org.apache.thrift.protocol.TProtocol prot, getFeedList_args struct) throws org.apache.thrift.TException {
         TTupleProtocol oprot = (TTupleProtocol) prot;
         BitSet optionals = new BitSet();
-        if (struct.isSetPage()) {
+        if (struct.isSetPage_num()) {
           optionals.set(0);
         }
         if (struct.isSetPage_count()) {
           optionals.set(1);
         }
         oprot.writeBitSet(optionals, 2);
-        if (struct.isSetPage()) {
-          oprot.writeI32(struct.page);
+        if (struct.isSetPage_num()) {
+          oprot.writeI32(struct.page_num);
         }
         if (struct.isSetPage_count()) {
           oprot.writeI32(struct.page_count);
@@ -1605,8 +1605,8 @@ public class IPhotoService {
         TTupleProtocol iprot = (TTupleProtocol) prot;
         BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
-          struct.page = iprot.readI32();
-          struct.setPageIsSet(true);
+          struct.page_num = iprot.readI32();
+          struct.setPage_numIsSet(true);
         }
         if (incoming.get(1)) {
           struct.page_count = iprot.readI32();
@@ -1620,7 +1620,7 @@ public class IPhotoService {
   public static class getFeedList_result implements org.apache.thrift.TBase<getFeedList_result, getFeedList_result._Fields>, java.io.Serializable, Cloneable   {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("getFeedList_result");
 
-    private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.LIST, (short)0);
+    private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.STRUCT, (short)0);
     private static final org.apache.thrift.protocol.TField AE_FIELD_DESC = new org.apache.thrift.protocol.TField("ae", org.apache.thrift.protocol.TType.STRUCT, (short)1);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
@@ -1629,7 +1629,7 @@ public class IPhotoService {
       schemes.put(TupleScheme.class, new getFeedList_resultTupleSchemeFactory());
     }
 
-    public List<Feed> success; // required
+    public FeedList success; // required
     public AException ae; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
@@ -1698,8 +1698,7 @@ public class IPhotoService {
     static {
       Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
       tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
-              new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Feed.class))));
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, FeedList.class)));
       tmpMap.put(_Fields.AE, new org.apache.thrift.meta_data.FieldMetaData("ae", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
@@ -1710,7 +1709,7 @@ public class IPhotoService {
     }
 
     public getFeedList_result(
-      List<Feed> success,
+      FeedList success,
       AException ae)
     {
       this();
@@ -1723,11 +1722,7 @@ public class IPhotoService {
      */
     public getFeedList_result(getFeedList_result other) {
       if (other.isSetSuccess()) {
-        List<Feed> __this__success = new ArrayList<Feed>();
-        for (Feed other_element : other.success) {
-          __this__success.add(new Feed(other_element));
-        }
-        this.success = __this__success;
+        this.success = new FeedList(other.success);
       }
       if (other.isSetAe()) {
         this.ae = new AException(other.ae);
@@ -1744,26 +1739,11 @@ public class IPhotoService {
       this.ae = null;
     }
 
-    public int getSuccessSize() {
-      return (this.success == null) ? 0 : this.success.size();
-    }
-
-    public java.util.Iterator<Feed> getSuccessIterator() {
-      return (this.success == null) ? null : this.success.iterator();
-    }
-
-    public void addToSuccess(Feed elem) {
-      if (this.success == null) {
-        this.success = new ArrayList<Feed>();
-      }
-      this.success.add(elem);
-    }
-
-    public List<Feed> getSuccess() {
+    public FeedList getSuccess() {
       return this.success;
     }
 
-    public getFeedList_result setSuccess(List<Feed> success) {
+    public getFeedList_result setSuccess(FeedList success) {
       this.success = success;
       return this;
     }
@@ -1813,7 +1793,7 @@ public class IPhotoService {
         if (value == null) {
           unsetSuccess();
         } else {
-          setSuccess((List<Feed>)value);
+          setSuccess((FeedList)value);
         }
         break;
 
@@ -1964,6 +1944,9 @@ public class IPhotoService {
     public void validate() throws org.apache.thrift.TException {
       // check for required fields
       // check for sub-struct validity
+      if (success != null) {
+        success.validate();
+      }
     }
 
     private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
@@ -2001,19 +1984,9 @@ public class IPhotoService {
           }
           switch (schemeField.id) {
             case 0: // SUCCESS
-              if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
-                {
-                  org.apache.thrift.protocol.TList _list0 = iprot.readListBegin();
-                  struct.success = new ArrayList<Feed>(_list0.size);
-                  for (int _i1 = 0; _i1 < _list0.size; ++_i1)
-                  {
-                    Feed _elem2; // required
-                    _elem2 = new Feed();
-                    _elem2.read(iprot);
-                    struct.success.add(_elem2);
-                  }
-                  iprot.readListEnd();
-                }
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.success = new FeedList();
+                struct.success.read(iprot);
                 struct.setSuccessIsSet(true);
               } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
@@ -2045,14 +2018,7 @@ public class IPhotoService {
         oprot.writeStructBegin(STRUCT_DESC);
         if (struct.success != null) {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
-          {
-            oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (Feed _iter3 : struct.success)
-            {
-              _iter3.write(oprot);
-            }
-            oprot.writeListEnd();
-          }
+          struct.success.write(oprot);
           oprot.writeFieldEnd();
         }
         if (struct.ae != null) {
@@ -2086,13 +2052,7 @@ public class IPhotoService {
         }
         oprot.writeBitSet(optionals, 2);
         if (struct.isSetSuccess()) {
-          {
-            oprot.writeI32(struct.success.size());
-            for (Feed _iter4 : struct.success)
-            {
-              _iter4.write(oprot);
-            }
-          }
+          struct.success.write(oprot);
         }
         if (struct.isSetAe()) {
           struct.ae.write(oprot);
@@ -2104,17 +2064,8 @@ public class IPhotoService {
         TTupleProtocol iprot = (TTupleProtocol) prot;
         BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
-          {
-            org.apache.thrift.protocol.TList _list5 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new ArrayList<Feed>(_list5.size);
-            for (int _i6 = 0; _i6 < _list5.size; ++_i6)
-            {
-              Feed _elem7; // required
-              _elem7 = new Feed();
-              _elem7.read(iprot);
-              struct.success.add(_elem7);
-            }
-          }
+          struct.success = new FeedList();
+          struct.success.read(iprot);
           struct.setSuccessIsSet(true);
         }
         if (incoming.get(1)) {
