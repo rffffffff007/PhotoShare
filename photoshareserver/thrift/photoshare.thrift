@@ -1,13 +1,8 @@
-namespace java com.example.photoshare.api
+namespace java com.example.photoshare.thrift
 
 // Show error message to front end.
 exception AException {
 	1: string message
-}
-
-struct User {
-	1: string id,
-	2: string name,
 }
 
 struct Feed {
@@ -24,8 +19,8 @@ service PhotoService {
 	string hello(1:string name) throws (1:AException ae),
 
 	// Get the feed list. Page start from 0.
-	list<Feed> getFeedList(1:i32 page, i32 page_count) throws (1:AException ae),
+	list<Feed> getFeedList(1:i32 page, 2:i32 page_count) throws (1:AException ae),
 	
 	// Upload a feed to server.
-	Feed uploadFeed(Feed feed) throws (1:AException ae),
+	Feed uploadFeed(1:Feed feed) throws (1:AException ae),
 }
