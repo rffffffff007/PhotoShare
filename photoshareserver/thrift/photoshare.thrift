@@ -14,7 +14,7 @@ struct Feed {
 	4: string feed_desc,
 }
 
-service PhotoService {
+service IPhotoService {
 	// A test api.
 	string hello(1:string name) throws (1:AException ae),
 
