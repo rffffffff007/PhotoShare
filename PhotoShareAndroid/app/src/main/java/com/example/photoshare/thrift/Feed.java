@@ -15,6 +15,7 @@ import org.apache.thrift.protocol.TTupleProtocol;
 import org.apache.thrift.protocol.TProtocolException;
 import org.apache.thrift.EncodingUtils;
 import org.apache.thrift.TException;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
@@ -27,46 +28,199 @@ import java.util.Collections;
 import java.util.BitSet;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Feed implements org.apache.thrift.TBase<Feed, Feed._Fields>, java.io.Serializable, Cloneable {
-  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("Feed");
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("Feed");
 
+    private static final org.apache.thrift.protocol.TField FEED_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("feed_id", org.apache.thrift.protocol.TType.STRING, (short) 1);
+    private static final org.apache.thrift.protocol.TField USER_NAME_FIELD_DESC = new org.apache.thrift.protocol.TField("user_name", org.apache.thrift.protocol.TType.STRING, (short) 2);
+    private static final org.apache.thrift.protocol.TField PHOTO_URL_FIELD_DESC = new org.apache.thrift.protocol.TField("photo_url", org.apache.thrift.protocol.TType.STRING, (short) 3);
+    private static final org.apache.thrift.protocol.TField FEED_DESC_FIELD_DESC = new org.apache.thrift.protocol.TField("feed_desc", org.apache.thrift.protocol.TType.STRING, (short) 4);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+
+    static {
+        schemes.put(StandardScheme.class, new FeedStandardSchemeFactory());
+        schemes.put(TupleScheme.class, new FeedTupleSchemeFactory());
+    }
+
+    public String feed_id; // required
+    public String user_name; // required
+    public String photo_url; // required
+    public String feed_desc; // required
+
+    /**
+     * The set of fields this struct contains, along with convenience methods for finding and manipulating them.
+     */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+        FEED_ID((short) 1, "feed_id"),
+        USER_NAME((short) 2, "user_name"),
+        PHOTO_URL((short) 3, "photo_url"),
+        FEED_DESC((short) 4, "feed_desc");
+
+<<<<<<< HEAD
+        private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+=======
   private static final org.apache.thrift.protocol.TField FEED_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("feed_id", org.apache.thrift.protocol.TType.STRING, (short)1);
   private static final org.apache.thrift.protocol.TField USER_NAME_FIELD_DESC = new org.apache.thrift.protocol.TField("user_name", org.apache.thrift.protocol.TType.STRING, (short)2);
   private static final org.apache.thrift.protocol.TField PHOTO_URL_FIELD_DESC = new org.apache.thrift.protocol.TField("photo_url", org.apache.thrift.protocol.TType.STRING, (short)3);
   private static final org.apache.thrift.protocol.TField FEED_DESC_FIELD_DESC = new org.apache.thrift.protocol.TField("feed_desc", org.apache.thrift.protocol.TType.STRING, (short)4);
+  private static final org.apache.thrift.protocol.TField TIMESTAMP_FIELD_DESC = new org.apache.thrift.protocol.TField("timestamp", org.apache.thrift.protocol.TType.I64, (short)5);
+>>>>>>> c346dbb2427643b98b05527f0b6ef7fefef20a33
 
-  private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
-  static {
-    schemes.put(StandardScheme.class, new FeedStandardSchemeFactory());
-    schemes.put(TupleScheme.class, new FeedTupleSchemeFactory());
-  }
+        static {
+            for (_Fields field : EnumSet.allOf(_Fields.class)) {
+                byName.put(field.getFieldName(), field);
+            }
+        }
 
+        /**
+         * Find the _Fields constant that matches fieldId, or null if its not found.
+         */
+        public static _Fields findByThriftId(int fieldId) {
+            switch (fieldId) {
+                case 1: // FEED_ID
+                    return FEED_ID;
+                case 2: // USER_NAME
+                    return USER_NAME;
+                case 3: // PHOTO_URL
+                    return PHOTO_URL;
+                case 4: // FEED_DESC
+                    return FEED_DESC;
+                default:
+                    return null;
+            }
+        }
+
+        /**
+         * Find the _Fields constant that matches fieldId, throwing an exception
+         * if it is not found.
+         */
+        public static _Fields findByThriftIdOrThrow(int fieldId) {
+            _Fields fields = findByThriftId(fieldId);
+            if (fields == null)
+                throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+            return fields;
+        }
+
+        /**
+         * Find the _Fields constant that matches name, or null if its not found.
+         */
+        public static _Fields findByName(String name) {
+            return byName.get(name);
+        }
+
+        private final short _thriftId;
+        private final String _fieldName;
+
+        _Fields(short thriftId, String fieldName) {
+            _thriftId = thriftId;
+            _fieldName = fieldName;
+        }
+
+<<<<<<< HEAD
+        public short getThriftFieldId() {
+            return _thriftId;
+        }
+
+        public String getFieldName() {
+            return _fieldName;
+        }
+    }
+=======
   public String feed_id; // required
   public String user_name; // required
   public String photo_url; // required
   public String feed_desc; // required
+  public long timestamp; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
     FEED_ID((short)1, "feed_id"),
     USER_NAME((short)2, "user_name"),
     PHOTO_URL((short)3, "photo_url"),
-    FEED_DESC((short)4, "feed_desc");
+    FEED_DESC((short)4, "feed_desc"),
+    TIMESTAMP((short)5, "timestamp");
+>>>>>>> c346dbb2427643b98b05527f0b6ef7fefef20a33
 
-    private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
 
     static {
-      for (_Fields field : EnumSet.allOf(_Fields.class)) {
-        byName.put(field.getFieldName(), field);
-      }
+        Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+        tmpMap.put(_Fields.FEED_ID, new org.apache.thrift.meta_data.FieldMetaData("feed_id", org.apache.thrift.TFieldRequirementType.DEFAULT,
+                new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+        tmpMap.put(_Fields.USER_NAME, new org.apache.thrift.meta_data.FieldMetaData("user_name", org.apache.thrift.TFieldRequirementType.DEFAULT,
+                new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+        tmpMap.put(_Fields.PHOTO_URL, new org.apache.thrift.meta_data.FieldMetaData("photo_url", org.apache.thrift.TFieldRequirementType.DEFAULT,
+                new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+        tmpMap.put(_Fields.FEED_DESC, new org.apache.thrift.meta_data.FieldMetaData("feed_desc", org.apache.thrift.TFieldRequirementType.DEFAULT,
+                new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+        metaDataMap = Collections.unmodifiableMap(tmpMap);
+        org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(Feed.class, metaDataMap);
+    }
+
+    public Feed() {
+    }
+
+    public Feed(
+            String feed_id,
+            String user_name,
+            String photo_url,
+            String feed_desc) {
+        this();
+        this.feed_id = feed_id;
+        this.user_name = user_name;
+        this.photo_url = photo_url;
+        this.feed_desc = feed_desc;
     }
 
     /**
-     * Find the _Fields constant that matches fieldId, or null if its not found.
+     * Performs a deep copy on <i>other</i>.
      */
+<<<<<<< HEAD
+    public Feed(Feed other) {
+        if (other.isSetFeed_id()) {
+            this.feed_id = other.feed_id;
+        }
+        if (other.isSetUser_name()) {
+            this.user_name = other.user_name;
+        }
+        if (other.isSetPhoto_url()) {
+            this.photo_url = other.photo_url;
+        }
+        if (other.isSetFeed_desc()) {
+            this.feed_desc = other.feed_desc;
+        }
+    }
+
+    public Feed deepCopy() {
+        return new Feed(this);
+    }
+
+    @Override
+    public void clear() {
+        this.feed_id = null;
+        this.user_name = null;
+        this.photo_url = null;
+        this.feed_desc = null;
+    }
+
+    public String getFeed_id() {
+        return this.feed_id;
+    }
+
+    public Feed setFeed_id(String feed_id) {
+        this.feed_id = feed_id;
+        return this;
+    }
+
+    public void unsetFeed_id() {
+        this.feed_id = null;
+=======
     public static _Fields findByThriftId(int fieldId) {
       switch(fieldId) {
         case 1: // FEED_ID
@@ -77,24 +231,47 @@ public class Feed implements org.apache.thrift.TBase<Feed, Feed._Fields>, java.i
           return PHOTO_URL;
         case 4: // FEED_DESC
           return FEED_DESC;
+        case 5: // TIMESTAMP
+          return TIMESTAMP;
         default:
           return null;
       }
+>>>>>>> c346dbb2427643b98b05527f0b6ef7fefef20a33
     }
 
     /**
-     * Find the _Fields constant that matches fieldId, throwing an exception
-     * if it is not found.
+     * Returns true if field feed_id is set (has been assigned a value) and false otherwise
      */
-    public static _Fields findByThriftIdOrThrow(int fieldId) {
-      _Fields fields = findByThriftId(fieldId);
-      if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
-      return fields;
+    public boolean isSetFeed_id() {
+        return this.feed_id != null;
+    }
+
+    public void setFeed_idIsSet(boolean value) {
+        if (!value) {
+            this.feed_id = null;
+        }
+    }
+
+    public String getUser_name() {
+        return this.user_name;
+    }
+
+    public Feed setUser_name(String user_name) {
+        this.user_name = user_name;
+        return this;
+    }
+
+    public void unsetUser_name() {
+        this.user_name = null;
     }
 
     /**
-     * Find the _Fields constant that matches name, or null if its not found.
+     * Returns true if field user_name is set (has been assigned a value) and false otherwise
      */
+<<<<<<< HEAD
+    public boolean isSetUser_name() {
+        return this.user_name != null;
+=======
     public static _Fields findByName(String name) {
       return byName.get(name);
     }
@@ -117,6 +294,8 @@ public class Feed implements org.apache.thrift.TBase<Feed, Feed._Fields>, java.i
   }
 
   // isset id assignments
+  private static final int __TIMESTAMP_ISSET_ID = 0;
+  private byte __isset_bitfield = 0;
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
@@ -128,6 +307,8 @@ public class Feed implements org.apache.thrift.TBase<Feed, Feed._Fields>, java.i
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     tmpMap.put(_Fields.FEED_DESC, new org.apache.thrift.meta_data.FieldMetaData("feed_desc", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+    tmpMap.put(_Fields.TIMESTAMP, new org.apache.thrift.meta_data.FieldMetaData("timestamp", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(Feed.class, metaDataMap);
   }
@@ -139,19 +320,23 @@ public class Feed implements org.apache.thrift.TBase<Feed, Feed._Fields>, java.i
     String feed_id,
     String user_name,
     String photo_url,
-    String feed_desc)
+    String feed_desc,
+    long timestamp)
   {
     this();
     this.feed_id = feed_id;
     this.user_name = user_name;
     this.photo_url = photo_url;
     this.feed_desc = feed_desc;
+    this.timestamp = timestamp;
+    setTimestampIsSet(true);
   }
 
   /**
    * Performs a deep copy on <i>other</i>.
    */
   public Feed(Feed other) {
+    __isset_bitfield = other.__isset_bitfield;
     if (other.isSetFeed_id()) {
       this.feed_id = other.feed_id;
     }
@@ -164,6 +349,7 @@ public class Feed implements org.apache.thrift.TBase<Feed, Feed._Fields>, java.i
     if (other.isSetFeed_desc()) {
       this.feed_desc = other.feed_desc;
     }
+    this.timestamp = other.timestamp;
   }
 
   public Feed deepCopy() {
@@ -176,6 +362,8 @@ public class Feed implements org.apache.thrift.TBase<Feed, Feed._Fields>, java.i
     this.user_name = null;
     this.photo_url = null;
     this.feed_desc = null;
+    setTimestampIsSet(false);
+    this.timestamp = 0;
   }
 
   public String getFeed_id() {
@@ -274,6 +462,29 @@ public class Feed implements org.apache.thrift.TBase<Feed, Feed._Fields>, java.i
     }
   }
 
+  public long getTimestamp() {
+    return this.timestamp;
+  }
+
+  public Feed setTimestamp(long timestamp) {
+    this.timestamp = timestamp;
+    setTimestampIsSet(true);
+    return this;
+  }
+
+  public void unsetTimestamp() {
+    __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __TIMESTAMP_ISSET_ID);
+  }
+
+  /** Returns true if field timestamp is set (has been assigned a value) and false otherwise */
+  public boolean isSetTimestamp() {
+    return EncodingUtils.testBit(__isset_bitfield, __TIMESTAMP_ISSET_ID);
+  }
+
+  public void setTimestampIsSet(boolean value) {
+    __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __TIMESTAMP_ISSET_ID, value);
+  }
+
   public void setFieldValue(_Fields field, Object value) {
     switch (field) {
     case FEED_ID:
@@ -308,6 +519,14 @@ public class Feed implements org.apache.thrift.TBase<Feed, Feed._Fields>, java.i
       }
       break;
 
+    case TIMESTAMP:
+      if (value == null) {
+        unsetTimestamp();
+      } else {
+        setTimestamp((Long)value);
+      }
+      break;
+
     }
   }
 
@@ -324,6 +543,9 @@ public class Feed implements org.apache.thrift.TBase<Feed, Feed._Fields>, java.i
 
     case FEED_DESC:
       return getFeed_desc();
+
+    case TIMESTAMP:
+      return Long.valueOf(getTimestamp());
 
     }
     throw new IllegalStateException();
@@ -344,6 +566,8 @@ public class Feed implements org.apache.thrift.TBase<Feed, Feed._Fields>, java.i
       return isSetPhoto_url();
     case FEED_DESC:
       return isSetFeed_desc();
+    case TIMESTAMP:
+      return isSetTimestamp();
     }
     throw new IllegalStateException();
   }
@@ -368,32 +592,224 @@ public class Feed implements org.apache.thrift.TBase<Feed, Feed._Fields>, java.i
         return false;
       if (!this.feed_id.equals(that.feed_id))
         return false;
+>>>>>>> c346dbb2427643b98b05527f0b6ef7fefef20a33
     }
 
-    boolean this_present_user_name = true && this.isSetUser_name();
-    boolean that_present_user_name = true && that.isSetUser_name();
-    if (this_present_user_name || that_present_user_name) {
-      if (!(this_present_user_name && that_present_user_name))
-        return false;
-      if (!this.user_name.equals(that.user_name))
+    public void setUser_nameIsSet(boolean value) {
+        if (!value) {
+            this.user_name = null;
+        }
+    }
+
+    public String getPhoto_url() {
+        return this.photo_url;
+    }
+
+    public Feed setPhoto_url(String photo_url) {
+        this.photo_url = photo_url;
+        return this;
+    }
+
+    public void unsetPhoto_url() {
+        this.photo_url = null;
+    }
+
+    /**
+     * Returns true if field photo_url is set (has been assigned a value) and false otherwise
+     */
+    public boolean isSetPhoto_url() {
+        return this.photo_url != null;
+    }
+
+    public void setPhoto_urlIsSet(boolean value) {
+        if (!value) {
+            this.photo_url = null;
+        }
+    }
+
+    public String getFeed_desc() {
+        return this.feed_desc;
+    }
+
+    public Feed setFeed_desc(String feed_desc) {
+        this.feed_desc = feed_desc;
+        return this;
+    }
+
+    public void unsetFeed_desc() {
+        this.feed_desc = null;
+    }
+
+    /**
+     * Returns true if field feed_desc is set (has been assigned a value) and false otherwise
+     */
+    public boolean isSetFeed_desc() {
+        return this.feed_desc != null;
+    }
+
+    public void setFeed_descIsSet(boolean value) {
+        if (!value) {
+            this.feed_desc = null;
+        }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+        switch (field) {
+            case FEED_ID:
+                if (value == null) {
+                    unsetFeed_id();
+                } else {
+                    setFeed_id((String) value);
+                }
+                break;
+
+            case USER_NAME:
+                if (value == null) {
+                    unsetUser_name();
+                } else {
+                    setUser_name((String) value);
+                }
+                break;
+
+            case PHOTO_URL:
+                if (value == null) {
+                    unsetPhoto_url();
+                } else {
+                    setPhoto_url((String) value);
+                }
+                break;
+
+            case FEED_DESC:
+                if (value == null) {
+                    unsetFeed_desc();
+                } else {
+                    setFeed_desc((String) value);
+                }
+                break;
+
+        }
+    }
+
+    public Object getFieldValue(_Fields field) {
+        switch (field) {
+            case FEED_ID:
+                return getFeed_id();
+
+            case USER_NAME:
+                return getUser_name();
+
+            case PHOTO_URL:
+                return getPhoto_url();
+
+            case FEED_DESC:
+                return getFeed_desc();
+
+        }
+        throw new IllegalStateException();
+    }
+
+    /**
+     * Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise
+     */
+    public boolean isSet(_Fields field) {
+        if (field == null) {
+            throw new IllegalArgumentException();
+        }
+
+        switch (field) {
+            case FEED_ID:
+                return isSetFeed_id();
+            case USER_NAME:
+                return isSetUser_name();
+            case PHOTO_URL:
+                return isSetPhoto_url();
+            case FEED_DESC:
+                return isSetFeed_desc();
+        }
+        throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if (that == null)
+            return false;
+        if (that instanceof Feed)
+            return this.equals((Feed) that);
         return false;
     }
 
-    boolean this_present_photo_url = true && this.isSetPhoto_url();
-    boolean that_present_photo_url = true && that.isSetPhoto_url();
-    if (this_present_photo_url || that_present_photo_url) {
-      if (!(this_present_photo_url && that_present_photo_url))
-        return false;
-      if (!this.photo_url.equals(that.photo_url))
-        return false;
+<<<<<<< HEAD
+    public boolean equals(Feed that) {
+        if (that == null)
+            return false;
+
+        boolean this_present_feed_id = true && this.isSetFeed_id();
+        boolean that_present_feed_id = true && that.isSetFeed_id();
+        if (this_present_feed_id || that_present_feed_id) {
+            if (!(this_present_feed_id && that_present_feed_id))
+                return false;
+            if (!this.feed_id.equals(that.feed_id))
+                return false;
+        }
+
+        boolean this_present_user_name = true && this.isSetUser_name();
+        boolean that_present_user_name = true && that.isSetUser_name();
+        if (this_present_user_name || that_present_user_name) {
+            if (!(this_present_user_name && that_present_user_name))
+                return false;
+            if (!this.user_name.equals(that.user_name))
+                return false;
+        }
+
+        boolean this_present_photo_url = true && this.isSetPhoto_url();
+        boolean that_present_photo_url = true && that.isSetPhoto_url();
+        if (this_present_photo_url || that_present_photo_url) {
+            if (!(this_present_photo_url && that_present_photo_url))
+                return false;
+            if (!this.photo_url.equals(that.photo_url))
+                return false;
+        }
+
+        boolean this_present_feed_desc = true && this.isSetFeed_desc();
+        boolean that_present_feed_desc = true && that.isSetFeed_desc();
+        if (this_present_feed_desc || that_present_feed_desc) {
+            if (!(this_present_feed_desc && that_present_feed_desc))
+                return false;
+            if (!this.feed_desc.equals(that.feed_desc))
+                return false;
+        }
+
+        return true;
     }
 
-    boolean this_present_feed_desc = true && this.isSetFeed_desc();
-    boolean that_present_feed_desc = true && that.isSetFeed_desc();
-    if (this_present_feed_desc || that_present_feed_desc) {
-      if (!(this_present_feed_desc && that_present_feed_desc))
+    @Override
+    public int hashCode() {
+        return 0;
+    }
+
+    public int compareTo(Feed other) {
+        if (!getClass().equals(other.getClass())) {
+            return getClass().getName().compareTo(other.getClass().getName());
+        }
+
+        int lastComparison = 0;
+        Feed typedOther = (Feed) other;
+
+        lastComparison = Boolean.valueOf(isSetFeed_id()).compareTo(typedOther.isSetFeed_id());
+        if (lastComparison != 0) {
+            return lastComparison;
+        }
+        if (isSetFeed_id()) {
+            lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.feed_id, typedOther.feed_id);
+            if (lastComparison != 0) {
+                return lastComparison;
+=======
+    boolean this_present_timestamp = true;
+    boolean that_present_timestamp = true;
+    if (this_present_timestamp || that_present_timestamp) {
+      if (!(this_present_timestamp && that_present_timestamp))
         return false;
-      if (!this.feed_desc.equals(that.feed_desc))
+      if (this.timestamp != that.timestamp)
         return false;
     }
 
@@ -453,6 +869,16 @@ public class Feed implements org.apache.thrift.TBase<Feed, Feed._Fields>, java.i
         return lastComparison;
       }
     }
+    lastComparison = Boolean.valueOf(isSetTimestamp()).compareTo(typedOther.isSetTimestamp());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetTimestamp()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.timestamp, typedOther.timestamp);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
     return 0;
   }
 
@@ -504,6 +930,10 @@ public class Feed implements org.apache.thrift.TBase<Feed, Feed._Fields>, java.i
       sb.append(this.feed_desc);
     }
     first = false;
+    if (!first) sb.append(", ");
+    sb.append("timestamp:");
+    sb.append(this.timestamp);
+    first = false;
     sb.append(")");
     return sb.toString();
   }
@@ -523,6 +953,8 @@ public class Feed implements org.apache.thrift.TBase<Feed, Feed._Fields>, java.i
 
   private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
     try {
+      // it doesn't seem like you should have to do this, but java serialization is wacky, and doesn't call the default constructor.
+      __isset_bitfield = 0;
       read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
     } catch (org.apache.thrift.TException te) {
       throw new java.io.IOException(te);
@@ -553,28 +985,273 @@ public class Feed implements org.apache.thrift.TBase<Feed, Feed._Fields>, java.i
               struct.setFeed_idIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+>>>>>>> c346dbb2427643b98b05527f0b6ef7fefef20a33
             }
-            break;
-          case 2: // USER_NAME
-            if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
-              struct.user_name = iprot.readString();
-              struct.setUser_nameIsSet(true);
-            } else { 
-              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+        }
+        lastComparison = Boolean.valueOf(isSetUser_name()).compareTo(typedOther.isSetUser_name());
+        if (lastComparison != 0) {
+            return lastComparison;
+        }
+        if (isSetUser_name()) {
+            lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.user_name, typedOther.user_name);
+            if (lastComparison != 0) {
+                return lastComparison;
             }
-            break;
-          case 3: // PHOTO_URL
-            if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
-              struct.photo_url = iprot.readString();
-              struct.setPhoto_urlIsSet(true);
-            } else { 
-              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+        }
+        lastComparison = Boolean.valueOf(isSetPhoto_url()).compareTo(typedOther.isSetPhoto_url());
+        if (lastComparison != 0) {
+            return lastComparison;
+        }
+        if (isSetPhoto_url()) {
+            lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.photo_url, typedOther.photo_url);
+            if (lastComparison != 0) {
+                return lastComparison;
             }
+        }
+        lastComparison = Boolean.valueOf(isSetFeed_desc()).compareTo(typedOther.isSetFeed_desc());
+        if (lastComparison != 0) {
+            return lastComparison;
+        }
+        if (isSetFeed_desc()) {
+            lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.feed_desc, typedOther.feed_desc);
+            if (lastComparison != 0) {
+                return lastComparison;
+            }
+<<<<<<< HEAD
+        }
+        return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+        return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+        schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+        schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("Feed(");
+        boolean first = true;
+
+        sb.append("feed_id:");
+        if (this.feed_id == null) {
+            sb.append("null");
+        } else {
+            sb.append(this.feed_id);
+        }
+        first = false;
+        if (!first) sb.append(", ");
+        sb.append("user_name:");
+        if (this.user_name == null) {
+            sb.append("null");
+        } else {
+            sb.append(this.user_name);
+        }
+        first = false;
+        if (!first) sb.append(", ");
+        sb.append("photo_url:");
+        if (this.photo_url == null) {
+            sb.append("null");
+        } else {
+            sb.append(this.photo_url);
+        }
+        first = false;
+        if (!first) sb.append(", ");
+        sb.append("feed_desc:");
+        if (this.feed_desc == null) {
+            sb.append("null");
+        } else {
+            sb.append(this.feed_desc);
+        }
+        first = false;
+        sb.append(")");
+        return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+        // check for required fields
+        // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+        try {
+            write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+        } catch (org.apache.thrift.TException te) {
+            throw new java.io.IOException(te);
+        }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+        try {
+            read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+        } catch (org.apache.thrift.TException te) {
+            throw new java.io.IOException(te);
+        }
+    }
+
+    private static class FeedStandardSchemeFactory implements SchemeFactory {
+        public FeedStandardScheme getScheme() {
+            return new FeedStandardScheme();
+        }
+    }
+
+    private static class FeedStandardScheme extends StandardScheme<Feed> {
+
+        public void read(org.apache.thrift.protocol.TProtocol iprot, Feed struct) throws org.apache.thrift.TException {
+            org.apache.thrift.protocol.TField schemeField;
+            iprot.readStructBegin();
+            while (true) {
+                schemeField = iprot.readFieldBegin();
+                if (schemeField.type == org.apache.thrift.protocol.TType.STOP) {
+                    break;
+                }
+                switch (schemeField.id) {
+                    case 1: // FEED_ID
+                        if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                            struct.feed_id = iprot.readString();
+                            struct.setFeed_idIsSet(true);
+                        } else {
+                            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+                        }
+                        break;
+                    case 2: // USER_NAME
+                        if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                            struct.user_name = iprot.readString();
+                            struct.setUser_nameIsSet(true);
+                        } else {
+                            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+                        }
+                        break;
+                    case 3: // PHOTO_URL
+                        if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                            struct.photo_url = iprot.readString();
+                            struct.setPhoto_urlIsSet(true);
+                        } else {
+                            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+                        }
+                        break;
+                    case 4: // FEED_DESC
+                        if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                            struct.feed_desc = iprot.readString();
+                            struct.setFeed_descIsSet(true);
+                        } else {
+                            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+                        }
+                        break;
+                    default:
+                        org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+                }
+                iprot.readFieldEnd();
+            }
+            iprot.readStructEnd();
+
+            // check for required fields of primitive type, which can't be checked in the validate method
+            struct.validate();
+        }
+
+        public void write(org.apache.thrift.protocol.TProtocol oprot, Feed struct) throws org.apache.thrift.TException {
+            struct.validate();
+
+            oprot.writeStructBegin(STRUCT_DESC);
+            if (struct.feed_id != null) {
+                oprot.writeFieldBegin(FEED_ID_FIELD_DESC);
+                oprot.writeString(struct.feed_id);
+                oprot.writeFieldEnd();
+            }
+            if (struct.user_name != null) {
+                oprot.writeFieldBegin(USER_NAME_FIELD_DESC);
+                oprot.writeString(struct.user_name);
+                oprot.writeFieldEnd();
+            }
+            if (struct.photo_url != null) {
+                oprot.writeFieldBegin(PHOTO_URL_FIELD_DESC);
+                oprot.writeString(struct.photo_url);
+                oprot.writeFieldEnd();
+            }
+            if (struct.feed_desc != null) {
+                oprot.writeFieldBegin(FEED_DESC_FIELD_DESC);
+                oprot.writeString(struct.feed_desc);
+                oprot.writeFieldEnd();
+            }
+            oprot.writeFieldStop();
+            oprot.writeStructEnd();
+        }
+
+    }
+
+    private static class FeedTupleSchemeFactory implements SchemeFactory {
+        public FeedTupleScheme getScheme() {
+            return new FeedTupleScheme();
+        }
+    }
+
+    private static class FeedTupleScheme extends TupleScheme<Feed> {
+
+        @Override
+        public void write(org.apache.thrift.protocol.TProtocol prot, Feed struct) throws org.apache.thrift.TException {
+            TTupleProtocol oprot = (TTupleProtocol) prot;
+            BitSet optionals = new BitSet();
+            if (struct.isSetFeed_id()) {
+                optionals.set(0);
+            }
+            if (struct.isSetUser_name()) {
+                optionals.set(1);
+            }
+            if (struct.isSetPhoto_url()) {
+                optionals.set(2);
+            }
+            if (struct.isSetFeed_desc()) {
+                optionals.set(3);
+            }
+            oprot.writeBitSet(optionals, 4);
+            if (struct.isSetFeed_id()) {
+                oprot.writeString(struct.feed_id);
+            }
+            if (struct.isSetUser_name()) {
+                oprot.writeString(struct.user_name);
+            }
+            if (struct.isSetPhoto_url()) {
+                oprot.writeString(struct.photo_url);
+            }
+            if (struct.isSetFeed_desc()) {
+                oprot.writeString(struct.feed_desc);
+            }
+        }
+
+        @Override
+        public void read(org.apache.thrift.protocol.TProtocol prot, Feed struct) throws org.apache.thrift.TException {
+            TTupleProtocol iprot = (TTupleProtocol) prot;
+            BitSet incoming = iprot.readBitSet(4);
+            if (incoming.get(0)) {
+                struct.feed_id = iprot.readString();
+                struct.setFeed_idIsSet(true);
+            }
+            if (incoming.get(1)) {
+                struct.user_name = iprot.readString();
+                struct.setUser_nameIsSet(true);
+            }
+            if (incoming.get(2)) {
+                struct.photo_url = iprot.readString();
+                struct.setPhoto_urlIsSet(true);
+            }
+            if (incoming.get(3)) {
+                struct.feed_desc = iprot.readString();
+                struct.setFeed_descIsSet(true);
+            }
+        }
+    }
+=======
             break;
-          case 4: // FEED_DESC
-            if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
-              struct.feed_desc = iprot.readString();
-              struct.setFeed_descIsSet(true);
+          case 5: // TIMESTAMP
+            if (schemeField.type == org.apache.thrift.protocol.TType.I64) {
+              struct.timestamp = iprot.readI64();
+              struct.setTimestampIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
@@ -614,6 +1291,9 @@ public class Feed implements org.apache.thrift.TBase<Feed, Feed._Fields>, java.i
         oprot.writeString(struct.feed_desc);
         oprot.writeFieldEnd();
       }
+      oprot.writeFieldBegin(TIMESTAMP_FIELD_DESC);
+      oprot.writeI64(struct.timestamp);
+      oprot.writeFieldEnd();
       oprot.writeFieldStop();
       oprot.writeStructEnd();
     }
@@ -644,7 +1324,10 @@ public class Feed implements org.apache.thrift.TBase<Feed, Feed._Fields>, java.i
       if (struct.isSetFeed_desc()) {
         optionals.set(3);
       }
-      oprot.writeBitSet(optionals, 4);
+      if (struct.isSetTimestamp()) {
+        optionals.set(4);
+      }
+      oprot.writeBitSet(optionals, 5);
       if (struct.isSetFeed_id()) {
         oprot.writeString(struct.feed_id);
       }
@@ -657,12 +1340,15 @@ public class Feed implements org.apache.thrift.TBase<Feed, Feed._Fields>, java.i
       if (struct.isSetFeed_desc()) {
         oprot.writeString(struct.feed_desc);
       }
+      if (struct.isSetTimestamp()) {
+        oprot.writeI64(struct.timestamp);
+      }
     }
 
     @Override
     public void read(org.apache.thrift.protocol.TProtocol prot, Feed struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
-      BitSet incoming = iprot.readBitSet(4);
+      BitSet incoming = iprot.readBitSet(5);
       if (incoming.get(0)) {
         struct.feed_id = iprot.readString();
         struct.setFeed_idIsSet(true);
@@ -679,8 +1365,13 @@ public class Feed implements org.apache.thrift.TBase<Feed, Feed._Fields>, java.i
         struct.feed_desc = iprot.readString();
         struct.setFeed_descIsSet(true);
       }
+      if (incoming.get(4)) {
+        struct.timestamp = iprot.readI64();
+        struct.setTimestampIsSet(true);
+      }
     }
   }
+>>>>>>> c346dbb2427643b98b05527f0b6ef7fefef20a33
 
 }
 

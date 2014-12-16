@@ -2,37 +2,60 @@ package com.example.photoshare.android;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.Toast;
 
+import com.android.volley.toolbox.ImageLoader;
 import com.example.photoshare.android.net.RPCHelper;
 import com.example.photoshare.thrift.AException;
 
 import org.apache.thrift.TException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class MainActivity extends ActionBarActivity {
     private static final String LOG_TAG = "MainActivity";
-    private EditText mTextName;
-    private Button mBtnHello;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mTextName = (EditText) findViewById(R.id.name);
-        mBtnHello = (Button) findViewById(R.id.hello);
-        mBtnHello.setOnClickListener(new View.OnClickListener() {
+        final EditText editImageUrl = (EditText) findViewById(R.id.edit_image_url);
+        final Button buttonShowImage = (Button) findViewById(R.id.button_show_image);
+        final ImageLoader imageLoader = VolleyUtils.getImageLoader(MainActivity.this);
+
+        final GridView gridView = (GridView) findViewById(R.id.grid_view);
+        final ImageAdapter adapter = new ImageAdapter(this, imageLoader);
+        gridView.setAdapter(adapter);
+        final List<String> imageUrls = new ArrayList<String>();
+        adapter.setImageUrls(imageUrls);
+        gridView.setOnItemClickListener(new GridView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getBaseContext(), ViewImageActivity.class);
+                intent.putExtra("image_url", imageUrls.get(position));
+                intent.putExtra("image_description", "Descriptions here.");
+                startActivity(intent);
+            }
+        });
+
+        buttonShowImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new HelloTask(MainActivity.this, mTextName.getText().toString()).execute();
+              imageUrls.add(editImageUrl.getText().toString());
+              adapter.notifyDataSetChanged();
             }
         });
     }

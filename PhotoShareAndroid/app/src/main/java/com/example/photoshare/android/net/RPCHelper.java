@@ -21,7 +21,7 @@ public class RPCHelper {
     private static final int SOCKET_TIME_OUT = 25000;
     private static final int CONNECTION_TIME_OUT = 25000;
 
-    private static HttpClient getHttpCilent() {
+    private static HttpClient getHttpClient() {
         HttpParams param = new BasicHttpParams();
         HttpConnectionParams.setConnectionTimeout(param, CONNECTION_TIME_OUT);
         HttpConnectionParams.setSoTimeout(param, SOCKET_TIME_OUT);
@@ -34,7 +34,7 @@ public class RPCHelper {
     }
 
     private static TProtocol getTProtocol(String url) throws TException {
-        HttpClient client = getHttpCilent();
+        HttpClient client = getHttpClient();
         TTransport transport = new THttpClient(HOST_URL + url, client);
         transport.open();
         return getProtocol(transport);

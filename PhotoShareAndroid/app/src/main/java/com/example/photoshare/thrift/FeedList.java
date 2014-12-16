@@ -15,6 +15,7 @@ import org.apache.thrift.protocol.TTupleProtocol;
 import org.apache.thrift.protocol.TProtocolException;
 import org.apache.thrift.EncodingUtils;
 import org.apache.thrift.TException;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
@@ -27,700 +28,710 @@ import java.util.Collections;
 import java.util.BitSet;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class FeedList implements org.apache.thrift.TBase<FeedList, FeedList._Fields>, java.io.Serializable, Cloneable {
-  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("FeedList");
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("FeedList");
 
-  private static final org.apache.thrift.protocol.TField FEEDS_FIELD_DESC = new org.apache.thrift.protocol.TField("feeds", org.apache.thrift.protocol.TType.LIST, (short)1);
-  private static final org.apache.thrift.protocol.TField PAGE_NUM_FIELD_DESC = new org.apache.thrift.protocol.TField("page_num", org.apache.thrift.protocol.TType.I32, (short)2);
-  private static final org.apache.thrift.protocol.TField PAGE_COUNT_FIELD_DESC = new org.apache.thrift.protocol.TField("page_count", org.apache.thrift.protocol.TType.I32, (short)3);
-  private static final org.apache.thrift.protocol.TField TOTAL_PAGE_NUM_FIELD_DESC = new org.apache.thrift.protocol.TField("total_page_num", org.apache.thrift.protocol.TType.I32, (short)4);
+    private static final org.apache.thrift.protocol.TField FEEDS_FIELD_DESC = new org.apache.thrift.protocol.TField("feeds", org.apache.thrift.protocol.TType.LIST, (short) 1);
+    private static final org.apache.thrift.protocol.TField PAGE_NUM_FIELD_DESC = new org.apache.thrift.protocol.TField("page_num", org.apache.thrift.protocol.TType.I32, (short) 2);
+    private static final org.apache.thrift.protocol.TField PAGE_COUNT_FIELD_DESC = new org.apache.thrift.protocol.TField("page_count", org.apache.thrift.protocol.TType.I32, (short) 3);
+    private static final org.apache.thrift.protocol.TField TOTAL_PAGE_NUM_FIELD_DESC = new org.apache.thrift.protocol.TField("total_page_num", org.apache.thrift.protocol.TType.I32, (short) 4);
 
-  private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
-  static {
-    schemes.put(StandardScheme.class, new FeedListStandardSchemeFactory());
-    schemes.put(TupleScheme.class, new FeedListTupleSchemeFactory());
-  }
-
-  public List<Feed> feeds; // required
-  public int page_num; // required
-  public int page_count; // required
-  public int total_page_num; // required
-
-  /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
-  public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-    FEEDS((short)1, "feeds"),
-    PAGE_NUM((short)2, "page_num"),
-    PAGE_COUNT((short)3, "page_count"),
-    TOTAL_PAGE_NUM((short)4, "total_page_num");
-
-    private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
 
     static {
-      for (_Fields field : EnumSet.allOf(_Fields.class)) {
-        byName.put(field.getFieldName(), field);
-      }
+        schemes.put(StandardScheme.class, new FeedListStandardSchemeFactory());
+        schemes.put(TupleScheme.class, new FeedListTupleSchemeFactory());
     }
+
+    public List<Feed> feeds; // required
+    public int page_num; // required
+    public int page_count; // required
+    public int total_page_num; // required
 
     /**
-     * Find the _Fields constant that matches fieldId, or null if its not found.
+     * The set of fields this struct contains, along with convenience methods for finding and manipulating them.
      */
-    public static _Fields findByThriftId(int fieldId) {
-      switch(fieldId) {
-        case 1: // FEEDS
-          return FEEDS;
-        case 2: // PAGE_NUM
-          return PAGE_NUM;
-        case 3: // PAGE_COUNT
-          return PAGE_COUNT;
-        case 4: // TOTAL_PAGE_NUM
-          return TOTAL_PAGE_NUM;
-        default:
-          return null;
-      }
-    }
-
-    /**
-     * Find the _Fields constant that matches fieldId, throwing an exception
-     * if it is not found.
-     */
-    public static _Fields findByThriftIdOrThrow(int fieldId) {
-      _Fields fields = findByThriftId(fieldId);
-      if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
-      return fields;
-    }
-
-    /**
-     * Find the _Fields constant that matches name, or null if its not found.
-     */
-    public static _Fields findByName(String name) {
-      return byName.get(name);
-    }
-
-    private final short _thriftId;
-    private final String _fieldName;
-
-    _Fields(short thriftId, String fieldName) {
-      _thriftId = thriftId;
-      _fieldName = fieldName;
-    }
-
-    public short getThriftFieldId() {
-      return _thriftId;
-    }
-
-    public String getFieldName() {
-      return _fieldName;
-    }
-  }
-
-  // isset id assignments
-  private static final int __PAGE_NUM_ISSET_ID = 0;
-  private static final int __PAGE_COUNT_ISSET_ID = 1;
-  private static final int __TOTAL_PAGE_NUM_ISSET_ID = 2;
-  private byte __isset_bitfield = 0;
-  public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
-  static {
-    Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-    tmpMap.put(_Fields.FEEDS, new org.apache.thrift.meta_data.FieldMetaData("feeds", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
-            new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Feed.class))));
-    tmpMap.put(_Fields.PAGE_NUM, new org.apache.thrift.meta_data.FieldMetaData("page_num", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32)));
-    tmpMap.put(_Fields.PAGE_COUNT, new org.apache.thrift.meta_data.FieldMetaData("page_count", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32)));
-    tmpMap.put(_Fields.TOTAL_PAGE_NUM, new org.apache.thrift.meta_data.FieldMetaData("total_page_num", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32)));
-    metaDataMap = Collections.unmodifiableMap(tmpMap);
-    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(FeedList.class, metaDataMap);
-  }
-
-  public FeedList() {
-  }
-
-  public FeedList(
-    List<Feed> feeds,
-    int page_num,
-    int page_count,
-    int total_page_num)
-  {
-    this();
-    this.feeds = feeds;
-    this.page_num = page_num;
-    setPage_numIsSet(true);
-    this.page_count = page_count;
-    setPage_countIsSet(true);
-    this.total_page_num = total_page_num;
-    setTotal_page_numIsSet(true);
-  }
-
-  /**
-   * Performs a deep copy on <i>other</i>.
-   */
-  public FeedList(FeedList other) {
-    __isset_bitfield = other.__isset_bitfield;
-    if (other.isSetFeeds()) {
-      List<Feed> __this__feeds = new ArrayList<Feed>();
-      for (Feed other_element : other.feeds) {
-        __this__feeds.add(new Feed(other_element));
-      }
-      this.feeds = __this__feeds;
-    }
-    this.page_num = other.page_num;
-    this.page_count = other.page_count;
-    this.total_page_num = other.total_page_num;
-  }
-
-  public FeedList deepCopy() {
-    return new FeedList(this);
-  }
-
-  @Override
-  public void clear() {
-    this.feeds = null;
-    setPage_numIsSet(false);
-    this.page_num = 0;
-    setPage_countIsSet(false);
-    this.page_count = 0;
-    setTotal_page_numIsSet(false);
-    this.total_page_num = 0;
-  }
-
-  public int getFeedsSize() {
-    return (this.feeds == null) ? 0 : this.feeds.size();
-  }
-
-  public java.util.Iterator<Feed> getFeedsIterator() {
-    return (this.feeds == null) ? null : this.feeds.iterator();
-  }
-
-  public void addToFeeds(Feed elem) {
-    if (this.feeds == null) {
-      this.feeds = new ArrayList<Feed>();
-    }
-    this.feeds.add(elem);
-  }
-
-  public List<Feed> getFeeds() {
-    return this.feeds;
-  }
-
-  public FeedList setFeeds(List<Feed> feeds) {
-    this.feeds = feeds;
-    return this;
-  }
-
-  public void unsetFeeds() {
-    this.feeds = null;
-  }
-
-  /** Returns true if field feeds is set (has been assigned a value) and false otherwise */
-  public boolean isSetFeeds() {
-    return this.feeds != null;
-  }
-
-  public void setFeedsIsSet(boolean value) {
-    if (!value) {
-      this.feeds = null;
-    }
-  }
-
-  public int getPage_num() {
-    return this.page_num;
-  }
-
-  public FeedList setPage_num(int page_num) {
-    this.page_num = page_num;
-    setPage_numIsSet(true);
-    return this;
-  }
-
-  public void unsetPage_num() {
-    __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __PAGE_NUM_ISSET_ID);
-  }
-
-  /** Returns true if field page_num is set (has been assigned a value) and false otherwise */
-  public boolean isSetPage_num() {
-    return EncodingUtils.testBit(__isset_bitfield, __PAGE_NUM_ISSET_ID);
-  }
-
-  public void setPage_numIsSet(boolean value) {
-    __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __PAGE_NUM_ISSET_ID, value);
-  }
-
-  public int getPage_count() {
-    return this.page_count;
-  }
-
-  public FeedList setPage_count(int page_count) {
-    this.page_count = page_count;
-    setPage_countIsSet(true);
-    return this;
-  }
-
-  public void unsetPage_count() {
-    __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __PAGE_COUNT_ISSET_ID);
-  }
-
-  /** Returns true if field page_count is set (has been assigned a value) and false otherwise */
-  public boolean isSetPage_count() {
-    return EncodingUtils.testBit(__isset_bitfield, __PAGE_COUNT_ISSET_ID);
-  }
-
-  public void setPage_countIsSet(boolean value) {
-    __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __PAGE_COUNT_ISSET_ID, value);
-  }
-
-  public int getTotal_page_num() {
-    return this.total_page_num;
-  }
-
-  public FeedList setTotal_page_num(int total_page_num) {
-    this.total_page_num = total_page_num;
-    setTotal_page_numIsSet(true);
-    return this;
-  }
-
-  public void unsetTotal_page_num() {
-    __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __TOTAL_PAGE_NUM_ISSET_ID);
-  }
-
-  /** Returns true if field total_page_num is set (has been assigned a value) and false otherwise */
-  public boolean isSetTotal_page_num() {
-    return EncodingUtils.testBit(__isset_bitfield, __TOTAL_PAGE_NUM_ISSET_ID);
-  }
-
-  public void setTotal_page_numIsSet(boolean value) {
-    __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __TOTAL_PAGE_NUM_ISSET_ID, value);
-  }
-
-  public void setFieldValue(_Fields field, Object value) {
-    switch (field) {
-    case FEEDS:
-      if (value == null) {
-        unsetFeeds();
-      } else {
-        setFeeds((List<Feed>)value);
-      }
-      break;
-
-    case PAGE_NUM:
-      if (value == null) {
-        unsetPage_num();
-      } else {
-        setPage_num((Integer)value);
-      }
-      break;
-
-    case PAGE_COUNT:
-      if (value == null) {
-        unsetPage_count();
-      } else {
-        setPage_count((Integer)value);
-      }
-      break;
-
-    case TOTAL_PAGE_NUM:
-      if (value == null) {
-        unsetTotal_page_num();
-      } else {
-        setTotal_page_num((Integer)value);
-      }
-      break;
-
-    }
-  }
-
-  public Object getFieldValue(_Fields field) {
-    switch (field) {
-    case FEEDS:
-      return getFeeds();
-
-    case PAGE_NUM:
-      return Integer.valueOf(getPage_num());
-
-    case PAGE_COUNT:
-      return Integer.valueOf(getPage_count());
-
-    case TOTAL_PAGE_NUM:
-      return Integer.valueOf(getTotal_page_num());
-
-    }
-    throw new IllegalStateException();
-  }
-
-  /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
-  public boolean isSet(_Fields field) {
-    if (field == null) {
-      throw new IllegalArgumentException();
-    }
-
-    switch (field) {
-    case FEEDS:
-      return isSetFeeds();
-    case PAGE_NUM:
-      return isSetPage_num();
-    case PAGE_COUNT:
-      return isSetPage_count();
-    case TOTAL_PAGE_NUM:
-      return isSetTotal_page_num();
-    }
-    throw new IllegalStateException();
-  }
-
-  @Override
-  public boolean equals(Object that) {
-    if (that == null)
-      return false;
-    if (that instanceof FeedList)
-      return this.equals((FeedList)that);
-    return false;
-  }
-
-  public boolean equals(FeedList that) {
-    if (that == null)
-      return false;
-
-    boolean this_present_feeds = true && this.isSetFeeds();
-    boolean that_present_feeds = true && that.isSetFeeds();
-    if (this_present_feeds || that_present_feeds) {
-      if (!(this_present_feeds && that_present_feeds))
-        return false;
-      if (!this.feeds.equals(that.feeds))
-        return false;
-    }
-
-    boolean this_present_page_num = true;
-    boolean that_present_page_num = true;
-    if (this_present_page_num || that_present_page_num) {
-      if (!(this_present_page_num && that_present_page_num))
-        return false;
-      if (this.page_num != that.page_num)
-        return false;
-    }
-
-    boolean this_present_page_count = true;
-    boolean that_present_page_count = true;
-    if (this_present_page_count || that_present_page_count) {
-      if (!(this_present_page_count && that_present_page_count))
-        return false;
-      if (this.page_count != that.page_count)
-        return false;
-    }
-
-    boolean this_present_total_page_num = true;
-    boolean that_present_total_page_num = true;
-    if (this_present_total_page_num || that_present_total_page_num) {
-      if (!(this_present_total_page_num && that_present_total_page_num))
-        return false;
-      if (this.total_page_num != that.total_page_num)
-        return false;
-    }
-
-    return true;
-  }
-
-  @Override
-  public int hashCode() {
-    return 0;
-  }
-
-  public int compareTo(FeedList other) {
-    if (!getClass().equals(other.getClass())) {
-      return getClass().getName().compareTo(other.getClass().getName());
-    }
-
-    int lastComparison = 0;
-    FeedList typedOther = (FeedList)other;
-
-    lastComparison = Boolean.valueOf(isSetFeeds()).compareTo(typedOther.isSetFeeds());
-    if (lastComparison != 0) {
-      return lastComparison;
-    }
-    if (isSetFeeds()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.feeds, typedOther.feeds);
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-    }
-    lastComparison = Boolean.valueOf(isSetPage_num()).compareTo(typedOther.isSetPage_num());
-    if (lastComparison != 0) {
-      return lastComparison;
-    }
-    if (isSetPage_num()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.page_num, typedOther.page_num);
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-    }
-    lastComparison = Boolean.valueOf(isSetPage_count()).compareTo(typedOther.isSetPage_count());
-    if (lastComparison != 0) {
-      return lastComparison;
-    }
-    if (isSetPage_count()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.page_count, typedOther.page_count);
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-    }
-    lastComparison = Boolean.valueOf(isSetTotal_page_num()).compareTo(typedOther.isSetTotal_page_num());
-    if (lastComparison != 0) {
-      return lastComparison;
-    }
-    if (isSetTotal_page_num()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.total_page_num, typedOther.total_page_num);
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-    }
-    return 0;
-  }
-
-  public _Fields fieldForId(int fieldId) {
-    return _Fields.findByThriftId(fieldId);
-  }
-
-  public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
-    schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
-  }
-
-  public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
-    schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
-  }
-
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder("FeedList(");
-    boolean first = true;
-
-    sb.append("feeds:");
-    if (this.feeds == null) {
-      sb.append("null");
-    } else {
-      sb.append(this.feeds);
-    }
-    first = false;
-    if (!first) sb.append(", ");
-    sb.append("page_num:");
-    sb.append(this.page_num);
-    first = false;
-    if (!first) sb.append(", ");
-    sb.append("page_count:");
-    sb.append(this.page_count);
-    first = false;
-    if (!first) sb.append(", ");
-    sb.append("total_page_num:");
-    sb.append(this.total_page_num);
-    first = false;
-    sb.append(")");
-    return sb.toString();
-  }
-
-  public void validate() throws org.apache.thrift.TException {
-    // check for required fields
-    // check for sub-struct validity
-  }
-
-  private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
-    try {
-      write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
-    } catch (org.apache.thrift.TException te) {
-      throw new java.io.IOException(te);
-    }
-  }
-
-  private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
-    try {
-      // it doesn't seem like you should have to do this, but java serialization is wacky, and doesn't call the default constructor.
-      __isset_bitfield = 0;
-      read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
-    } catch (org.apache.thrift.TException te) {
-      throw new java.io.IOException(te);
-    }
-  }
-
-  private static class FeedListStandardSchemeFactory implements SchemeFactory {
-    public FeedListStandardScheme getScheme() {
-      return new FeedListStandardScheme();
-    }
-  }
-
-  private static class FeedListStandardScheme extends StandardScheme<FeedList> {
-
-    public void read(org.apache.thrift.protocol.TProtocol iprot, FeedList struct) throws org.apache.thrift.TException {
-      org.apache.thrift.protocol.TField schemeField;
-      iprot.readStructBegin();
-      while (true)
-      {
-        schemeField = iprot.readFieldBegin();
-        if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
-          break;
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+        FEEDS((short) 1, "feeds"),
+        PAGE_NUM((short) 2, "page_num"),
+        PAGE_COUNT((short) 3, "page_count"),
+        TOTAL_PAGE_NUM((short) 4, "total_page_num");
+
+        private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+        static {
+            for (_Fields field : EnumSet.allOf(_Fields.class)) {
+                byName.put(field.getFieldName(), field);
+            }
         }
-        switch (schemeField.id) {
-          case 1: // FEEDS
-            if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
-              {
-                org.apache.thrift.protocol.TList _list0 = iprot.readListBegin();
-                struct.feeds = new ArrayList<Feed>(_list0.size);
-                for (int _i1 = 0; _i1 < _list0.size; ++_i1)
-                {
-                  Feed _elem2; // required
-                  _elem2 = new Feed();
-                  _elem2.read(iprot);
-                  struct.feeds.add(_elem2);
+
+        /**
+         * Find the _Fields constant that matches fieldId, or null if its not found.
+         */
+        public static _Fields findByThriftId(int fieldId) {
+            switch (fieldId) {
+                case 1: // FEEDS
+                    return FEEDS;
+                case 2: // PAGE_NUM
+                    return PAGE_NUM;
+                case 3: // PAGE_COUNT
+                    return PAGE_COUNT;
+                case 4: // TOTAL_PAGE_NUM
+                    return TOTAL_PAGE_NUM;
+                default:
+                    return null;
+            }
+        }
+
+        /**
+         * Find the _Fields constant that matches fieldId, throwing an exception
+         * if it is not found.
+         */
+        public static _Fields findByThriftIdOrThrow(int fieldId) {
+            _Fields fields = findByThriftId(fieldId);
+            if (fields == null)
+                throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+            return fields;
+        }
+
+        /**
+         * Find the _Fields constant that matches name, or null if its not found.
+         */
+        public static _Fields findByName(String name) {
+            return byName.get(name);
+        }
+
+        private final short _thriftId;
+        private final String _fieldName;
+
+        _Fields(short thriftId, String fieldName) {
+            _thriftId = thriftId;
+            _fieldName = fieldName;
+        }
+
+        public short getThriftFieldId() {
+            return _thriftId;
+        }
+
+        public String getFieldName() {
+            return _fieldName;
+        }
+    }
+
+    // isset id assignments
+    private static final int __PAGE_NUM_ISSET_ID = 0;
+    private static final int __PAGE_COUNT_ISSET_ID = 1;
+    private static final int __TOTAL_PAGE_NUM_ISSET_ID = 2;
+    private byte __isset_bitfield = 0;
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+
+    static {
+        Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+        tmpMap.put(_Fields.FEEDS, new org.apache.thrift.meta_data.FieldMetaData("feeds", org.apache.thrift.TFieldRequirementType.DEFAULT,
+                new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST,
+                        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Feed.class))));
+        tmpMap.put(_Fields.PAGE_NUM, new org.apache.thrift.meta_data.FieldMetaData("page_num", org.apache.thrift.TFieldRequirementType.DEFAULT,
+                new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32)));
+        tmpMap.put(_Fields.PAGE_COUNT, new org.apache.thrift.meta_data.FieldMetaData("page_count", org.apache.thrift.TFieldRequirementType.DEFAULT,
+                new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32)));
+        tmpMap.put(_Fields.TOTAL_PAGE_NUM, new org.apache.thrift.meta_data.FieldMetaData("total_page_num", org.apache.thrift.TFieldRequirementType.DEFAULT,
+                new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32)));
+        metaDataMap = Collections.unmodifiableMap(tmpMap);
+        org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(FeedList.class, metaDataMap);
+    }
+
+    public FeedList() {
+    }
+
+    public FeedList(
+            List<Feed> feeds,
+            int page_num,
+            int page_count,
+            int total_page_num) {
+        this();
+        this.feeds = feeds;
+        this.page_num = page_num;
+        setPage_numIsSet(true);
+        this.page_count = page_count;
+        setPage_countIsSet(true);
+        this.total_page_num = total_page_num;
+        setTotal_page_numIsSet(true);
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public FeedList(FeedList other) {
+        __isset_bitfield = other.__isset_bitfield;
+        if (other.isSetFeeds()) {
+            List<Feed> __this__feeds = new ArrayList<Feed>();
+            for (Feed other_element : other.feeds) {
+                __this__feeds.add(new Feed(other_element));
+            }
+            this.feeds = __this__feeds;
+        }
+        this.page_num = other.page_num;
+        this.page_count = other.page_count;
+        this.total_page_num = other.total_page_num;
+    }
+
+    public FeedList deepCopy() {
+        return new FeedList(this);
+    }
+
+    @Override
+    public void clear() {
+        this.feeds = null;
+        setPage_numIsSet(false);
+        this.page_num = 0;
+        setPage_countIsSet(false);
+        this.page_count = 0;
+        setTotal_page_numIsSet(false);
+        this.total_page_num = 0;
+    }
+
+    public int getFeedsSize() {
+        return (this.feeds == null) ? 0 : this.feeds.size();
+    }
+
+    public java.util.Iterator<Feed> getFeedsIterator() {
+        return (this.feeds == null) ? null : this.feeds.iterator();
+    }
+
+    public void addToFeeds(Feed elem) {
+        if (this.feeds == null) {
+            this.feeds = new ArrayList<Feed>();
+        }
+        this.feeds.add(elem);
+    }
+
+    public List<Feed> getFeeds() {
+        return this.feeds;
+    }
+
+    public FeedList setFeeds(List<Feed> feeds) {
+        this.feeds = feeds;
+        return this;
+    }
+
+    public void unsetFeeds() {
+        this.feeds = null;
+    }
+
+    /**
+     * Returns true if field feeds is set (has been assigned a value) and false otherwise
+     */
+    public boolean isSetFeeds() {
+        return this.feeds != null;
+    }
+
+    public void setFeedsIsSet(boolean value) {
+        if (!value) {
+            this.feeds = null;
+        }
+    }
+
+    public int getPage_num() {
+        return this.page_num;
+    }
+
+    public FeedList setPage_num(int page_num) {
+        this.page_num = page_num;
+        setPage_numIsSet(true);
+        return this;
+    }
+
+    public void unsetPage_num() {
+        __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __PAGE_NUM_ISSET_ID);
+    }
+
+    /**
+     * Returns true if field page_num is set (has been assigned a value) and false otherwise
+     */
+    public boolean isSetPage_num() {
+        return EncodingUtils.testBit(__isset_bitfield, __PAGE_NUM_ISSET_ID);
+    }
+
+    public void setPage_numIsSet(boolean value) {
+        __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __PAGE_NUM_ISSET_ID, value);
+    }
+
+    public int getPage_count() {
+        return this.page_count;
+    }
+
+    public FeedList setPage_count(int page_count) {
+        this.page_count = page_count;
+        setPage_countIsSet(true);
+        return this;
+    }
+
+    public void unsetPage_count() {
+        __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __PAGE_COUNT_ISSET_ID);
+    }
+
+    /**
+     * Returns true if field page_count is set (has been assigned a value) and false otherwise
+     */
+    public boolean isSetPage_count() {
+        return EncodingUtils.testBit(__isset_bitfield, __PAGE_COUNT_ISSET_ID);
+    }
+
+    public void setPage_countIsSet(boolean value) {
+        __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __PAGE_COUNT_ISSET_ID, value);
+    }
+
+    public int getTotal_page_num() {
+        return this.total_page_num;
+    }
+
+    public FeedList setTotal_page_num(int total_page_num) {
+        this.total_page_num = total_page_num;
+        setTotal_page_numIsSet(true);
+        return this;
+    }
+
+    public void unsetTotal_page_num() {
+        __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __TOTAL_PAGE_NUM_ISSET_ID);
+    }
+
+    /**
+     * Returns true if field total_page_num is set (has been assigned a value) and false otherwise
+     */
+    public boolean isSetTotal_page_num() {
+        return EncodingUtils.testBit(__isset_bitfield, __TOTAL_PAGE_NUM_ISSET_ID);
+    }
+
+    public void setTotal_page_numIsSet(boolean value) {
+        __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __TOTAL_PAGE_NUM_ISSET_ID, value);
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+        switch (field) {
+            case FEEDS:
+                if (value == null) {
+                    unsetFeeds();
+                } else {
+                    setFeeds((List<Feed>) value);
                 }
-                iprot.readListEnd();
-              }
-              struct.setFeedsIsSet(true);
-            } else { 
-              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-            }
-            break;
-          case 2: // PAGE_NUM
-            if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-              struct.page_num = iprot.readI32();
-              struct.setPage_numIsSet(true);
-            } else { 
-              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-            }
-            break;
-          case 3: // PAGE_COUNT
-            if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-              struct.page_count = iprot.readI32();
-              struct.setPage_countIsSet(true);
-            } else { 
-              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-            }
-            break;
-          case 4: // TOTAL_PAGE_NUM
-            if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-              struct.total_page_num = iprot.readI32();
-              struct.setTotal_page_numIsSet(true);
-            } else { 
-              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-            }
-            break;
-          default:
-            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-        }
-        iprot.readFieldEnd();
-      }
-      iprot.readStructEnd();
+                break;
 
-      // check for required fields of primitive type, which can't be checked in the validate method
-      struct.validate();
+            case PAGE_NUM:
+                if (value == null) {
+                    unsetPage_num();
+                } else {
+                    setPage_num((Integer) value);
+                }
+                break;
+
+            case PAGE_COUNT:
+                if (value == null) {
+                    unsetPage_count();
+                } else {
+                    setPage_count((Integer) value);
+                }
+                break;
+
+            case TOTAL_PAGE_NUM:
+                if (value == null) {
+                    unsetTotal_page_num();
+                } else {
+                    setTotal_page_num((Integer) value);
+                }
+                break;
+
+        }
     }
 
-    public void write(org.apache.thrift.protocol.TProtocol oprot, FeedList struct) throws org.apache.thrift.TException {
-      struct.validate();
+    public Object getFieldValue(_Fields field) {
+        switch (field) {
+            case FEEDS:
+                return getFeeds();
 
-      oprot.writeStructBegin(STRUCT_DESC);
-      if (struct.feeds != null) {
-        oprot.writeFieldBegin(FEEDS_FIELD_DESC);
-        {
-          oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.feeds.size()));
-          for (Feed _iter3 : struct.feeds)
-          {
-            _iter3.write(oprot);
-          }
-          oprot.writeListEnd();
+            case PAGE_NUM:
+                return Integer.valueOf(getPage_num());
+
+            case PAGE_COUNT:
+                return Integer.valueOf(getPage_count());
+
+            case TOTAL_PAGE_NUM:
+                return Integer.valueOf(getTotal_page_num());
+
         }
-        oprot.writeFieldEnd();
-      }
-      oprot.writeFieldBegin(PAGE_NUM_FIELD_DESC);
-      oprot.writeI32(struct.page_num);
-      oprot.writeFieldEnd();
-      oprot.writeFieldBegin(PAGE_COUNT_FIELD_DESC);
-      oprot.writeI32(struct.page_count);
-      oprot.writeFieldEnd();
-      oprot.writeFieldBegin(TOTAL_PAGE_NUM_FIELD_DESC);
-      oprot.writeI32(struct.total_page_num);
-      oprot.writeFieldEnd();
-      oprot.writeFieldStop();
-      oprot.writeStructEnd();
+        throw new IllegalStateException();
     }
 
-  }
-
-  private static class FeedListTupleSchemeFactory implements SchemeFactory {
-    public FeedListTupleScheme getScheme() {
-      return new FeedListTupleScheme();
-    }
-  }
-
-  private static class FeedListTupleScheme extends TupleScheme<FeedList> {
-
-    @Override
-    public void write(org.apache.thrift.protocol.TProtocol prot, FeedList struct) throws org.apache.thrift.TException {
-      TTupleProtocol oprot = (TTupleProtocol) prot;
-      BitSet optionals = new BitSet();
-      if (struct.isSetFeeds()) {
-        optionals.set(0);
-      }
-      if (struct.isSetPage_num()) {
-        optionals.set(1);
-      }
-      if (struct.isSetPage_count()) {
-        optionals.set(2);
-      }
-      if (struct.isSetTotal_page_num()) {
-        optionals.set(3);
-      }
-      oprot.writeBitSet(optionals, 4);
-      if (struct.isSetFeeds()) {
-        {
-          oprot.writeI32(struct.feeds.size());
-          for (Feed _iter4 : struct.feeds)
-          {
-            _iter4.write(oprot);
-          }
+    /**
+     * Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise
+     */
+    public boolean isSet(_Fields field) {
+        if (field == null) {
+            throw new IllegalArgumentException();
         }
-      }
-      if (struct.isSetPage_num()) {
-        oprot.writeI32(struct.page_num);
-      }
-      if (struct.isSetPage_count()) {
-        oprot.writeI32(struct.page_count);
-      }
-      if (struct.isSetTotal_page_num()) {
-        oprot.writeI32(struct.total_page_num);
-      }
+
+        switch (field) {
+            case FEEDS:
+                return isSetFeeds();
+            case PAGE_NUM:
+                return isSetPage_num();
+            case PAGE_COUNT:
+                return isSetPage_count();
+            case TOTAL_PAGE_NUM:
+                return isSetTotal_page_num();
+        }
+        throw new IllegalStateException();
     }
 
     @Override
-    public void read(org.apache.thrift.protocol.TProtocol prot, FeedList struct) throws org.apache.thrift.TException {
-      TTupleProtocol iprot = (TTupleProtocol) prot;
-      BitSet incoming = iprot.readBitSet(4);
-      if (incoming.get(0)) {
-        {
-          org.apache.thrift.protocol.TList _list5 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-          struct.feeds = new ArrayList<Feed>(_list5.size);
-          for (int _i6 = 0; _i6 < _list5.size; ++_i6)
-          {
-            Feed _elem7; // required
-            _elem7 = new Feed();
-            _elem7.read(iprot);
-            struct.feeds.add(_elem7);
-          }
-        }
-        struct.setFeedsIsSet(true);
-      }
-      if (incoming.get(1)) {
-        struct.page_num = iprot.readI32();
-        struct.setPage_numIsSet(true);
-      }
-      if (incoming.get(2)) {
-        struct.page_count = iprot.readI32();
-        struct.setPage_countIsSet(true);
-      }
-      if (incoming.get(3)) {
-        struct.total_page_num = iprot.readI32();
-        struct.setTotal_page_numIsSet(true);
-      }
+    public boolean equals(Object that) {
+        if (that == null)
+            return false;
+        if (that instanceof FeedList)
+            return this.equals((FeedList) that);
+        return false;
     }
-  }
+
+    public boolean equals(FeedList that) {
+        if (that == null)
+            return false;
+
+        boolean this_present_feeds = true && this.isSetFeeds();
+        boolean that_present_feeds = true && that.isSetFeeds();
+        if (this_present_feeds || that_present_feeds) {
+            if (!(this_present_feeds && that_present_feeds))
+                return false;
+            if (!this.feeds.equals(that.feeds))
+                return false;
+        }
+
+        boolean this_present_page_num = true;
+        boolean that_present_page_num = true;
+        if (this_present_page_num || that_present_page_num) {
+            if (!(this_present_page_num && that_present_page_num))
+                return false;
+            if (this.page_num != that.page_num)
+                return false;
+        }
+
+        boolean this_present_page_count = true;
+        boolean that_present_page_count = true;
+        if (this_present_page_count || that_present_page_count) {
+            if (!(this_present_page_count && that_present_page_count))
+                return false;
+            if (this.page_count != that.page_count)
+                return false;
+        }
+
+        boolean this_present_total_page_num = true;
+        boolean that_present_total_page_num = true;
+        if (this_present_total_page_num || that_present_total_page_num) {
+            if (!(this_present_total_page_num && that_present_total_page_num))
+                return false;
+            if (this.total_page_num != that.total_page_num)
+                return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return 0;
+    }
+
+    public int compareTo(FeedList other) {
+        if (!getClass().equals(other.getClass())) {
+            return getClass().getName().compareTo(other.getClass().getName());
+        }
+
+        int lastComparison = 0;
+        FeedList typedOther = (FeedList) other;
+
+        lastComparison = Boolean.valueOf(isSetFeeds()).compareTo(typedOther.isSetFeeds());
+        if (lastComparison != 0) {
+            return lastComparison;
+        }
+        if (isSetFeeds()) {
+            lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.feeds, typedOther.feeds);
+            if (lastComparison != 0) {
+                return lastComparison;
+            }
+        }
+        lastComparison = Boolean.valueOf(isSetPage_num()).compareTo(typedOther.isSetPage_num());
+        if (lastComparison != 0) {
+            return lastComparison;
+        }
+        if (isSetPage_num()) {
+            lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.page_num, typedOther.page_num);
+            if (lastComparison != 0) {
+                return lastComparison;
+            }
+        }
+        lastComparison = Boolean.valueOf(isSetPage_count()).compareTo(typedOther.isSetPage_count());
+        if (lastComparison != 0) {
+            return lastComparison;
+        }
+        if (isSetPage_count()) {
+            lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.page_count, typedOther.page_count);
+            if (lastComparison != 0) {
+                return lastComparison;
+            }
+        }
+        lastComparison = Boolean.valueOf(isSetTotal_page_num()).compareTo(typedOther.isSetTotal_page_num());
+        if (lastComparison != 0) {
+            return lastComparison;
+        }
+        if (isSetTotal_page_num()) {
+            lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.total_page_num, typedOther.total_page_num);
+            if (lastComparison != 0) {
+                return lastComparison;
+            }
+        }
+        return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+        return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+        schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+        schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("FeedList(");
+        boolean first = true;
+
+        sb.append("feeds:");
+        if (this.feeds == null) {
+            sb.append("null");
+        } else {
+            sb.append(this.feeds);
+        }
+        first = false;
+        if (!first) sb.append(", ");
+        sb.append("page_num:");
+        sb.append(this.page_num);
+        first = false;
+        if (!first) sb.append(", ");
+        sb.append("page_count:");
+        sb.append(this.page_count);
+        first = false;
+        if (!first) sb.append(", ");
+        sb.append("total_page_num:");
+        sb.append(this.total_page_num);
+        first = false;
+        sb.append(")");
+        return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+        // check for required fields
+        // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+        try {
+            write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+        } catch (org.apache.thrift.TException te) {
+            throw new java.io.IOException(te);
+        }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+        try {
+            // it doesn't seem like you should have to do this, but java serialization is wacky, and doesn't call the default constructor.
+            __isset_bitfield = 0;
+            read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+        } catch (org.apache.thrift.TException te) {
+            throw new java.io.IOException(te);
+        }
+    }
+
+    private static class FeedListStandardSchemeFactory implements SchemeFactory {
+        public FeedListStandardScheme getScheme() {
+            return new FeedListStandardScheme();
+        }
+    }
+
+    private static class FeedListStandardScheme extends StandardScheme<FeedList> {
+
+        public void read(org.apache.thrift.protocol.TProtocol iprot, FeedList struct) throws org.apache.thrift.TException {
+            org.apache.thrift.protocol.TField schemeField;
+            iprot.readStructBegin();
+            while (true) {
+                schemeField = iprot.readFieldBegin();
+                if (schemeField.type == org.apache.thrift.protocol.TType.STOP) {
+                    break;
+                }
+                switch (schemeField.id) {
+                    case 1: // FEEDS
+                        if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
+                            {
+                                org.apache.thrift.protocol.TList _list0 = iprot.readListBegin();
+                                struct.feeds = new ArrayList<Feed>(_list0.size);
+                                for (int _i1 = 0; _i1 < _list0.size; ++_i1) {
+                                    Feed _elem2; // required
+                                    _elem2 = new Feed();
+                                    _elem2.read(iprot);
+                                    struct.feeds.add(_elem2);
+                                }
+                                iprot.readListEnd();
+                            }
+                            struct.setFeedsIsSet(true);
+                        } else {
+                            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+                        }
+                        break;
+                    case 2: // PAGE_NUM
+                        if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
+                            struct.page_num = iprot.readI32();
+                            struct.setPage_numIsSet(true);
+                        } else {
+                            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+                        }
+                        break;
+                    case 3: // PAGE_COUNT
+                        if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
+                            struct.page_count = iprot.readI32();
+                            struct.setPage_countIsSet(true);
+                        } else {
+                            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+                        }
+                        break;
+                    case 4: // TOTAL_PAGE_NUM
+                        if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
+                            struct.total_page_num = iprot.readI32();
+                            struct.setTotal_page_numIsSet(true);
+                        } else {
+                            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+                        }
+                        break;
+                    default:
+                        org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+                }
+                iprot.readFieldEnd();
+            }
+            iprot.readStructEnd();
+
+            // check for required fields of primitive type, which can't be checked in the validate method
+            struct.validate();
+        }
+
+        public void write(org.apache.thrift.protocol.TProtocol oprot, FeedList struct) throws org.apache.thrift.TException {
+            struct.validate();
+
+            oprot.writeStructBegin(STRUCT_DESC);
+            if (struct.feeds != null) {
+                oprot.writeFieldBegin(FEEDS_FIELD_DESC);
+                {
+                    oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.feeds.size()));
+                    for (Feed _iter3 : struct.feeds) {
+                        _iter3.write(oprot);
+                    }
+                    oprot.writeListEnd();
+                }
+                oprot.writeFieldEnd();
+            }
+            oprot.writeFieldBegin(PAGE_NUM_FIELD_DESC);
+            oprot.writeI32(struct.page_num);
+            oprot.writeFieldEnd();
+            oprot.writeFieldBegin(PAGE_COUNT_FIELD_DESC);
+            oprot.writeI32(struct.page_count);
+            oprot.writeFieldEnd();
+            oprot.writeFieldBegin(TOTAL_PAGE_NUM_FIELD_DESC);
+            oprot.writeI32(struct.total_page_num);
+            oprot.writeFieldEnd();
+            oprot.writeFieldStop();
+            oprot.writeStructEnd();
+        }
+
+    }
+
+    private static class FeedListTupleSchemeFactory implements SchemeFactory {
+        public FeedListTupleScheme getScheme() {
+            return new FeedListTupleScheme();
+        }
+    }
+
+    private static class FeedListTupleScheme extends TupleScheme<FeedList> {
+
+        @Override
+        public void write(org.apache.thrift.protocol.TProtocol prot, FeedList struct) throws org.apache.thrift.TException {
+            TTupleProtocol oprot = (TTupleProtocol) prot;
+            BitSet optionals = new BitSet();
+            if (struct.isSetFeeds()) {
+                optionals.set(0);
+            }
+            if (struct.isSetPage_num()) {
+                optionals.set(1);
+            }
+            if (struct.isSetPage_count()) {
+                optionals.set(2);
+            }
+            if (struct.isSetTotal_page_num()) {
+                optionals.set(3);
+            }
+            oprot.writeBitSet(optionals, 4);
+            if (struct.isSetFeeds()) {
+                {
+                    oprot.writeI32(struct.feeds.size());
+                    for (Feed _iter4 : struct.feeds) {
+                        _iter4.write(oprot);
+                    }
+                }
+            }
+            if (struct.isSetPage_num()) {
+                oprot.writeI32(struct.page_num);
+            }
+            if (struct.isSetPage_count()) {
+                oprot.writeI32(struct.page_count);
+            }
+            if (struct.isSetTotal_page_num()) {
+                oprot.writeI32(struct.total_page_num);
+            }
+        }
+
+        @Override
+        public void read(org.apache.thrift.protocol.TProtocol prot, FeedList struct) throws org.apache.thrift.TException {
+            TTupleProtocol iprot = (TTupleProtocol) prot;
+            BitSet incoming = iprot.readBitSet(4);
+            if (incoming.get(0)) {
+                {
+                    org.apache.thrift.protocol.TList _list5 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+                    struct.feeds = new ArrayList<Feed>(_list5.size);
+                    for (int _i6 = 0; _i6 < _list5.size; ++_i6) {
+                        Feed _elem7; // required
+                        _elem7 = new Feed();
+                        _elem7.read(iprot);
+                        struct.feeds.add(_elem7);
+                    }
+                }
+                struct.setFeedsIsSet(true);
+            }
+            if (incoming.get(1)) {
+                struct.page_num = iprot.readI32();
+                struct.setPage_numIsSet(true);
+            }
+            if (incoming.get(2)) {
+                struct.page_count = iprot.readI32();
+                struct.setPage_countIsSet(true);
+            }
+            if (incoming.get(3)) {
+                struct.total_page_num = iprot.readI32();
+                struct.setTotal_page_numIsSet(true);
+            }
+        }
+    }
 
 }
 
