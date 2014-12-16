@@ -11,6 +11,7 @@ import org.apache.thrift.transport.TTransport;
 import com.example.photoshare.thrift.AException;
 import com.example.photoshare.thrift.Feed;
 import com.example.photoshare.thrift.FeedList;
+import com.example.photoshare.thrift.FeedUploadReq;
 import com.example.photoshare.thrift.IPhotoService;
 
 public class PhotoServiceTest extends TestCase {
@@ -48,9 +49,8 @@ public class PhotoServiceTest extends TestCase {
     }
     
     public void testUploadFeed() throws AException, TException {
-        Feed feed = new Feed();
+        FeedUploadReq feed = new FeedUploadReq();
         feed.user_name = "testcase";
-        feed.photo_url = "http://www.baidu.com";
         feed.feed_desc = "unit test " + System.currentTimeMillis();
         Feed resFeed = mPhotoClient.uploadFeed(feed);
         assertTrue(resFeed.isSetFeed_id());

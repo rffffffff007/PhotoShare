@@ -53,19 +53,16 @@ public class ImageAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         NetworkImageView imageView;
         if (convertView == null) { // create a new view if no recycled view is available
-            imageView = (NetworkImageView) mLayoutInflater.inflate(
-                    R.layout.grid_view_item, parent, false /* attachToRoot */);
+            convertView = mLayoutInflater.inflate(
+                    R.layout.grid_item_feed, parent, false /* attachToRoot */);
+            imageView = (NetworkImageView) convertView.findViewById(R.id.image);
         } else {
-            imageView = (NetworkImageView) convertView;
+            imageView = (NetworkImageView) convertView.findViewById(R.id.image);
             imageView.setImageUrl(null, mImageLoader);
-        }
-        if (position >= mImageUrls.size()) { // imageUrls not yet downloaded!
-            // TODO not good here.
-            return imageView;
         }
         String imageUrl = mImageUrls.get(position);
         imageView.setImageUrl(imageUrl, mImageLoader);
-        return imageView;
+        return convertView;
     }
 
     public void setImageUrls(List<String> imageUrls) {

@@ -8,6 +8,7 @@ import org.apache.thrift.TException;
 import com.example.photoshare.thrift.AException;
 import com.example.photoshare.thrift.Feed;
 import com.example.photoshare.thrift.FeedList;
+import com.example.photoshare.thrift.FeedUploadReq;
 import com.example.photoshare.thrift.IPhotoService;
 
 public class PhotoService extends BaseServlet {
@@ -59,7 +60,11 @@ public class PhotoService extends BaseServlet {
         }
 
         @Override
-        public Feed uploadFeed(Feed feed) throws AException, TException {
+        public Feed uploadFeed(FeedUploadReq feedReq) throws AException,
+                TException {
+            Feed feed = new Feed();
+            feed.setFeed_desc(feedReq.getFeed_desc());
+            feed.setUser_name(feedReq.getUser_name());
             feed.setFeed_id("" + System.currentTimeMillis());
             feeds.add(feed);
             return feed;
