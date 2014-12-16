@@ -5,17 +5,61 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.GridView;
 
-/**
- * Created by faylon on 12/16/14.
- */
-public class FeedsHomeActivity extends ActionBarActivity {
+import com.example.photoshare.thrift.Feed;
+
+import java.util.ArrayList;
+
+public class FeedsHomeActivity extends ActionBarActivity implements
+        GridView.OnItemClickListener, View.OnClickListener {
+
+    private EditText mImageUrl;
+    private GridView mGridView;
+    private View mBtnAdd;
+    private ImageAdapter mImageAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle("Feeds Home");
         setContentView(R.layout.activity_feeds_home);
+        initElements();
+        initContent();
+    }
+
+    private void initElements() {
+        mImageUrl = (EditText) findViewById(R.id.image_url);
+        mGridView = (GridView) findViewById(R.id.grid_view);
+        mBtnAdd = findViewById(R.id.btn_add);
+        mGridView.setOnItemClickListener(this);
+        mBtnAdd.setOnClickListener(this);
+    }
+
+    private void initContent() {
+        mImageAdapter = new ImageAdapter(this, VolleyUtils.getImageLoader(this));
+        mImageAdapter.setImageUrls(new ArrayList<String>());
+        mGridView.setAdapter(mImageAdapter);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent intent = new Intent(getBaseContext(), FeedViewActivity.class);
+        Feed feed = new Feed();
+        feed.setPhoto_url(mImageAdapter.getImageUrls().get(position));
+        intent.putExtra(FeedViewActivity.EXTRA_FEED, feed);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v == mBtnAdd) {
+            mImageAdapter.getImageUrls().add(mImageUrl.getText().toString());
+            mImageAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override

@@ -5,9 +5,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-/**
- * Created by faylon on 12/16/14.
- */
 public class FeedUploadActivity extends ActionBarActivity {
 
     @Override

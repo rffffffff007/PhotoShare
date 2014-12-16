@@ -16,28 +16,32 @@ import java.util.List;
  * Created by zhouxiaobo on 12/16/14.
  */
 public class ImageAdapter extends BaseAdapter {
-    private final Context context;
-    private final ImageLoader imageLoader;
-    private final LayoutInflater layoutInflater;
-    private List<String> imageUrls = new ArrayList<String>();
+    private final Context mContext;
+    private final ImageLoader mImageLoader;
+    private final LayoutInflater mLayoutInflater;
+    private List<String> mImageUrls = new ArrayList<String>();
 
     public ImageAdapter(Context c, ImageLoader imageLoader) {
-        context = c;
-        layoutInflater = LayoutInflater.from(context);
-        this.imageLoader = imageLoader;
+        mContext = c;
+        mLayoutInflater = LayoutInflater.from(mContext);
+        mImageLoader = imageLoader;
+    }
+
+    public List<String> getImageUrls() {
+        return mImageUrls;
     }
 
     @Override
     public int getCount() {
-        return imageUrls.size();
+        return mImageUrls.size();
     }
 
     @Override
     public Object getItem(int position) {
-        if (position >= imageUrls.size()) {
+        if (position >= mImageUrls.size()) {
             return null;
         }
-        return imageUrls.get(position);
+        return mImageUrls.get(position);
     }
 
     @Override
@@ -49,21 +53,22 @@ public class ImageAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         NetworkImageView imageView;
         if (convertView == null) { // create a new view if no recycled view is available
-            imageView = (NetworkImageView) layoutInflater.inflate(
+            imageView = (NetworkImageView) mLayoutInflater.inflate(
                     R.layout.grid_view_item, parent, false /* attachToRoot */);
         } else {
             imageView = (NetworkImageView) convertView;
-            imageView.setImageUrl(null, imageLoader);
+            imageView.setImageUrl(null, mImageLoader);
         }
-        if (position >= imageUrls.size()) { // imageUrls not yet downloaded!
+        if (position >= mImageUrls.size()) { // imageUrls not yet downloaded!
+            // TODO not good here.
             return imageView;
         }
-        String imageUrl = imageUrls.get(position);
-        imageView.setImageUrl(imageUrl, imageLoader);
+        String imageUrl = mImageUrls.get(position);
+        imageView.setImageUrl(imageUrl, mImageLoader);
         return imageView;
     }
 
     public void setImageUrls(List<String> imageUrls) {
-        this.imageUrls = imageUrls;
+        mImageUrls = imageUrls;
     }
 }
