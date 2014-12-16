@@ -34,11 +34,49 @@ import org.slf4j.LoggerFactory;
 
 public class IPhotoService {
 
+<<<<<<< HEAD
     public interface Iface {
+=======
+  public interface Iface {
+
+    public String hello(String name) throws AException, org.apache.thrift.TException;
+
+    public FeedList getFeedList(int page_num, int page_count) throws AException, org.apache.thrift.TException;
+
+    public Feed uploadFeed(FeedUploadReq feed) throws AException, org.apache.thrift.TException;
+
+  }
+
+  public interface AsyncIface {
+>>>>>>> c346dbb2427643b98b05527f0b6ef7fefef20a33
 
         public String hello(String name) throws AException, org.apache.thrift.TException;
 
+<<<<<<< HEAD
         public FeedList getFeedList(int page_num, int page_count) throws AException, org.apache.thrift.TException;
+=======
+    public void getFeedList(int page_num, int page_count, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.getFeedList_call> resultHandler) throws org.apache.thrift.TException;
+
+    public void uploadFeed(FeedUploadReq feed, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.uploadFeed_call> resultHandler) throws org.apache.thrift.TException;
+
+  }
+
+  public static class Client extends org.apache.thrift.TServiceClient implements Iface {
+    public static class Factory implements org.apache.thrift.TServiceClientFactory<Client> {
+      public Factory() {}
+      public Client getClient(org.apache.thrift.protocol.TProtocol prot) {
+        return new Client(prot);
+      }
+      public Client getClient(org.apache.thrift.protocol.TProtocol iprot, org.apache.thrift.protocol.TProtocol oprot) {
+        return new Client(iprot, oprot);
+      }
+    }
+
+    public Client(org.apache.thrift.protocol.TProtocol prot)
+    {
+      super(prot, prot);
+    }
+>>>>>>> c346dbb2427643b98b05527f0b6ef7fefef20a33
 
         public Feed uploadFeed(Feed feed) throws AException, org.apache.thrift.TException;
 
@@ -54,6 +92,7 @@ public class IPhotoService {
 
     }
 
+<<<<<<< HEAD
     public static class Client extends org.apache.thrift.TServiceClient implements Iface {
         public static class Factory implements org.apache.thrift.TServiceClientFactory<Client> {
             public Factory() {
@@ -62,6 +101,20 @@ public class IPhotoService {
             public Client getClient(org.apache.thrift.protocol.TProtocol prot) {
                 return new Client(prot);
             }
+=======
+    public Feed uploadFeed(FeedUploadReq feed) throws AException, org.apache.thrift.TException
+    {
+      send_uploadFeed(feed);
+      return recv_uploadFeed();
+    }
+
+    public void send_uploadFeed(FeedUploadReq feed) throws org.apache.thrift.TException
+    {
+      uploadFeed_args args = new uploadFeed_args();
+      args.setFeed(feed);
+      sendBase("uploadFeed", args);
+    }
+>>>>>>> c346dbb2427643b98b05527f0b6ef7fefef20a33
 
             public Client getClient(org.apache.thrift.protocol.TProtocol iprot, org.apache.thrift.protocol.TProtocol oprot) {
                 return new Client(iprot, oprot);
@@ -104,6 +157,7 @@ public class IPhotoService {
             return recv_getFeedList();
         }
 
+<<<<<<< HEAD
         public void send_getFeedList(int page_num, int page_count) throws org.apache.thrift.TException {
             getFeedList_args args = new getFeedList_args();
             args.setPage_num(page_num);
@@ -122,6 +176,39 @@ public class IPhotoService {
             }
             throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "getFeedList failed: unknown result");
         }
+=======
+    public void uploadFeed(FeedUploadReq feed, org.apache.thrift.async.AsyncMethodCallback<uploadFeed_call> resultHandler) throws org.apache.thrift.TException {
+      checkReady();
+      uploadFeed_call method_call = new uploadFeed_call(feed, resultHandler, this, ___protocolFactory, ___transport);
+      this.___currentMethod = method_call;
+      ___manager.call(method_call);
+    }
+
+    public static class uploadFeed_call extends org.apache.thrift.async.TAsyncMethodCall {
+      private FeedUploadReq feed;
+      public uploadFeed_call(FeedUploadReq feed, org.apache.thrift.async.AsyncMethodCallback<uploadFeed_call> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.feed = feed;
+      }
+
+      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("uploadFeed", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        uploadFeed_args args = new uploadFeed_args();
+        args.setFeed(feed);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public Feed getResult() throws AException, org.apache.thrift.TException {
+        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
+        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        return (new Client(prot)).recv_uploadFeed();
+      }
+    }
+>>>>>>> c346dbb2427643b98b05527f0b6ef7fefef20a33
 
         public Feed uploadFeed(Feed feed) throws AException, org.apache.thrift.TException {
             send_uploadFeed(feed);
@@ -1843,6 +1930,7 @@ public class IPhotoService {
             }
         }
 
+<<<<<<< HEAD
         public Object getFieldValue(_Fields field) {
             switch (field) {
                 case SUCCESS:
@@ -1850,11 +1938,83 @@ public class IPhotoService {
 
                 case AE:
                     return getAe();
+=======
+    public FeedUploadReq feed; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      FEED((short)1, "feed");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // FEED
+            return FEED;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.FEED, new org.apache.thrift.meta_data.FieldMetaData("feed", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, FeedUploadReq.class)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(uploadFeed_args.class, metaDataMap);
+    }
+>>>>>>> c346dbb2427643b98b05527f0b6ef7fefef20a33
 
             }
             throw new IllegalStateException();
         }
 
+<<<<<<< HEAD
         /**
          * Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise
          */
@@ -1871,6 +2031,23 @@ public class IPhotoService {
             }
             throw new IllegalStateException();
         }
+=======
+    public uploadFeed_args(
+      FeedUploadReq feed)
+    {
+      this();
+      this.feed = feed;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public uploadFeed_args(uploadFeed_args other) {
+      if (other.isSetFeed()) {
+        this.feed = new FeedUploadReq(other.feed);
+      }
+    }
+>>>>>>> c346dbb2427643b98b05527f0b6ef7fefef20a33
 
         @Override
         public boolean equals(Object that) {
@@ -2154,6 +2331,7 @@ public class IPhotoService {
                 }
             }
 
+<<<<<<< HEAD
             /**
              * Find the _Fields constant that matches fieldId, throwing an exception
              * if it is not found.
@@ -2171,6 +2349,16 @@ public class IPhotoService {
             public static _Fields findByName(String name) {
                 return byName.get(name);
             }
+=======
+    public FeedUploadReq getFeed() {
+      return this.feed;
+    }
+
+    public uploadFeed_args setFeed(FeedUploadReq feed) {
+      this.feed = feed;
+      return this;
+    }
+>>>>>>> c346dbb2427643b98b05527f0b6ef7fefef20a33
 
             private final short _thriftId;
             private final String _fieldName;
@@ -2184,9 +2372,19 @@ public class IPhotoService {
                 return _thriftId;
             }
 
+<<<<<<< HEAD
             public String getFieldName() {
                 return _fieldName;
             }
+=======
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case FEED:
+        if (value == null) {
+          unsetFeed();
+        } else {
+          setFeed((FeedUploadReq)value);
+>>>>>>> c346dbb2427643b98b05527f0b6ef7fefef20a33
         }
 
         // isset id assignments
@@ -2263,8 +2461,55 @@ public class IPhotoService {
                     }
                     break;
 
+<<<<<<< HEAD
             }
         }
+=======
+    private static class uploadFeed_argsStandardScheme extends StandardScheme<uploadFeed_args> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, uploadFeed_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // FEED
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.feed = new FeedUploadReq();
+                struct.feed.read(iprot);
+                struct.setFeedIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, uploadFeed_args struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.feed != null) {
+          oprot.writeFieldBegin(FEED_FIELD_DESC);
+          struct.feed.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+>>>>>>> c346dbb2427643b98b05527f0b6ef7fefef20a33
 
         public Object getFieldValue(_Fields field) {
             switch (field) {
@@ -2290,6 +2535,7 @@ public class IPhotoService {
             throw new IllegalStateException();
         }
 
+<<<<<<< HEAD
         @Override
         public boolean equals(Object that) {
             if (that == null)
@@ -2297,6 +2543,16 @@ public class IPhotoService {
             if (that instanceof uploadFeed_args)
                 return this.equals((uploadFeed_args) that);
             return false;
+=======
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, uploadFeed_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(1);
+        if (incoming.get(0)) {
+          struct.feed = new FeedUploadReq();
+          struct.feed.read(iprot);
+          struct.setFeedIsSet(true);
+>>>>>>> c346dbb2427643b98b05527f0b6ef7fefef20a33
         }
 
         public boolean equals(uploadFeed_args that) {
