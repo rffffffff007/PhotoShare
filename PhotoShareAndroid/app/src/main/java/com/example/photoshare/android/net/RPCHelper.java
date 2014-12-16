@@ -20,8 +20,6 @@ public class RPCHelper {
 
     private static final int SOCKET_TIME_OUT = 25000;
     private static final int CONNECTION_TIME_OUT = 25000;
-    private static final int MAX_READ_LENGTH = 128 * 1024;
-    private static final long CACHE_AVAILABLE_TIME = 3 * 3600 * 1000;
 
     private static HttpClient getHttpCilent() {
         HttpParams param = new BasicHttpParams();

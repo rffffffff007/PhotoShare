@@ -1,0 +1,20 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".FeedsHomeActivity">
+    <item
+        android:id="@+id/action_change_name"
+        android:icon="@android:drawable/ic_menu_edit"
+        android:title="@string/action_change_name"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_pick"
+        android:icon="@android:drawable/ic_menu_gallery"
+        android:title="@string/action_pick"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_take"
+        android:icon="@android:drawable/ic_menu_camera"
+        android:title="@string/action_take"
+        app:showAsAction="always" />
+</menu>
