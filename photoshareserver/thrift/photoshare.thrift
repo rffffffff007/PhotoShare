@@ -12,6 +12,13 @@ struct Feed {
 	2: string user_name,
 	3: string photo_url,
 	4: string feed_desc,
+	5: i64 timestamp,
+}
+
+struct FeedUploadReq {
+	1: string user_name,
+	2: binary photo_data,
+	3: string feed_desc,
 }
 
 struct FeedList {
@@ -27,7 +34,7 @@ service IPhotoService {
 
 	// Get the feed list. Page start from 0.
 	FeedList getFeedList(1:i32 page_num, 2:i32 page_count) throws (1:AException ae),
-	
+
 	// Upload a feed to server.
-	Feed uploadFeed(1:Feed feed) throws (1:AException ae),
+	Feed uploadFeed(1:FeedUploadReq feed) throws (1:AException ae),
 }

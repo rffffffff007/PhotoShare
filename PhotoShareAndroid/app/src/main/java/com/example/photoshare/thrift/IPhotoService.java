@@ -38,7 +38,7 @@ public class IPhotoService {
 
     public FeedList getFeedList(int page_num, int page_count) throws AException, org.apache.thrift.TException;
 
-    public Feed uploadFeed(Feed feed) throws AException, org.apache.thrift.TException;
+    public Feed uploadFeed(FeedUploadReq feed) throws AException, org.apache.thrift.TException;
 
   }
 
@@ -48,7 +48,7 @@ public class IPhotoService {
 
     public void getFeedList(int page_num, int page_count, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.getFeedList_call> resultHandler) throws org.apache.thrift.TException;
 
-    public void uploadFeed(Feed feed, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.uploadFeed_call> resultHandler) throws org.apache.thrift.TException;
+    public void uploadFeed(FeedUploadReq feed, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.uploadFeed_call> resultHandler) throws org.apache.thrift.TException;
 
   }
 
@@ -125,13 +125,13 @@ public class IPhotoService {
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "getFeedList failed: unknown result");
     }
 
-    public Feed uploadFeed(Feed feed) throws AException, org.apache.thrift.TException
+    public Feed uploadFeed(FeedUploadReq feed) throws AException, org.apache.thrift.TException
     {
       send_uploadFeed(feed);
       return recv_uploadFeed();
     }
 
-    public void send_uploadFeed(Feed feed) throws org.apache.thrift.TException
+    public void send_uploadFeed(FeedUploadReq feed) throws org.apache.thrift.TException
     {
       uploadFeed_args args = new uploadFeed_args();
       args.setFeed(feed);
@@ -236,7 +236,7 @@ public class IPhotoService {
       }
     }
 
-    public void uploadFeed(Feed feed, org.apache.thrift.async.AsyncMethodCallback<uploadFeed_call> resultHandler) throws org.apache.thrift.TException {
+    public void uploadFeed(FeedUploadReq feed, org.apache.thrift.async.AsyncMethodCallback<uploadFeed_call> resultHandler) throws org.apache.thrift.TException {
       checkReady();
       uploadFeed_call method_call = new uploadFeed_call(feed, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
@@ -244,8 +244,8 @@ public class IPhotoService {
     }
 
     public static class uploadFeed_call extends org.apache.thrift.async.TAsyncMethodCall {
-      private Feed feed;
-      public uploadFeed_call(Feed feed, org.apache.thrift.async.AsyncMethodCallback<uploadFeed_call> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+      private FeedUploadReq feed;
+      public uploadFeed_call(FeedUploadReq feed, org.apache.thrift.async.AsyncMethodCallback<uploadFeed_call> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
         this.feed = feed;
       }
@@ -2089,7 +2089,7 @@ public class IPhotoService {
       schemes.put(TupleScheme.class, new uploadFeed_argsTupleSchemeFactory());
     }
 
-    public Feed feed; // required
+    public FeedUploadReq feed; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -2154,7 +2154,7 @@ public class IPhotoService {
     static {
       Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
       tmpMap.put(_Fields.FEED, new org.apache.thrift.meta_data.FieldMetaData("feed", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Feed.class)));
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, FeedUploadReq.class)));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(uploadFeed_args.class, metaDataMap);
     }
@@ -2163,7 +2163,7 @@ public class IPhotoService {
     }
 
     public uploadFeed_args(
-      Feed feed)
+      FeedUploadReq feed)
     {
       this();
       this.feed = feed;
@@ -2174,7 +2174,7 @@ public class IPhotoService {
      */
     public uploadFeed_args(uploadFeed_args other) {
       if (other.isSetFeed()) {
-        this.feed = new Feed(other.feed);
+        this.feed = new FeedUploadReq(other.feed);
       }
     }
 
@@ -2187,11 +2187,11 @@ public class IPhotoService {
       this.feed = null;
     }
 
-    public Feed getFeed() {
+    public FeedUploadReq getFeed() {
       return this.feed;
     }
 
-    public uploadFeed_args setFeed(Feed feed) {
+    public uploadFeed_args setFeed(FeedUploadReq feed) {
       this.feed = feed;
       return this;
     }
@@ -2217,7 +2217,7 @@ public class IPhotoService {
         if (value == null) {
           unsetFeed();
         } else {
-          setFeed((Feed)value);
+          setFeed((FeedUploadReq)value);
         }
         break;
 
@@ -2369,7 +2369,7 @@ public class IPhotoService {
           switch (schemeField.id) {
             case 1: // FEED
               if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
-                struct.feed = new Feed();
+                struct.feed = new FeedUploadReq();
                 struct.feed.read(iprot);
                 struct.setFeedIsSet(true);
               } else { 
@@ -2428,7 +2428,7 @@ public class IPhotoService {
         TTupleProtocol iprot = (TTupleProtocol) prot;
         BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
-          struct.feed = new Feed();
+          struct.feed = new FeedUploadReq();
           struct.feed.read(iprot);
           struct.setFeedIsSet(true);
         }
