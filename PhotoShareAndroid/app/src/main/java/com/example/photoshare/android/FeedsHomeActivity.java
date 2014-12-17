@@ -1,10 +1,6 @@
 package com.example.photoshare.android;
 
-<<<<<<< HEAD
-import android.content.ContentResolver;
 import android.content.ContentValues;
-=======
->>>>>>> 1d10780d982b36cf87b5e1c4529a6fbb08e6a682
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -30,13 +26,9 @@ import com.example.photoshare.thrift.FeedList;
 
 import org.apache.thrift.TException;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-
 public class FeedsHomeActivity extends ActionBarActivity implements
         GridView.OnItemClickListener, View.OnClickListener {
+
     private static final String LOG_TAG = "FeedsHOmeActivity";
     private EditText mImageUrl;
     private GridView mGridView;
@@ -113,7 +105,6 @@ public class FeedsHomeActivity extends ActionBarActivity implements
         return super.onOptionsItemSelected(item);
     }
 
-<<<<<<< HEAD
     private Uri photoUri;
 
     private static final int IMAGE_CAPTURE_REQUEST_CODE = 1;
@@ -149,9 +140,6 @@ public class FeedsHomeActivity extends ActionBarActivity implements
         }
     }
 
-
-}
-=======
     class RefreshFeedsTask extends BaseTask {
         private Context mContext;
         public RefreshFeedsTask(Context context) {
@@ -181,4 +169,3 @@ public class FeedsHomeActivity extends ActionBarActivity implements
         }
     }
 }
->>>>>>> 1d10780d982b36cf87b5e1c4529a6fbb08e6a682

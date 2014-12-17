@@ -1,5 +1,6 @@
 package com.example.photoshare.android;
 
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
@@ -14,7 +15,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.photoshare.android.net.RPCHelper;
 import com.example.photoshare.thrift.Feed;
@@ -40,12 +44,16 @@ public class FeedUploadActivity extends ActionBarActivity {
         setContentView(R.layout.activity_feed_upload);
         Uri imageUri = getIntent().getParcelableExtra("extra_image_uri");
         Log.e("INFO", imageUri.toString());
+        thisActivity = this;
         imageView  = (ImageView) findViewById(R.id.image);
         new DownSampleImageAsyncTask().execute(imageUri);
+        description = (EditText) findViewById(R.id.desc_edit);
     }
 
     ImageView imageView;
     Bitmap image;
+    Activity thisActivity;
+    EditText description;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -60,26 +68,39 @@ public class FeedUploadActivity extends ActionBarActivity {
             onBackPressed();
             return true;
         } else if (id == R.id.action_upload) {
-            new UploadImageAsyncTask().execute(image);
+            new UploadImageAsyncTask().execute();
         }
         return super.onOptionsItemSelected(item);
     }
 
-    class UploadImageAsyncTask extends AsyncTask<Bitmap, Void, Feed> {
+    class UploadImageAsyncTask extends AsyncTask<Void, Void, Feed> {
         @Override
-        protected Feed doInBackground(Bitmap... params) {
-            Bitmap toUpload = params[0];
+        protected Feed doInBackground(Void... params) {
+            Bitmap toUpload = image;
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             toUpload.compress(Bitmap.CompressFormat.PNG, 100, out);
             ByteBuffer buffer = ByteBuffer.wrap(out.toByteArray());
             FeedUploadReq req = new FeedUploadReq();
             req.setPhoto_data(buffer);
+            req.setFeed_desc(description.getText().toString());
             try {
                 return RPCHelper.getPhotoService().uploadFeed(req);
             } catch (TException e) {
-                Log.e("INFO", "Error uploading image.", e);
+                Log.e("INFO", "Error uploading image, description: " + req.getFeed_desc(), e);
             }
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Feed result) {
+            if (result != null) {
+                Toast.makeText(thisActivity, "Your image has been uploaded!",
+                        Toast.LENGTH_LONG).show();
+                thisActivity.finish();
+            } else {
+                Toast.makeText(thisActivity, "Uploading failed!",
+                        Toast.LENGTH_LONG).show();
+            }
         }
     }
 
