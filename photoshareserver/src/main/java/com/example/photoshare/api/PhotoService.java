@@ -54,14 +54,14 @@ public class PhotoService extends BaseServlet {
             int startPos = 0;
             if (last_feed_id != null) {
                 for (int i = 0; i < feeds.size(); ++i) {
-                    if (last_feed_id.compareTo(feeds.get(i).getFeed_id()) <= 0) {
+                    if (last_feed_id.compareTo(feeds.get(i).getFeed_id()) < 0) {
                         startPos = i;
                         break;
                     }
                 }
             }
             int endPos = startPos + page_count;
-            endPos = endPos > feeds.size() ? feeds.size() : 0;
+            endPos = endPos > feeds.size() ? feeds.size() : endPos;
             feedList.setFeeds(feeds.subList(startPos, endPos));
             return feedList;
         }
