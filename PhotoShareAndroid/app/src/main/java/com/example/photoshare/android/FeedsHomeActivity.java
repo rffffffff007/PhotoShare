@@ -98,15 +98,16 @@ public class FeedsHomeActivity extends ActionBarActivity implements
     }
 
     class RefreshFeedsTask extends BaseTask {
-
+        private Context mContext;
         public RefreshFeedsTask(Context context) {
             super(context);
+            mContext = context;
         }
 
         @Override
         protected Object doInBackground(Void... params) {
             try {
-                return RPCHelper.getPhotoService().getFeedList(0, 100);
+                return RPCHelper.getPhotoService().getFeedList(null, 100);
             } catch (AException ae) {
                 return ae;
             } catch (TException e) {
@@ -119,6 +120,7 @@ public class FeedsHomeActivity extends ActionBarActivity implements
             super.onPostExecute(o);
             if (o instanceof FeedList) {
                 mImageAdapter.setFeeds((FeedList)o);
+                CacheHelper.PutFeedsToCache((FeedList)o, mContext);
                 mImageAdapter.notifyDataSetChanged();
             }
         }
