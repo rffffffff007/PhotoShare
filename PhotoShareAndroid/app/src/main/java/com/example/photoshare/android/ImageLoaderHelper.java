@@ -16,6 +16,7 @@ public final class ImageLoaderHelper {
         requestQueue.start();
         mImageLoader = new ImageLoader(requestQueue, CacheHelper.getImageMemoryCache());
     }
+
     public static ImageLoader getImageLoader() {
         return mImageLoader;
     }

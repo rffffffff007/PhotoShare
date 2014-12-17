@@ -3,7 +3,6 @@ package com.example.photoshare.android;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -20,20 +19,13 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.Toast;
 
-import com.example.photoshare.android.net.RPCHelper;
-import com.example.photoshare.thrift.AException;
 import com.example.photoshare.thrift.Feed;
-import com.example.photoshare.thrift.FeedList;
-
-import org.apache.thrift.TException;
 
 public class FeedsHomeActivity extends ActionBarActivity implements
-        GridView.OnItemClickListener, View.OnClickListener {
-    private static final int FEED_COUNT_FOR_EACH_REQUEST = 6;
+        GridView.OnItemClickListener {
 
     private static final String LOG_TAG = "FeedsHomeActivity";
     private GridView mGridView;
-    private View mBtnMore;
     private ImageAdapter mImageAdapter;
     private Activity mHomeActivity;
     private String mUserName;
@@ -86,10 +78,7 @@ public class FeedsHomeActivity extends ActionBarActivity implements
 
     private void initElements() {
         mGridView = (GridView) findViewById(R.id.grid_view);
-        mBtnMore = findViewById(R.id.btn_more);
-
         mGridView.setOnItemClickListener(this);
-        mBtnMore.setOnClickListener(this);
     }
 
     private void initContent() {
@@ -97,7 +86,7 @@ public class FeedsHomeActivity extends ActionBarActivity implements
         mGridView.setAdapter(mImageAdapter);
 
         if (FeedListHelper.getFeedList().getFeedsSize() == 0) {
-            new MoreFeedsTask(this).execute();
+            new LoadMoreFeedsTask(this, mImageAdapter).execute();
         }
     }
 
@@ -107,13 +96,6 @@ public class FeedsHomeActivity extends ActionBarActivity implements
         Feed feed = (Feed) mImageAdapter.getItem(position);
         intent.putExtra(FeedViewActivity.EXTRA_FEED, feed);
         startActivity(intent);
-    }
-
-    @Override
-    public void onClick(View v) {
-        if (v == mBtnMore) {
-            new MoreFeedsTask(this).execute();
-        }
     }
 
     @Override
@@ -133,10 +115,6 @@ public class FeedsHomeActivity extends ActionBarActivity implements
             return true;
         } else if (id == R.id.action_change_name) {
             // TODO open a dialog to random pick name.
-            return true;
-        } else if (id == R.id.action_refresh) {
-            // TODO refresh the feedlist.
-            new RefreshFeedsTask(this).execute();
             return true;
         }
 
@@ -200,66 +178,4 @@ public class FeedsHomeActivity extends ActionBarActivity implements
         }
     }
 
-    class RefreshFeedsTask extends BaseTask {
-        public RefreshFeedsTask(Context context) {
-            super(context);
-        }
-
-        @Override
-        protected Object doInBackground(Void... params) {
-            try {
-                return RPCHelper.getPhotoService().getFeedList(null, FEED_COUNT_FOR_EACH_REQUEST);
-            } catch (AException ae) {
-                return ae;
-            } catch (TException e) {
-                return e;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(Object o) {
-            super.onPostExecute(o);
-            if (o instanceof FeedList) {
-                if (FeedListHelper.mergeFeedListFromFront((FeedList) o)) {
-                    mImageAdapter.notifyDataSetChanged();
-                } else {
-                    Toast.makeText(
-                            FeedsHomeActivity.this, "No new photos.", Toast.LENGTH_SHORT).show();
-                }
-            }
-        }
-    }
-
-    class MoreFeedsTask extends BaseTask {
-        public MoreFeedsTask(Context context) {
-            super(context);
-        }
-
-        @Override
-        protected Object doInBackground(Void... params) {
-            try {
-                Feed lastFeed = FeedListHelper.getLastFeed();
-                String lastFeedId = lastFeed == null ? null : lastFeed.getFeed_id();
-                return RPCHelper.getPhotoService().getFeedList(
-                        lastFeedId, FEED_COUNT_FOR_EACH_REQUEST);
-            } catch (AException ae) {
-                return ae;
-            } catch (TException e) {
-                return e;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(Object o) {
-            super.onPostExecute(o);
-            if (o instanceof FeedList) {
-                if (FeedListHelper.mergeFeedListFromEnd((FeedList) o)) {
-                    mImageAdapter.notifyDataSetChanged();
-                } else {
-                    Toast.makeText(
-                            FeedsHomeActivity.this, "No more photos.", Toast.LENGTH_SHORT).show();
-                }
-            }
-        }
-    }
 }
