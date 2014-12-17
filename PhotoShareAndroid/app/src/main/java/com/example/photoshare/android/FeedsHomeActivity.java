@@ -84,6 +84,9 @@ public class FeedsHomeActivity extends ActionBarActivity implements
         } else if (id == R.id.action_change_name) {
             // TODO open a dialog to random pick name.
             return true;
+        } else if (id == R.id.action_refresh) {
+            // TODO refresh the feedlist.
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

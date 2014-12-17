@@ -17,4 +17,9 @@
         android:icon="@android:drawable/ic_menu_camera"
         android:title="@string/action_take"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/action_refresh"
+        android:icon="@android:drawable/ic_menu_rotate"
+        android:title="@string/action_refresh"
+        app:showAsAction="always" />
 </menu>
