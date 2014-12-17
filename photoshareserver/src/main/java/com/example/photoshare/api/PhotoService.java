@@ -147,19 +147,25 @@ public class PhotoService extends BaseServlet {
             int feedsSize = feedsData.getFeedSize();
 	    int endPos = feedsSize - 1;
             if (last_feed_id != null) {
-                for (int i = feedsSize - 1; i >= 0; --i) {
-                    if (last_feed_id.compareTo(feedsData.getFeed().get(i)
+                for (endPos = feedsSize - 1; endPos >= 0; --endPos) {
+                    if (last_feed_id.compareTo(feedsData.getFeed().get(endPos)
                             .getFeed_id()) > 0) {
-                        endPos = i;
+                        System.out.println(last_feed_id + "," + endPos + "," + feedsData.getFeed().get(endPos).getFeed_id());
                         break;
                     }
                 }
             }
             int startPos = endPos + 1 - page_count;
+            startPos = startPos >= 0 ? startPos : 0;
+            System.out.println(last_feed_id + "," + startPos + "," + endPos);
             for (int i = endPos; i >= startPos; i--) {
                 feedList.addToFeeds(feedsData.getFeed().get(i));
             }
             return feedList;
+        }
+
+        private synchronized void insertFeed(Feed feed) {
+            feedsData.getFeed().add(feed);
         }
 
         @Override
@@ -171,7 +177,7 @@ public class PhotoService extends BaseServlet {
             long timestamp = System.currentTimeMillis();
             feed.setFeed_id("" + timestamp);
             feed.setTimestamp(timestamp);
-            feedsData.getFeed().add(feed);
+            insertFeed(feed);
 
             if (feedReq.isSetPhoto_data()) {
                 try {
@@ -187,9 +193,7 @@ public class PhotoService extends BaseServlet {
             return feed;
         }
 
-        @Override
-        public Comment sendComment(Comment comment) throws AException,
-                TException {
+        private synchronized void insertComment(Comment comment) {
             String feed_id = comment.getFeed_id();
             Map<String, List<Comment>> commentMap = commentsData
                     .getFeed_comments();
@@ -197,6 +201,12 @@ public class PhotoService extends BaseServlet {
                 commentMap.put(feed_id, new ArrayList<Comment>());
             }
             commentMap.get(comment.feed_id).add(comment);
+        }
+
+        @Override
+        public Comment sendComment(Comment comment) throws AException,
+                TException {
+            insertComment(comment);
             comment.setTimestamp(System.currentTimeMillis());
             return comment;
         }
