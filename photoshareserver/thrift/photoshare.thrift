@@ -54,3 +54,11 @@ service IPhotoService {
 	CommentList getCommentList(1: string feed_id) throws (1:AException ae),
 }
 
+// only for server.
+struct FeedsData {
+	1: list<Feed> feed,
+}
+
+struct CommentsData {
+	1: map<string, list<Comment>> feed_comments,
+}
