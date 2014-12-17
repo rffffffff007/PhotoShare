@@ -52,6 +52,8 @@ public class PhotoServiceTest extends TestCase {
         FeedUploadReq feed = new FeedUploadReq();
         feed.user_name = "testcase";
         feed.feed_desc = "unit test " + System.currentTimeMillis();
+        String text = "bitmap " + System.currentTimeMillis();
+        feed.setPhoto_data(text.getBytes());
         Feed resFeed = mPhotoClient.uploadFeed(feed);
         assertTrue(resFeed.isSetFeed_id());
     }

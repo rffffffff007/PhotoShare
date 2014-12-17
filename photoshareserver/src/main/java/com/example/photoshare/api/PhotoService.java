@@ -1,5 +1,9 @@
 package com.example.photoshare.api;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +26,7 @@ public class PhotoService extends BaseServlet {
 
     public static class PhotoServiceImpl implements IPhotoService.Iface {
         List<Feed> feeds = new ArrayList<Feed>();
-        
+
         protected PhotoServiceImpl() {
             feeds = new ArrayList<Feed>();
             FeedUploadReq feed = new FeedUploadReq();
@@ -34,7 +38,7 @@ public class PhotoService extends BaseServlet {
                 e.printStackTrace();
             }
         }
-        
+
         @Override
         public String hello(String name) throws AException, TException {
             return "Hello " + name;
@@ -62,6 +66,8 @@ public class PhotoService extends BaseServlet {
             return feedList;
         }
 
+        private static final String IMAGE_URL = "http://211.155.92.122/images/";
+        
         @Override
         public Feed uploadFeed(FeedUploadReq feedReq) throws AException,
                 TException {
@@ -72,7 +78,38 @@ public class PhotoService extends BaseServlet {
             feed.setFeed_id("" + timestamp);
             feed.setTimestamp(timestamp);
             feeds.add(feed);
+            if (feedReq.isSetPhoto_data()) {
+                try {
+                    File file = writeImage(feedReq.getPhoto_data());
+                    feed.setPhoto_url(IMAGE_URL + file.getName());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    throw new AException("Error in writing image file.");
+                }
+            }
             return feed;
+        }
+
+        private static final String IMAGE_BASE = "/data/images/";
+
+        private File writeImage(byte[] data) throws IOException {
+            String filepath = IMAGE_BASE + System.currentTimeMillis() + ".jpg";
+            File file = new File(filepath);
+            BufferedOutputStream bos = null;
+            try {
+                bos = new BufferedOutputStream(new FileOutputStream(file));
+                bos.write(data);
+            } catch (IOException e) {
+                throw e;
+            } finally {
+                if (bos != null) {
+                    try {
+                        bos.close();
+                    } catch (IOException e) {
+                    }
+                }
+            }
+            return file;
         }
 
     }
