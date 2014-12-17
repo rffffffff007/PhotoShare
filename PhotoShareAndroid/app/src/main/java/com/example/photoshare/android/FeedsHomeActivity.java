@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.Toast;
 
 import com.example.photoshare.android.net.RPCHelper;
 import com.example.photoshare.thrift.AException;
@@ -108,7 +107,7 @@ public class FeedsHomeActivity extends ActionBarActivity implements
         @Override
         protected Object doInBackground(Void... params) {
             try {
-                return RPCHelper.getPhotoService().getFeedList(0, 100);
+                return RPCHelper.getPhotoService().getFeedList(null, 100);
             } catch (AException ae) {
                 return ae;
             } catch (TException e) {
