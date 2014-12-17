@@ -29,6 +29,7 @@ import org.apache.thrift.TException;
 
 public class FeedsHomeActivity extends ActionBarActivity implements
         GridView.OnItemClickListener, View.OnClickListener {
+    private static final int FEED_COUNT_FOR_EACH_REQUEST = 6;
 
     private static final String LOG_TAG = "FeedsHomeActivity";
     private GridView mGridView;
@@ -94,6 +95,10 @@ public class FeedsHomeActivity extends ActionBarActivity implements
     private void initContent() {
         mImageAdapter = new ImageAdapter(this, ImageLoaderHelper.getImageLoader());
         mGridView.setAdapter(mImageAdapter);
+
+        if (FeedListHelper.getFeedList().getFeedsSize() == 0) {
+            new MoreFeedsTask(this).execute();
+        }
     }
 
     @Override
@@ -203,7 +208,7 @@ public class FeedsHomeActivity extends ActionBarActivity implements
         @Override
         protected Object doInBackground(Void... params) {
             try {
-                return RPCHelper.getPhotoService().getFeedList(null, 3);
+                return RPCHelper.getPhotoService().getFeedList(null, FEED_COUNT_FOR_EACH_REQUEST);
             } catch (AException ae) {
                 return ae;
             } catch (TException e) {
@@ -235,7 +240,8 @@ public class FeedsHomeActivity extends ActionBarActivity implements
             try {
                 Feed lastFeed = FeedListHelper.getLastFeed();
                 String lastFeedId = lastFeed == null ? null : lastFeed.getFeed_id();
-                return RPCHelper.getPhotoService().getFeedList(lastFeedId, 3);
+                return RPCHelper.getPhotoService().getFeedList(
+                        lastFeedId, FEED_COUNT_FOR_EACH_REQUEST);
             } catch (AException ae) {
                 return ae;
             } catch (TException e) {
