@@ -12,19 +12,19 @@ import com.android.volley.toolbox.ImageLoader;
 public final class ImageLoaderHelper {
     private static ImageLoader mImageLoader;
 
-    public static ImageLoader getImageLoader(Context context) {
+    public static void initialize() {
         Utils.ensureOnMainThread();
-        if (mImageLoader == null) {
-            RequestQueue requestQueue = createRequestQueue(context);
-            requestQueue.start();
-            mImageLoader = new ImageLoader(requestQueue, CacheHelper.getImageMemoryCache());
-        }
+        RequestQueue requestQueue = createRequestQueue();
+        requestQueue.start();
+        mImageLoader = new ImageLoader(requestQueue, CacheHelper.getImageMemoryCache());
+    }
+    public static ImageLoader getImageLoader() {
         return mImageLoader;
     }
 
-    private static RequestQueue createRequestQueue(Context context) {
+    private static RequestQueue createRequestQueue() {
         Network network = new BasicNetwork(new HurlStack());
-        Cache cache = CacheHelper.getImageRequestsDiskCache(context);
+        Cache cache = CacheHelper.getImageRequestsDiskCache();
         return new RequestQueue(cache, network);
     }
 }

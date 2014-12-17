@@ -15,22 +15,17 @@ import com.example.photoshare.thrift.FeedList;
  * Created by zhouxiaobo on 12/16/14.
  */
 public class ImageAdapter extends BaseAdapter {
-    private final Context mContext;
     private final ImageLoader mImageLoader;
     private final LayoutInflater mLayoutInflater;
-    private FeedList mFeeds;
 
-
-    public ImageAdapter(Context c, ImageLoader imageLoader) {
-        mContext = c;
-        mLayoutInflater = LayoutInflater.from(mContext);
+    public ImageAdapter(Context context, ImageLoader imageLoader) {
+        mLayoutInflater = LayoutInflater.from(context);
         mImageLoader = imageLoader;
-        mFeeds = CacheHelper.getFeedsFromCache(c);
     }
 
     @Override
     public int getCount() {
-        return mFeeds.getFeedsSize();
+        return FeedListHelper.getFeedList().getFeedsSize();
     }
 
     @Override
@@ -38,7 +33,7 @@ public class ImageAdapter extends BaseAdapter {
         if (position >= getCount()) {
             return null;
         }
-        return mFeeds.getFeeds().get(position);
+        return FeedListHelper.getFeedList().getFeeds().get(position);
     }
 
     @Override
@@ -57,33 +52,8 @@ public class ImageAdapter extends BaseAdapter {
             imageView = (NetworkImageView) convertView.findViewById(R.id.image);
             imageView.setImageUrl(null, mImageLoader);
         }
-        String imageUrl = mFeeds.getFeeds().get(position).getPhoto_url();
+        String imageUrl = FeedListHelper.getFeedList().getFeeds().get(position).getPhoto_url();
         imageView.setImageUrl(imageUrl, mImageLoader);
         return convertView;
-    }
-
-    public void addFeed(Feed feed) {
-        mFeeds.addToFeeds(feed);
-        CacheHelper.PutFeedsToCache(mFeeds, mContext);
-    }
-
-    public void setFeeds(FeedList feeds) {
-        mFeeds = feeds;
-        CacheHelper.PutFeedsToCache(mFeeds, mContext);
-    }
-
-    public String getLastFeedId() {
-        if (getCount() == 0) {
-            return null;
-        }
-        return mFeeds.getFeeds().get(getCount() - 1).getFeed_id();
-    }
-
-    public boolean mergeFeeds(FeedList feeds) {
-        if (feeds.getFeedsSize() == 0) {
-            return false;
-        }
-        mFeeds.getFeeds().addAll(feeds.getFeeds());
-        return true;
     }
 }

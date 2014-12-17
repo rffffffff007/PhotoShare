@@ -38,7 +38,7 @@ public class FeedViewActivity extends ActionBarActivity {
     private void initContent() {
         Feed feed = (Feed) getIntent().getSerializableExtra(EXTRA_FEED);
         if (feed != null) {
-            mImage.setImageUrl(feed.getPhoto_url(), ImageLoaderHelper.getImageLoader(this));
+            mImage.setImageUrl(feed.getPhoto_url(), ImageLoaderHelper.getImageLoader());
             if (feed.isSetFeed_desc()) {
                 mDesc.setText(feed.getFeed_desc());
             }
