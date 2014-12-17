@@ -8,12 +8,8 @@ import android.widget.BaseAdapter;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
-import com.example.photoshare.android.net.RPCHelper;
 import com.example.photoshare.thrift.Feed;
 import com.example.photoshare.thrift.FeedList;
-
-import org.apache.thrift.TException;
-import com.example.photoshare.thrift.AException;
 
 import java.util.ArrayList;
 
@@ -78,5 +74,6 @@ public class ImageAdapter extends BaseAdapter {
 
     public void setFeeds(FeedList feeds) {
         mFeeds = feeds;
+        CacheHelper.PutFeedsToCache(mFeeds, mContext);
     }
 }

@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.Toast;
 
 import com.example.photoshare.android.net.RPCHelper;
 import com.example.photoshare.thrift.AException;

@@ -18,7 +18,7 @@ import java.io.File;
 /**
 * Created by zhouxiaobo on 12/17/14.
 */
-class CacheHelper {
+public class CacheHelper {
 
     public static FeedList getFeedsFromCache(Context context) {
         Utils.ensureOnMainThread();
