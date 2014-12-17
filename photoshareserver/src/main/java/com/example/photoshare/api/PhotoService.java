@@ -57,7 +57,7 @@ public class PhotoService extends BaseServlet {
                 }
             }
             int endPos = startPos + page_count;
-            startPos = startPos < 0 ? 0 : startPos;
+            endPos = endPos > feeds.size() ? feeds.size() : 0;
             feedList.setFeeds(feeds.subList(startPos, endPos));
             return feedList;
         }
