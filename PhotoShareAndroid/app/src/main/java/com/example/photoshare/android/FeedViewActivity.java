@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
@@ -13,6 +15,8 @@ public class FeedViewActivity extends ActionBarActivity {
     public static final String EXTRA_FEED = "extra_feed";
     private TextView mDesc;
     private NetworkImageView mImage;
+    private ViewGroup mCommentsContainer;
+    private CommentsAdapter mCommentsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +32,7 @@ public class FeedViewActivity extends ActionBarActivity {
     private void initElements() {
         mDesc = (TextView) findViewById(R.id.desc);
         mImage = (NetworkImageView) findViewById(R.id.image);
+        mCommentsContainer = (ViewGroup) findViewById(R.id.comments_container);
     }
 
     private void initContent() {
@@ -37,6 +42,12 @@ public class FeedViewActivity extends ActionBarActivity {
             if (feed.isSetFeed_desc()) {
                 mDesc.setText(feed.getFeed_desc());
             }
+        }
+
+        mCommentsAdapter = new CommentsAdapter(this);
+        for (int i = 0; i < mCommentsAdapter.getCount(); i++) {
+            View child = mCommentsAdapter.getView(i, null, null);
+            mCommentsContainer.addView(child, 0);
         }
     }
 
