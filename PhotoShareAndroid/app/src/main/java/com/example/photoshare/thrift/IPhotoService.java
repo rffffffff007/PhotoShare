@@ -40,6 +40,10 @@ public class IPhotoService {
 
     public Feed uploadFeed(FeedUploadReq feed) throws AException, org.apache.thrift.TException;
 
+    public Comment sendComment(Comment comment) throws AException, org.apache.thrift.TException;
+
+    public CommentList getCommentList(String feed_id) throws AException, org.apache.thrift.TException;
+
   }
 
   public interface AsyncIface {
@@ -49,6 +53,10 @@ public class IPhotoService {
     public void getFeedList(String last_feed_id, int page_count, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.getFeedList_call> resultHandler) throws org.apache.thrift.TException;
 
     public void uploadFeed(FeedUploadReq feed, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.uploadFeed_call> resultHandler) throws org.apache.thrift.TException;
+
+    public void sendComment(Comment comment, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.sendComment_call> resultHandler) throws org.apache.thrift.TException;
+
+    public void getCommentList(String feed_id, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.getCommentList_call> resultHandler) throws org.apache.thrift.TException;
 
   }
 
@@ -149,6 +157,58 @@ public class IPhotoService {
         throw result.ae;
       }
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "uploadFeed failed: unknown result");
+    }
+
+    public Comment sendComment(Comment comment) throws AException, org.apache.thrift.TException
+    {
+      send_sendComment(comment);
+      return recv_sendComment();
+    }
+
+    public void send_sendComment(Comment comment) throws org.apache.thrift.TException
+    {
+      sendComment_args args = new sendComment_args();
+      args.setComment(comment);
+      sendBase("sendComment", args);
+    }
+
+    public Comment recv_sendComment() throws AException, org.apache.thrift.TException
+    {
+      sendComment_result result = new sendComment_result();
+      receiveBase(result, "sendComment");
+      if (result.isSetSuccess()) {
+        return result.success;
+      }
+      if (result.ae != null) {
+        throw result.ae;
+      }
+      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "sendComment failed: unknown result");
+    }
+
+    public CommentList getCommentList(String feed_id) throws AException, org.apache.thrift.TException
+    {
+      send_getCommentList(feed_id);
+      return recv_getCommentList();
+    }
+
+    public void send_getCommentList(String feed_id) throws org.apache.thrift.TException
+    {
+      getCommentList_args args = new getCommentList_args();
+      args.setFeed_id(feed_id);
+      sendBase("getCommentList", args);
+    }
+
+    public CommentList recv_getCommentList() throws AException, org.apache.thrift.TException
+    {
+      getCommentList_result result = new getCommentList_result();
+      receiveBase(result, "getCommentList");
+      if (result.isSetSuccess()) {
+        return result.success;
+      }
+      if (result.ae != null) {
+        throw result.ae;
+      }
+      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "getCommentList failed: unknown result");
     }
 
   }
@@ -268,6 +328,70 @@ public class IPhotoService {
       }
     }
 
+    public void sendComment(Comment comment, org.apache.thrift.async.AsyncMethodCallback<sendComment_call> resultHandler) throws org.apache.thrift.TException {
+      checkReady();
+      sendComment_call method_call = new sendComment_call(comment, resultHandler, this, ___protocolFactory, ___transport);
+      this.___currentMethod = method_call;
+      ___manager.call(method_call);
+    }
+
+    public static class sendComment_call extends org.apache.thrift.async.TAsyncMethodCall {
+      private Comment comment;
+      public sendComment_call(Comment comment, org.apache.thrift.async.AsyncMethodCallback<sendComment_call> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.comment = comment;
+      }
+
+      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("sendComment", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        sendComment_args args = new sendComment_args();
+        args.setComment(comment);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public Comment getResult() throws AException, org.apache.thrift.TException {
+        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
+        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        return (new Client(prot)).recv_sendComment();
+      }
+    }
+
+    public void getCommentList(String feed_id, org.apache.thrift.async.AsyncMethodCallback<getCommentList_call> resultHandler) throws org.apache.thrift.TException {
+      checkReady();
+      getCommentList_call method_call = new getCommentList_call(feed_id, resultHandler, this, ___protocolFactory, ___transport);
+      this.___currentMethod = method_call;
+      ___manager.call(method_call);
+    }
+
+    public static class getCommentList_call extends org.apache.thrift.async.TAsyncMethodCall {
+      private String feed_id;
+      public getCommentList_call(String feed_id, org.apache.thrift.async.AsyncMethodCallback<getCommentList_call> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.feed_id = feed_id;
+      }
+
+      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("getCommentList", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        getCommentList_args args = new getCommentList_args();
+        args.setFeed_id(feed_id);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public CommentList getResult() throws AException, org.apache.thrift.TException {
+        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
+        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        return (new Client(prot)).recv_getCommentList();
+      }
+    }
+
   }
 
   public static class Processor<I extends Iface> extends org.apache.thrift.TBaseProcessor<I> implements org.apache.thrift.TProcessor {
@@ -284,6 +408,8 @@ public class IPhotoService {
       processMap.put("hello", new hello());
       processMap.put("getFeedList", new getFeedList());
       processMap.put("uploadFeed", new uploadFeed());
+      processMap.put("sendComment", new sendComment());
+      processMap.put("getCommentList", new getCommentList());
       return processMap;
     }
 
@@ -352,6 +478,54 @@ public class IPhotoService {
         uploadFeed_result result = new uploadFeed_result();
         try {
           result.success = iface.uploadFeed(args.feed);
+        } catch (AException ae) {
+          result.ae = ae;
+        }
+        return result;
+      }
+    }
+
+    public static class sendComment<I extends Iface> extends org.apache.thrift.ProcessFunction<I, sendComment_args> {
+      public sendComment() {
+        super("sendComment");
+      }
+
+      public sendComment_args getEmptyArgsInstance() {
+        return new sendComment_args();
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public sendComment_result getResult(I iface, sendComment_args args) throws org.apache.thrift.TException {
+        sendComment_result result = new sendComment_result();
+        try {
+          result.success = iface.sendComment(args.comment);
+        } catch (AException ae) {
+          result.ae = ae;
+        }
+        return result;
+      }
+    }
+
+    public static class getCommentList<I extends Iface> extends org.apache.thrift.ProcessFunction<I, getCommentList_args> {
+      public getCommentList() {
+        super("getCommentList");
+      }
+
+      public getCommentList_args getEmptyArgsInstance() {
+        return new getCommentList_args();
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public getCommentList_result getResult(I iface, getCommentList_args args) throws org.apache.thrift.TException {
+        getCommentList_result result = new getCommentList_result();
+        try {
+          result.success = iface.getCommentList(args.feed_id);
         } catch (AException ae) {
           result.ae = ae;
         }
@@ -2891,6 +3065,1641 @@ public class IPhotoService {
         BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
           struct.success = new Feed();
+          struct.success.read(iprot);
+          struct.setSuccessIsSet(true);
+        }
+        if (incoming.get(1)) {
+          struct.ae = new AException();
+          struct.ae.read(iprot);
+          struct.setAeIsSet(true);
+        }
+      }
+    }
+
+  }
+
+  public static class sendComment_args implements org.apache.thrift.TBase<sendComment_args, sendComment_args._Fields>, java.io.Serializable, Cloneable   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("sendComment_args");
+
+    private static final org.apache.thrift.protocol.TField COMMENT_FIELD_DESC = new org.apache.thrift.protocol.TField("comment", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new sendComment_argsStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new sendComment_argsTupleSchemeFactory());
+    }
+
+    public Comment comment; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      COMMENT((short)1, "comment");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // COMMENT
+            return COMMENT;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.COMMENT, new org.apache.thrift.meta_data.FieldMetaData("comment", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Comment.class)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(sendComment_args.class, metaDataMap);
+    }
+
+    public sendComment_args() {
+    }
+
+    public sendComment_args(
+      Comment comment)
+    {
+      this();
+      this.comment = comment;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public sendComment_args(sendComment_args other) {
+      if (other.isSetComment()) {
+        this.comment = new Comment(other.comment);
+      }
+    }
+
+    public sendComment_args deepCopy() {
+      return new sendComment_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.comment = null;
+    }
+
+    public Comment getComment() {
+      return this.comment;
+    }
+
+    public sendComment_args setComment(Comment comment) {
+      this.comment = comment;
+      return this;
+    }
+
+    public void unsetComment() {
+      this.comment = null;
+    }
+
+    /** Returns true if field comment is set (has been assigned a value) and false otherwise */
+    public boolean isSetComment() {
+      return this.comment != null;
+    }
+
+    public void setCommentIsSet(boolean value) {
+      if (!value) {
+        this.comment = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case COMMENT:
+        if (value == null) {
+          unsetComment();
+        } else {
+          setComment((Comment)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case COMMENT:
+        return getComment();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case COMMENT:
+        return isSetComment();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof sendComment_args)
+        return this.equals((sendComment_args)that);
+      return false;
+    }
+
+    public boolean equals(sendComment_args that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_comment = true && this.isSetComment();
+      boolean that_present_comment = true && that.isSetComment();
+      if (this_present_comment || that_present_comment) {
+        if (!(this_present_comment && that_present_comment))
+          return false;
+        if (!this.comment.equals(that.comment))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(sendComment_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      sendComment_args typedOther = (sendComment_args)other;
+
+      lastComparison = Boolean.valueOf(isSetComment()).compareTo(typedOther.isSetComment());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetComment()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.comment, typedOther.comment);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("sendComment_args(");
+      boolean first = true;
+
+      sb.append("comment:");
+      if (this.comment == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.comment);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+      if (comment != null) {
+        comment.validate();
+      }
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class sendComment_argsStandardSchemeFactory implements SchemeFactory {
+      public sendComment_argsStandardScheme getScheme() {
+        return new sendComment_argsStandardScheme();
+      }
+    }
+
+    private static class sendComment_argsStandardScheme extends StandardScheme<sendComment_args> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, sendComment_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // COMMENT
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.comment = new Comment();
+                struct.comment.read(iprot);
+                struct.setCommentIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, sendComment_args struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.comment != null) {
+          oprot.writeFieldBegin(COMMENT_FIELD_DESC);
+          struct.comment.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class sendComment_argsTupleSchemeFactory implements SchemeFactory {
+      public sendComment_argsTupleScheme getScheme() {
+        return new sendComment_argsTupleScheme();
+      }
+    }
+
+    private static class sendComment_argsTupleScheme extends TupleScheme<sendComment_args> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, sendComment_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetComment()) {
+          optionals.set(0);
+        }
+        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetComment()) {
+          struct.comment.write(oprot);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, sendComment_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(1);
+        if (incoming.get(0)) {
+          struct.comment = new Comment();
+          struct.comment.read(iprot);
+          struct.setCommentIsSet(true);
+        }
+      }
+    }
+
+  }
+
+  public static class sendComment_result implements org.apache.thrift.TBase<sendComment_result, sendComment_result._Fields>, java.io.Serializable, Cloneable   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("sendComment_result");
+
+    private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.STRUCT, (short)0);
+    private static final org.apache.thrift.protocol.TField AE_FIELD_DESC = new org.apache.thrift.protocol.TField("ae", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new sendComment_resultStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new sendComment_resultTupleSchemeFactory());
+    }
+
+    public Comment success; // required
+    public AException ae; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      SUCCESS((short)0, "success"),
+      AE((short)1, "ae");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 0: // SUCCESS
+            return SUCCESS;
+          case 1: // AE
+            return AE;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Comment.class)));
+      tmpMap.put(_Fields.AE, new org.apache.thrift.meta_data.FieldMetaData("ae", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(sendComment_result.class, metaDataMap);
+    }
+
+    public sendComment_result() {
+    }
+
+    public sendComment_result(
+      Comment success,
+      AException ae)
+    {
+      this();
+      this.success = success;
+      this.ae = ae;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public sendComment_result(sendComment_result other) {
+      if (other.isSetSuccess()) {
+        this.success = new Comment(other.success);
+      }
+      if (other.isSetAe()) {
+        this.ae = new AException(other.ae);
+      }
+    }
+
+    public sendComment_result deepCopy() {
+      return new sendComment_result(this);
+    }
+
+    @Override
+    public void clear() {
+      this.success = null;
+      this.ae = null;
+    }
+
+    public Comment getSuccess() {
+      return this.success;
+    }
+
+    public sendComment_result setSuccess(Comment success) {
+      this.success = success;
+      return this;
+    }
+
+    public void unsetSuccess() {
+      this.success = null;
+    }
+
+    /** Returns true if field success is set (has been assigned a value) and false otherwise */
+    public boolean isSetSuccess() {
+      return this.success != null;
+    }
+
+    public void setSuccessIsSet(boolean value) {
+      if (!value) {
+        this.success = null;
+      }
+    }
+
+    public AException getAe() {
+      return this.ae;
+    }
+
+    public sendComment_result setAe(AException ae) {
+      this.ae = ae;
+      return this;
+    }
+
+    public void unsetAe() {
+      this.ae = null;
+    }
+
+    /** Returns true if field ae is set (has been assigned a value) and false otherwise */
+    public boolean isSetAe() {
+      return this.ae != null;
+    }
+
+    public void setAeIsSet(boolean value) {
+      if (!value) {
+        this.ae = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case SUCCESS:
+        if (value == null) {
+          unsetSuccess();
+        } else {
+          setSuccess((Comment)value);
+        }
+        break;
+
+      case AE:
+        if (value == null) {
+          unsetAe();
+        } else {
+          setAe((AException)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case SUCCESS:
+        return getSuccess();
+
+      case AE:
+        return getAe();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case SUCCESS:
+        return isSetSuccess();
+      case AE:
+        return isSetAe();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof sendComment_result)
+        return this.equals((sendComment_result)that);
+      return false;
+    }
+
+    public boolean equals(sendComment_result that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_success = true && this.isSetSuccess();
+      boolean that_present_success = true && that.isSetSuccess();
+      if (this_present_success || that_present_success) {
+        if (!(this_present_success && that_present_success))
+          return false;
+        if (!this.success.equals(that.success))
+          return false;
+      }
+
+      boolean this_present_ae = true && this.isSetAe();
+      boolean that_present_ae = true && that.isSetAe();
+      if (this_present_ae || that_present_ae) {
+        if (!(this_present_ae && that_present_ae))
+          return false;
+        if (!this.ae.equals(that.ae))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(sendComment_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      sendComment_result typedOther = (sendComment_result)other;
+
+      lastComparison = Boolean.valueOf(isSetSuccess()).compareTo(typedOther.isSetSuccess());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetSuccess()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.success, typedOther.success);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetAe()).compareTo(typedOther.isSetAe());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetAe()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.ae, typedOther.ae);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+      }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("sendComment_result(");
+      boolean first = true;
+
+      sb.append("success:");
+      if (this.success == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.success);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("ae:");
+      if (this.ae == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.ae);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+      if (success != null) {
+        success.validate();
+      }
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class sendComment_resultStandardSchemeFactory implements SchemeFactory {
+      public sendComment_resultStandardScheme getScheme() {
+        return new sendComment_resultStandardScheme();
+      }
+    }
+
+    private static class sendComment_resultStandardScheme extends StandardScheme<sendComment_result> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, sendComment_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 0: // SUCCESS
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.success = new Comment();
+                struct.success.read(iprot);
+                struct.setSuccessIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 1: // AE
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.ae = new AException();
+                struct.ae.read(iprot);
+                struct.setAeIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, sendComment_result struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.success != null) {
+          oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
+          struct.success.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        if (struct.ae != null) {
+          oprot.writeFieldBegin(AE_FIELD_DESC);
+          struct.ae.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class sendComment_resultTupleSchemeFactory implements SchemeFactory {
+      public sendComment_resultTupleScheme getScheme() {
+        return new sendComment_resultTupleScheme();
+      }
+    }
+
+    private static class sendComment_resultTupleScheme extends TupleScheme<sendComment_result> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, sendComment_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetSuccess()) {
+          optionals.set(0);
+        }
+        if (struct.isSetAe()) {
+          optionals.set(1);
+        }
+        oprot.writeBitSet(optionals, 2);
+        if (struct.isSetSuccess()) {
+          struct.success.write(oprot);
+        }
+        if (struct.isSetAe()) {
+          struct.ae.write(oprot);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, sendComment_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(2);
+        if (incoming.get(0)) {
+          struct.success = new Comment();
+          struct.success.read(iprot);
+          struct.setSuccessIsSet(true);
+        }
+        if (incoming.get(1)) {
+          struct.ae = new AException();
+          struct.ae.read(iprot);
+          struct.setAeIsSet(true);
+        }
+      }
+    }
+
+  }
+
+  public static class getCommentList_args implements org.apache.thrift.TBase<getCommentList_args, getCommentList_args._Fields>, java.io.Serializable, Cloneable   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("getCommentList_args");
+
+    private static final org.apache.thrift.protocol.TField FEED_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("feed_id", org.apache.thrift.protocol.TType.STRING, (short)1);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new getCommentList_argsStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new getCommentList_argsTupleSchemeFactory());
+    }
+
+    public String feed_id; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      FEED_ID((short)1, "feed_id");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // FEED_ID
+            return FEED_ID;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.FEED_ID, new org.apache.thrift.meta_data.FieldMetaData("feed_id", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(getCommentList_args.class, metaDataMap);
+    }
+
+    public getCommentList_args() {
+    }
+
+    public getCommentList_args(
+      String feed_id)
+    {
+      this();
+      this.feed_id = feed_id;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public getCommentList_args(getCommentList_args other) {
+      if (other.isSetFeed_id()) {
+        this.feed_id = other.feed_id;
+      }
+    }
+
+    public getCommentList_args deepCopy() {
+      return new getCommentList_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.feed_id = null;
+    }
+
+    public String getFeed_id() {
+      return this.feed_id;
+    }
+
+    public getCommentList_args setFeed_id(String feed_id) {
+      this.feed_id = feed_id;
+      return this;
+    }
+
+    public void unsetFeed_id() {
+      this.feed_id = null;
+    }
+
+    /** Returns true if field feed_id is set (has been assigned a value) and false otherwise */
+    public boolean isSetFeed_id() {
+      return this.feed_id != null;
+    }
+
+    public void setFeed_idIsSet(boolean value) {
+      if (!value) {
+        this.feed_id = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case FEED_ID:
+        if (value == null) {
+          unsetFeed_id();
+        } else {
+          setFeed_id((String)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case FEED_ID:
+        return getFeed_id();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case FEED_ID:
+        return isSetFeed_id();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof getCommentList_args)
+        return this.equals((getCommentList_args)that);
+      return false;
+    }
+
+    public boolean equals(getCommentList_args that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_feed_id = true && this.isSetFeed_id();
+      boolean that_present_feed_id = true && that.isSetFeed_id();
+      if (this_present_feed_id || that_present_feed_id) {
+        if (!(this_present_feed_id && that_present_feed_id))
+          return false;
+        if (!this.feed_id.equals(that.feed_id))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(getCommentList_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      getCommentList_args typedOther = (getCommentList_args)other;
+
+      lastComparison = Boolean.valueOf(isSetFeed_id()).compareTo(typedOther.isSetFeed_id());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetFeed_id()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.feed_id, typedOther.feed_id);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("getCommentList_args(");
+      boolean first = true;
+
+      sb.append("feed_id:");
+      if (this.feed_id == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.feed_id);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class getCommentList_argsStandardSchemeFactory implements SchemeFactory {
+      public getCommentList_argsStandardScheme getScheme() {
+        return new getCommentList_argsStandardScheme();
+      }
+    }
+
+    private static class getCommentList_argsStandardScheme extends StandardScheme<getCommentList_args> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, getCommentList_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // FEED_ID
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.feed_id = iprot.readString();
+                struct.setFeed_idIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, getCommentList_args struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.feed_id != null) {
+          oprot.writeFieldBegin(FEED_ID_FIELD_DESC);
+          oprot.writeString(struct.feed_id);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class getCommentList_argsTupleSchemeFactory implements SchemeFactory {
+      public getCommentList_argsTupleScheme getScheme() {
+        return new getCommentList_argsTupleScheme();
+      }
+    }
+
+    private static class getCommentList_argsTupleScheme extends TupleScheme<getCommentList_args> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, getCommentList_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetFeed_id()) {
+          optionals.set(0);
+        }
+        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetFeed_id()) {
+          oprot.writeString(struct.feed_id);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, getCommentList_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(1);
+        if (incoming.get(0)) {
+          struct.feed_id = iprot.readString();
+          struct.setFeed_idIsSet(true);
+        }
+      }
+    }
+
+  }
+
+  public static class getCommentList_result implements org.apache.thrift.TBase<getCommentList_result, getCommentList_result._Fields>, java.io.Serializable, Cloneable   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("getCommentList_result");
+
+    private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.STRUCT, (short)0);
+    private static final org.apache.thrift.protocol.TField AE_FIELD_DESC = new org.apache.thrift.protocol.TField("ae", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new getCommentList_resultStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new getCommentList_resultTupleSchemeFactory());
+    }
+
+    public CommentList success; // required
+    public AException ae; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      SUCCESS((short)0, "success"),
+      AE((short)1, "ae");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 0: // SUCCESS
+            return SUCCESS;
+          case 1: // AE
+            return AE;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, CommentList.class)));
+      tmpMap.put(_Fields.AE, new org.apache.thrift.meta_data.FieldMetaData("ae", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(getCommentList_result.class, metaDataMap);
+    }
+
+    public getCommentList_result() {
+    }
+
+    public getCommentList_result(
+      CommentList success,
+      AException ae)
+    {
+      this();
+      this.success = success;
+      this.ae = ae;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public getCommentList_result(getCommentList_result other) {
+      if (other.isSetSuccess()) {
+        this.success = new CommentList(other.success);
+      }
+      if (other.isSetAe()) {
+        this.ae = new AException(other.ae);
+      }
+    }
+
+    public getCommentList_result deepCopy() {
+      return new getCommentList_result(this);
+    }
+
+    @Override
+    public void clear() {
+      this.success = null;
+      this.ae = null;
+    }
+
+    public CommentList getSuccess() {
+      return this.success;
+    }
+
+    public getCommentList_result setSuccess(CommentList success) {
+      this.success = success;
+      return this;
+    }
+
+    public void unsetSuccess() {
+      this.success = null;
+    }
+
+    /** Returns true if field success is set (has been assigned a value) and false otherwise */
+    public boolean isSetSuccess() {
+      return this.success != null;
+    }
+
+    public void setSuccessIsSet(boolean value) {
+      if (!value) {
+        this.success = null;
+      }
+    }
+
+    public AException getAe() {
+      return this.ae;
+    }
+
+    public getCommentList_result setAe(AException ae) {
+      this.ae = ae;
+      return this;
+    }
+
+    public void unsetAe() {
+      this.ae = null;
+    }
+
+    /** Returns true if field ae is set (has been assigned a value) and false otherwise */
+    public boolean isSetAe() {
+      return this.ae != null;
+    }
+
+    public void setAeIsSet(boolean value) {
+      if (!value) {
+        this.ae = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case SUCCESS:
+        if (value == null) {
+          unsetSuccess();
+        } else {
+          setSuccess((CommentList)value);
+        }
+        break;
+
+      case AE:
+        if (value == null) {
+          unsetAe();
+        } else {
+          setAe((AException)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case SUCCESS:
+        return getSuccess();
+
+      case AE:
+        return getAe();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case SUCCESS:
+        return isSetSuccess();
+      case AE:
+        return isSetAe();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof getCommentList_result)
+        return this.equals((getCommentList_result)that);
+      return false;
+    }
+
+    public boolean equals(getCommentList_result that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_success = true && this.isSetSuccess();
+      boolean that_present_success = true && that.isSetSuccess();
+      if (this_present_success || that_present_success) {
+        if (!(this_present_success && that_present_success))
+          return false;
+        if (!this.success.equals(that.success))
+          return false;
+      }
+
+      boolean this_present_ae = true && this.isSetAe();
+      boolean that_present_ae = true && that.isSetAe();
+      if (this_present_ae || that_present_ae) {
+        if (!(this_present_ae && that_present_ae))
+          return false;
+        if (!this.ae.equals(that.ae))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(getCommentList_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      getCommentList_result typedOther = (getCommentList_result)other;
+
+      lastComparison = Boolean.valueOf(isSetSuccess()).compareTo(typedOther.isSetSuccess());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetSuccess()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.success, typedOther.success);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetAe()).compareTo(typedOther.isSetAe());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetAe()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.ae, typedOther.ae);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+      }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("getCommentList_result(");
+      boolean first = true;
+
+      sb.append("success:");
+      if (this.success == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.success);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("ae:");
+      if (this.ae == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.ae);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+      if (success != null) {
+        success.validate();
+      }
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class getCommentList_resultStandardSchemeFactory implements SchemeFactory {
+      public getCommentList_resultStandardScheme getScheme() {
+        return new getCommentList_resultStandardScheme();
+      }
+    }
+
+    private static class getCommentList_resultStandardScheme extends StandardScheme<getCommentList_result> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, getCommentList_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 0: // SUCCESS
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.success = new CommentList();
+                struct.success.read(iprot);
+                struct.setSuccessIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 1: // AE
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.ae = new AException();
+                struct.ae.read(iprot);
+                struct.setAeIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, getCommentList_result struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.success != null) {
+          oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
+          struct.success.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        if (struct.ae != null) {
+          oprot.writeFieldBegin(AE_FIELD_DESC);
+          struct.ae.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class getCommentList_resultTupleSchemeFactory implements SchemeFactory {
+      public getCommentList_resultTupleScheme getScheme() {
+        return new getCommentList_resultTupleScheme();
+      }
+    }
+
+    private static class getCommentList_resultTupleScheme extends TupleScheme<getCommentList_result> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, getCommentList_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetSuccess()) {
+          optionals.set(0);
+        }
+        if (struct.isSetAe()) {
+          optionals.set(1);
+        }
+        oprot.writeBitSet(optionals, 2);
+        if (struct.isSetSuccess()) {
+          struct.success.write(oprot);
+        }
+        if (struct.isSetAe()) {
+          struct.ae.write(oprot);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, getCommentList_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(2);
+        if (incoming.get(0)) {
+          struct.success = new CommentList();
           struct.success.read(iprot);
           struct.setSuccessIsSet(true);
         }
