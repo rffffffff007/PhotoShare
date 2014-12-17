@@ -34,9 +34,7 @@ public class FeedList implements org.apache.thrift.TBase<FeedList, FeedList._Fie
   private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("FeedList");
 
   private static final org.apache.thrift.protocol.TField FEEDS_FIELD_DESC = new org.apache.thrift.protocol.TField("feeds", org.apache.thrift.protocol.TType.LIST, (short)1);
-  private static final org.apache.thrift.protocol.TField PAGE_NUM_FIELD_DESC = new org.apache.thrift.protocol.TField("page_num", org.apache.thrift.protocol.TType.I32, (short)2);
-  private static final org.apache.thrift.protocol.TField PAGE_COUNT_FIELD_DESC = new org.apache.thrift.protocol.TField("page_count", org.apache.thrift.protocol.TType.I32, (short)3);
-  private static final org.apache.thrift.protocol.TField TOTAL_PAGE_NUM_FIELD_DESC = new org.apache.thrift.protocol.TField("total_page_num", org.apache.thrift.protocol.TType.I32, (short)4);
+  private static final org.apache.thrift.protocol.TField HAS_MORE_DATA_FIELD_DESC = new org.apache.thrift.protocol.TField("has_more_data", org.apache.thrift.protocol.TType.BOOL, (short)2);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
   static {
@@ -45,16 +43,12 @@ public class FeedList implements org.apache.thrift.TBase<FeedList, FeedList._Fie
   }
 
   public List<Feed> feeds; // required
-  public int page_num; // required
-  public int page_count; // required
-  public int total_page_num; // required
+  public boolean has_more_data; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
     FEEDS((short)1, "feeds"),
-    PAGE_NUM((short)2, "page_num"),
-    PAGE_COUNT((short)3, "page_count"),
-    TOTAL_PAGE_NUM((short)4, "total_page_num");
+    HAS_MORE_DATA((short)2, "has_more_data");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -71,12 +65,8 @@ public class FeedList implements org.apache.thrift.TBase<FeedList, FeedList._Fie
       switch(fieldId) {
         case 1: // FEEDS
           return FEEDS;
-        case 2: // PAGE_NUM
-          return PAGE_NUM;
-        case 3: // PAGE_COUNT
-          return PAGE_COUNT;
-        case 4: // TOTAL_PAGE_NUM
-          return TOTAL_PAGE_NUM;
+        case 2: // HAS_MORE_DATA
+          return HAS_MORE_DATA;
         default:
           return null;
       }
@@ -117,9 +107,7 @@ public class FeedList implements org.apache.thrift.TBase<FeedList, FeedList._Fie
   }
 
   // isset id assignments
-  private static final int __PAGE_NUM_ISSET_ID = 0;
-  private static final int __PAGE_COUNT_ISSET_ID = 1;
-  private static final int __TOTAL_PAGE_NUM_ISSET_ID = 2;
+  private static final int __HAS_MORE_DATA_ISSET_ID = 0;
   private byte __isset_bitfield = 0;
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
@@ -127,12 +115,8 @@ public class FeedList implements org.apache.thrift.TBase<FeedList, FeedList._Fie
     tmpMap.put(_Fields.FEEDS, new org.apache.thrift.meta_data.FieldMetaData("feeds", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
             new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Feed.class))));
-    tmpMap.put(_Fields.PAGE_NUM, new org.apache.thrift.meta_data.FieldMetaData("page_num", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32)));
-    tmpMap.put(_Fields.PAGE_COUNT, new org.apache.thrift.meta_data.FieldMetaData("page_count", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32)));
-    tmpMap.put(_Fields.TOTAL_PAGE_NUM, new org.apache.thrift.meta_data.FieldMetaData("total_page_num", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32)));
+    tmpMap.put(_Fields.HAS_MORE_DATA, new org.apache.thrift.meta_data.FieldMetaData("has_more_data", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.BOOL)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(FeedList.class, metaDataMap);
   }
@@ -142,18 +126,12 @@ public class FeedList implements org.apache.thrift.TBase<FeedList, FeedList._Fie
 
   public FeedList(
     List<Feed> feeds,
-    int page_num,
-    int page_count,
-    int total_page_num)
+    boolean has_more_data)
   {
     this();
     this.feeds = feeds;
-    this.page_num = page_num;
-    setPage_numIsSet(true);
-    this.page_count = page_count;
-    setPage_countIsSet(true);
-    this.total_page_num = total_page_num;
-    setTotal_page_numIsSet(true);
+    this.has_more_data = has_more_data;
+    setHas_more_dataIsSet(true);
   }
 
   /**
@@ -168,9 +146,7 @@ public class FeedList implements org.apache.thrift.TBase<FeedList, FeedList._Fie
       }
       this.feeds = __this__feeds;
     }
-    this.page_num = other.page_num;
-    this.page_count = other.page_count;
-    this.total_page_num = other.total_page_num;
+    this.has_more_data = other.has_more_data;
   }
 
   public FeedList deepCopy() {
@@ -180,12 +156,8 @@ public class FeedList implements org.apache.thrift.TBase<FeedList, FeedList._Fie
   @Override
   public void clear() {
     this.feeds = null;
-    setPage_numIsSet(false);
-    this.page_num = 0;
-    setPage_countIsSet(false);
-    this.page_count = 0;
-    setTotal_page_numIsSet(false);
-    this.total_page_num = 0;
+    setHas_more_dataIsSet(false);
+    this.has_more_data = false;
   }
 
   public int getFeedsSize() {
@@ -227,73 +199,27 @@ public class FeedList implements org.apache.thrift.TBase<FeedList, FeedList._Fie
     }
   }
 
-  public int getPage_num() {
-    return this.page_num;
+  public boolean isHas_more_data() {
+    return this.has_more_data;
   }
 
-  public FeedList setPage_num(int page_num) {
-    this.page_num = page_num;
-    setPage_numIsSet(true);
+  public FeedList setHas_more_data(boolean has_more_data) {
+    this.has_more_data = has_more_data;
+    setHas_more_dataIsSet(true);
     return this;
   }
 
-  public void unsetPage_num() {
-    __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __PAGE_NUM_ISSET_ID);
+  public void unsetHas_more_data() {
+    __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __HAS_MORE_DATA_ISSET_ID);
   }
 
-  /** Returns true if field page_num is set (has been assigned a value) and false otherwise */
-  public boolean isSetPage_num() {
-    return EncodingUtils.testBit(__isset_bitfield, __PAGE_NUM_ISSET_ID);
+  /** Returns true if field has_more_data is set (has been assigned a value) and false otherwise */
+  public boolean isSetHas_more_data() {
+    return EncodingUtils.testBit(__isset_bitfield, __HAS_MORE_DATA_ISSET_ID);
   }
 
-  public void setPage_numIsSet(boolean value) {
-    __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __PAGE_NUM_ISSET_ID, value);
-  }
-
-  public int getPage_count() {
-    return this.page_count;
-  }
-
-  public FeedList setPage_count(int page_count) {
-    this.page_count = page_count;
-    setPage_countIsSet(true);
-    return this;
-  }
-
-  public void unsetPage_count() {
-    __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __PAGE_COUNT_ISSET_ID);
-  }
-
-  /** Returns true if field page_count is set (has been assigned a value) and false otherwise */
-  public boolean isSetPage_count() {
-    return EncodingUtils.testBit(__isset_bitfield, __PAGE_COUNT_ISSET_ID);
-  }
-
-  public void setPage_countIsSet(boolean value) {
-    __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __PAGE_COUNT_ISSET_ID, value);
-  }
-
-  public int getTotal_page_num() {
-    return this.total_page_num;
-  }
-
-  public FeedList setTotal_page_num(int total_page_num) {
-    this.total_page_num = total_page_num;
-    setTotal_page_numIsSet(true);
-    return this;
-  }
-
-  public void unsetTotal_page_num() {
-    __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __TOTAL_PAGE_NUM_ISSET_ID);
-  }
-
-  /** Returns true if field total_page_num is set (has been assigned a value) and false otherwise */
-  public boolean isSetTotal_page_num() {
-    return EncodingUtils.testBit(__isset_bitfield, __TOTAL_PAGE_NUM_ISSET_ID);
-  }
-
-  public void setTotal_page_numIsSet(boolean value) {
-    __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __TOTAL_PAGE_NUM_ISSET_ID, value);
+  public void setHas_more_dataIsSet(boolean value) {
+    __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __HAS_MORE_DATA_ISSET_ID, value);
   }
 
   public void setFieldValue(_Fields field, Object value) {
@@ -306,27 +232,11 @@ public class FeedList implements org.apache.thrift.TBase<FeedList, FeedList._Fie
       }
       break;
 
-    case PAGE_NUM:
+    case HAS_MORE_DATA:
       if (value == null) {
-        unsetPage_num();
+        unsetHas_more_data();
       } else {
-        setPage_num((Integer)value);
-      }
-      break;
-
-    case PAGE_COUNT:
-      if (value == null) {
-        unsetPage_count();
-      } else {
-        setPage_count((Integer)value);
-      }
-      break;
-
-    case TOTAL_PAGE_NUM:
-      if (value == null) {
-        unsetTotal_page_num();
-      } else {
-        setTotal_page_num((Integer)value);
+        setHas_more_data((Boolean)value);
       }
       break;
 
@@ -338,14 +248,8 @@ public class FeedList implements org.apache.thrift.TBase<FeedList, FeedList._Fie
     case FEEDS:
       return getFeeds();
 
-    case PAGE_NUM:
-      return Integer.valueOf(getPage_num());
-
-    case PAGE_COUNT:
-      return Integer.valueOf(getPage_count());
-
-    case TOTAL_PAGE_NUM:
-      return Integer.valueOf(getTotal_page_num());
+    case HAS_MORE_DATA:
+      return Boolean.valueOf(isHas_more_data());
 
     }
     throw new IllegalStateException();
@@ -360,12 +264,8 @@ public class FeedList implements org.apache.thrift.TBase<FeedList, FeedList._Fie
     switch (field) {
     case FEEDS:
       return isSetFeeds();
-    case PAGE_NUM:
-      return isSetPage_num();
-    case PAGE_COUNT:
-      return isSetPage_count();
-    case TOTAL_PAGE_NUM:
-      return isSetTotal_page_num();
+    case HAS_MORE_DATA:
+      return isSetHas_more_data();
     }
     throw new IllegalStateException();
   }
@@ -392,30 +292,12 @@ public class FeedList implements org.apache.thrift.TBase<FeedList, FeedList._Fie
         return false;
     }
 
-    boolean this_present_page_num = true;
-    boolean that_present_page_num = true;
-    if (this_present_page_num || that_present_page_num) {
-      if (!(this_present_page_num && that_present_page_num))
+    boolean this_present_has_more_data = true;
+    boolean that_present_has_more_data = true;
+    if (this_present_has_more_data || that_present_has_more_data) {
+      if (!(this_present_has_more_data && that_present_has_more_data))
         return false;
-      if (this.page_num != that.page_num)
-        return false;
-    }
-
-    boolean this_present_page_count = true;
-    boolean that_present_page_count = true;
-    if (this_present_page_count || that_present_page_count) {
-      if (!(this_present_page_count && that_present_page_count))
-        return false;
-      if (this.page_count != that.page_count)
-        return false;
-    }
-
-    boolean this_present_total_page_num = true;
-    boolean that_present_total_page_num = true;
-    if (this_present_total_page_num || that_present_total_page_num) {
-      if (!(this_present_total_page_num && that_present_total_page_num))
-        return false;
-      if (this.total_page_num != that.total_page_num)
+      if (this.has_more_data != that.has_more_data)
         return false;
     }
 
@@ -445,32 +327,12 @@ public class FeedList implements org.apache.thrift.TBase<FeedList, FeedList._Fie
         return lastComparison;
       }
     }
-    lastComparison = Boolean.valueOf(isSetPage_num()).compareTo(typedOther.isSetPage_num());
+    lastComparison = Boolean.valueOf(isSetHas_more_data()).compareTo(typedOther.isSetHas_more_data());
     if (lastComparison != 0) {
       return lastComparison;
     }
-    if (isSetPage_num()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.page_num, typedOther.page_num);
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-    }
-    lastComparison = Boolean.valueOf(isSetPage_count()).compareTo(typedOther.isSetPage_count());
-    if (lastComparison != 0) {
-      return lastComparison;
-    }
-    if (isSetPage_count()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.page_count, typedOther.page_count);
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-    }
-    lastComparison = Boolean.valueOf(isSetTotal_page_num()).compareTo(typedOther.isSetTotal_page_num());
-    if (lastComparison != 0) {
-      return lastComparison;
-    }
-    if (isSetTotal_page_num()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.total_page_num, typedOther.total_page_num);
+    if (isSetHas_more_data()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.has_more_data, typedOther.has_more_data);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -503,16 +365,8 @@ public class FeedList implements org.apache.thrift.TBase<FeedList, FeedList._Fie
     }
     first = false;
     if (!first) sb.append(", ");
-    sb.append("page_num:");
-    sb.append(this.page_num);
-    first = false;
-    if (!first) sb.append(", ");
-    sb.append("page_count:");
-    sb.append(this.page_count);
-    first = false;
-    if (!first) sb.append(", ");
-    sb.append("total_page_num:");
-    sb.append(this.total_page_num);
+    sb.append("has_more_data:");
+    sb.append(this.has_more_data);
     first = false;
     sb.append(")");
     return sb.toString();
@@ -578,26 +432,10 @@ public class FeedList implements org.apache.thrift.TBase<FeedList, FeedList._Fie
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
-          case 2: // PAGE_NUM
-            if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-              struct.page_num = iprot.readI32();
-              struct.setPage_numIsSet(true);
-            } else { 
-              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-            }
-            break;
-          case 3: // PAGE_COUNT
-            if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-              struct.page_count = iprot.readI32();
-              struct.setPage_countIsSet(true);
-            } else { 
-              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-            }
-            break;
-          case 4: // TOTAL_PAGE_NUM
-            if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-              struct.total_page_num = iprot.readI32();
-              struct.setTotal_page_numIsSet(true);
+          case 2: // HAS_MORE_DATA
+            if (schemeField.type == org.apache.thrift.protocol.TType.BOOL) {
+              struct.has_more_data = iprot.readBool();
+              struct.setHas_more_dataIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
@@ -629,14 +467,8 @@ public class FeedList implements org.apache.thrift.TBase<FeedList, FeedList._Fie
         }
         oprot.writeFieldEnd();
       }
-      oprot.writeFieldBegin(PAGE_NUM_FIELD_DESC);
-      oprot.writeI32(struct.page_num);
-      oprot.writeFieldEnd();
-      oprot.writeFieldBegin(PAGE_COUNT_FIELD_DESC);
-      oprot.writeI32(struct.page_count);
-      oprot.writeFieldEnd();
-      oprot.writeFieldBegin(TOTAL_PAGE_NUM_FIELD_DESC);
-      oprot.writeI32(struct.total_page_num);
+      oprot.writeFieldBegin(HAS_MORE_DATA_FIELD_DESC);
+      oprot.writeBool(struct.has_more_data);
       oprot.writeFieldEnd();
       oprot.writeFieldStop();
       oprot.writeStructEnd();
@@ -659,16 +491,10 @@ public class FeedList implements org.apache.thrift.TBase<FeedList, FeedList._Fie
       if (struct.isSetFeeds()) {
         optionals.set(0);
       }
-      if (struct.isSetPage_num()) {
+      if (struct.isSetHas_more_data()) {
         optionals.set(1);
       }
-      if (struct.isSetPage_count()) {
-        optionals.set(2);
-      }
-      if (struct.isSetTotal_page_num()) {
-        optionals.set(3);
-      }
-      oprot.writeBitSet(optionals, 4);
+      oprot.writeBitSet(optionals, 2);
       if (struct.isSetFeeds()) {
         {
           oprot.writeI32(struct.feeds.size());
@@ -678,21 +504,15 @@ public class FeedList implements org.apache.thrift.TBase<FeedList, FeedList._Fie
           }
         }
       }
-      if (struct.isSetPage_num()) {
-        oprot.writeI32(struct.page_num);
-      }
-      if (struct.isSetPage_count()) {
-        oprot.writeI32(struct.page_count);
-      }
-      if (struct.isSetTotal_page_num()) {
-        oprot.writeI32(struct.total_page_num);
+      if (struct.isSetHas_more_data()) {
+        oprot.writeBool(struct.has_more_data);
       }
     }
 
     @Override
     public void read(org.apache.thrift.protocol.TProtocol prot, FeedList struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
-      BitSet incoming = iprot.readBitSet(4);
+      BitSet incoming = iprot.readBitSet(2);
       if (incoming.get(0)) {
         {
           org.apache.thrift.protocol.TList _list5 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
@@ -708,16 +528,8 @@ public class FeedList implements org.apache.thrift.TBase<FeedList, FeedList._Fie
         struct.setFeedsIsSet(true);
       }
       if (incoming.get(1)) {
-        struct.page_num = iprot.readI32();
-        struct.setPage_numIsSet(true);
-      }
-      if (incoming.get(2)) {
-        struct.page_count = iprot.readI32();
-        struct.setPage_countIsSet(true);
-      }
-      if (incoming.get(3)) {
-        struct.total_page_num = iprot.readI32();
-        struct.setTotal_page_numIsSet(true);
+        struct.has_more_data = iprot.readBool();
+        struct.setHas_more_dataIsSet(true);
       }
     }
   }
