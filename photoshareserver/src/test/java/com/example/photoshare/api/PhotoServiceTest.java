@@ -42,6 +42,7 @@ public class PhotoServiceTest extends TestCase {
     
     public void testGetFeedList() throws AException, TException {
         FeedList feedList = mPhotoClient.getFeedList(null, 10);
+        System.out.println("Get Feed List");
         for (Feed feed : feedList.getFeeds()) {
             System.out.println(feed.toString());
         }
@@ -55,6 +56,8 @@ public class PhotoServiceTest extends TestCase {
         String text = "bitmap " + System.currentTimeMillis();
         feed.setPhoto_data(text.getBytes());
         Feed resFeed = mPhotoClient.uploadFeed(feed);
+        System.out.println("Upload Feed");
+        System.out.println(resFeed.toString());
         assertTrue(resFeed.isSetFeed_id());
     }
 }
