@@ -1,5 +1,6 @@
 package com.example.photoshare.android;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -9,8 +10,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.Toast;
 
+import com.example.photoshare.android.net.RPCHelper;
+import com.example.photoshare.thrift.AException;
 import com.example.photoshare.thrift.Feed;
+import com.example.photoshare.thrift.FeedList;
+
+import org.apache.thrift.TException;
 
 public class FeedsHomeActivity extends ActionBarActivity implements
         GridView.OnItemClickListener, View.OnClickListener {
@@ -84,9 +91,37 @@ public class FeedsHomeActivity extends ActionBarActivity implements
             return true;
         } else if (id == R.id.action_refresh) {
             // TODO refresh the feedlist.
+            new RefreshFeedsTask(this).execute();
             return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 
+    class RefreshFeedsTask extends BaseTask {
+
+        public RefreshFeedsTask(Context context) {
+            super(context);
+        }
+
+        @Override
+        protected Object doInBackground(Void... params) {
+            try {
+                return RPCHelper.getPhotoService().getFeedList(0, 100);
+            } catch (AException ae) {
+                return ae;
+            } catch (TException e) {
+                return e;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Object o) {
+            super.onPostExecute(o);
+            if (o instanceof FeedList) {
+                mImageAdapter.setFeeds((FeedList)o);
+                mImageAdapter.notifyDataSetChanged();
+            }
+        }
+    }
 }
