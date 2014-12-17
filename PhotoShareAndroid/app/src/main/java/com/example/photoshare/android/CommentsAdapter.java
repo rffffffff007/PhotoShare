@@ -7,21 +7,41 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.example.photoshare.android.net.RPCHelper;
+import com.example.photoshare.thrift.AException;
+import com.example.photoshare.thrift.Comment;
+import com.example.photoshare.thrift.CommentList;
+import com.example.photoshare.thrift.Feed;
+import com.example.photoshare.thrift.FeedList;
+
+import org.apache.thrift.TException;
+
+import java.util.ArrayList;
+
+import static junit.framework.Assert.assertNotNull;
+
 
 /**
  * Created by faylon on 12/17/14.
  */
 public class CommentsAdapter extends BaseAdapter {
     private Context mContext;
+    private CommentList mCommentList;
+
 
     public CommentsAdapter(Context context) {
         mContext = context;
+        //mCommentList = new CommentList();
+        //mCommentList.setComments(new ArrayList<Comment>());
     }
+
+
 
     @Override
     public int getCount() {
-        return 10;
+        return mCommentList.getCommentsSize();
     }
+
 
     @Override
     public Object getItem(int position) {
@@ -44,5 +64,19 @@ public class CommentsAdapter extends BaseAdapter {
         TextView commentContent = (TextView)convertView.findViewById(R.id.comment_content);
         commentContent.setText("Lao He's comment. -----------");
         return convertView;
+    }
+
+    public void addComment(Comment comment) {
+        assertNotNull(mCommentList);
+        assertNotNull(comment);
+        if (mCommentList.comments == null) {
+            mCommentList.setComments(new ArrayList<Comment>());
+        }
+        mCommentList.comments.add(comment);
+    }
+
+    public void setCommentList(CommentList commentList) {
+        assertNotNull(commentList);
+        mCommentList = commentList;
     }
 }
