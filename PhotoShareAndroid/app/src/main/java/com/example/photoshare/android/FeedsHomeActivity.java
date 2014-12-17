@@ -29,7 +29,7 @@ public class FeedsHomeActivity extends ActionBarActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("Feeds Home");
+        setTitle("Soap Fun");
         setContentView(R.layout.activity_feeds_home);
         initElements();
         initContent();
