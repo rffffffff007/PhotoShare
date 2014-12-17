@@ -48,10 +48,10 @@ service IPhotoService {
 	Feed uploadFeed(1:FeedUploadReq feed) throws (1:AException ae),
 
 	// Send a comment to server. Server will fill the timestamp.
-	Comment sendComment(1: Comment comment) throws (1:AException ae),
+	Comment sendComment(1:Comment comment) throws (1:AException ae),
 
 	// Get comment list for a feed
-	CommentList getCommentList(1: string feed_id) throws (1:AException ae),
+	CommentList getCommentList(1:string feed_id, 2:i32 comments_count) throws (1:AException ae),
 }
 
 // only for server.

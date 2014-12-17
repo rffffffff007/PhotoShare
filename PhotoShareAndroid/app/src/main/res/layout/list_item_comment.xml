@@ -6,11 +6,13 @@
     android:paddingTop="6dp">
 
     <TextView
+        android:id="@+id/comment_uname"
         android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:text="Name:" />
 
     <TextView
+        android:id="@+id/comment_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="CONTENTCONTENT content content asldkfjaslk jlaksjf lkasjdf lkasj flkasj flkasj lkas" />

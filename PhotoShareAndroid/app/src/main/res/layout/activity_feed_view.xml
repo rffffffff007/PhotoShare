@@ -72,10 +72,10 @@
                     android:layout_height="wrap_content" />
 
                 <Button
+                    android:id="@+id/comment_submit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Add Comment" />
-
+                    android:text="Submit Comment" />
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
