@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="50dp"
+    android:paddingRight="50dp"
+    android:id="@+id/input_username">
+
+    <EditText
+        android:id="@+id/input_username_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="lao he loves soap"
+        android:text="" />
+
+</LinearLayout>

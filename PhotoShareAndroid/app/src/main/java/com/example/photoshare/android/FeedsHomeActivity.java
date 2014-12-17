@@ -1,20 +1,27 @@
 package com.example.photoshare.android;
 
+import android.annotation.TargetApi;
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.photoshare.android.net.RPCHelper;
@@ -32,14 +39,53 @@ public class FeedsHomeActivity extends ActionBarActivity implements
     private GridView mGridView;
     private View mBtnAdd;
     private ImageAdapter mImageAdapter;
+    private Activity mHomeActivity;
+    private String mUserName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mHomeActivity = this;
         setTitle("Soap Fun");
         setContentView(R.layout.activity_feeds_home);
         initElements();
         initContent();
+        if (Utils.GetUserName(this).isEmpty()) {
+            inputUserName();
+        } else {
+            Log.d("INFO", "User name fetched: " + Utils.GetUserName(mHomeActivity));
+        }
+    }
+
+    private void inputUserName() {
+        final AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setCancelable(false);
+        alert.setTitle("Please input your username:");
+        alert.setMessage("e.g. Lao He");
+        View inputView = LayoutInflater.from(mHomeActivity).inflate(
+                R.layout.input_username, null, false /* attachToRoot */);
+        alert.setView(inputView);
+        final EditText input = (EditText) inputView.findViewById(R.id.input_username_edit);;
+
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                String value = input.getEditableText().toString();
+                if (value.isEmpty()) {
+                    Toast.makeText(
+                            mHomeActivity, "User name cannot be empty", Toast.LENGTH_SHORT).show();
+                    inputUserName();
+                } else {
+                    Toast.makeText(
+                            mHomeActivity, "User name set: " + value, Toast.LENGTH_SHORT).show();
+                    Utils.SetUserName(mHomeActivity, value);
+                    Log.d("INFO", "User name: " + Utils.GetUserName(mHomeActivity));
+                }
+            }
+
+        });
+
+        alert.show();
     }
 
     private void initElements() {
