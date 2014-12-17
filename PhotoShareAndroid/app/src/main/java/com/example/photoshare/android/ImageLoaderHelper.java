@@ -1,7 +1,5 @@
 package com.example.photoshare.android;
 
-import android.content.Context;
-
 import com.android.volley.Cache;
 import com.android.volley.Network;
 import com.android.volley.RequestQueue;

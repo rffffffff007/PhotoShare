@@ -5,19 +5,6 @@
     android:orientation="vertical"
     android:padding="20dp">
 
-    <EditText
-        android:id="@+id/image_url"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Input URL"
-        android:text="http://211.155.92.122/images/test.jpg" />
-
-    <Button
-        android:id="@+id/btn_add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="show image" />
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -36,6 +23,7 @@
         <Button
             android:id="@+id/btn_more"
             android:layout_alignBottom="@id/grid_view"
+            android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="more" />

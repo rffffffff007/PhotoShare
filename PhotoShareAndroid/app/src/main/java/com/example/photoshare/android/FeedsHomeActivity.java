@@ -1,6 +1,5 @@
 package com.example.photoshare.android;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
@@ -8,7 +7,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
@@ -20,7 +18,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.photoshare.android.net.RPCHelper;
@@ -34,9 +31,7 @@ public class FeedsHomeActivity extends ActionBarActivity implements
         GridView.OnItemClickListener, View.OnClickListener {
 
     private static final String LOG_TAG = "FeedsHomeActivity";
-    private EditText mImageUrl;
     private GridView mGridView;
-    private View mBtnAdd;
     private View mBtnMore;
     private ImageAdapter mImageAdapter;
     private Activity mHomeActivity;
@@ -89,13 +84,10 @@ public class FeedsHomeActivity extends ActionBarActivity implements
     }
 
     private void initElements() {
-        mImageUrl = (EditText) findViewById(R.id.image_url);
         mGridView = (GridView) findViewById(R.id.grid_view);
-        mBtnAdd = findViewById(R.id.btn_add);
         mBtnMore = findViewById(R.id.btn_more);
 
         mGridView.setOnItemClickListener(this);
-        mBtnAdd.setOnClickListener(this);
         mBtnMore.setOnClickListener(this);
     }
 
@@ -114,8 +106,7 @@ public class FeedsHomeActivity extends ActionBarActivity implements
 
     @Override
     public void onClick(View v) {
-        if (v == mBtnAdd) {
-        } else if (v == mBtnMore) {
+        if (v == mBtnMore) {
             new MoreFeedsTask(this).execute();
         }
     }
@@ -230,7 +221,6 @@ public class FeedsHomeActivity extends ActionBarActivity implements
                     Toast.makeText(
                             FeedsHomeActivity.this, "No new photos.", Toast.LENGTH_SHORT).show();
                 }
-
             }
         }
     }

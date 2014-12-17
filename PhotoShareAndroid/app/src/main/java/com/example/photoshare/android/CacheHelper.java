@@ -7,11 +7,6 @@ import android.support.v4.util.LruCache;
 import com.android.volley.Cache;
 import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.ImageLoader;
-import com.example.photoshare.thrift.FeedList;
-
-import org.apache.thrift.TDeserializer;
-import org.apache.thrift.TException;
-import org.apache.thrift.TSerializer;
 
 import java.io.File;
 

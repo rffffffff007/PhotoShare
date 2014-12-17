@@ -1,7 +1,5 @@
 package com.example.photoshare.android;
 
-import android.util.Log;
-
 import com.android.volley.Cache;
 import com.example.photoshare.thrift.Feed;
 import com.example.photoshare.thrift.FeedList;
@@ -57,6 +55,11 @@ public class FeedListHelper {
         }
         if (i == 0) {
             return false;
+        }
+        if (i == feedList.getFeedsSize()) {
+            mFeedList = feedList;
+            putFeedsToCache();
+            return true;
         }
         List<Feed> newFeeds = feedList.getFeeds().subList(0, i);
         if (mFeedList.getFeeds() != null) {

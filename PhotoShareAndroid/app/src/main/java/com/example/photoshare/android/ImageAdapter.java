@@ -8,8 +8,6 @@ import android.widget.BaseAdapter;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
-import com.example.photoshare.thrift.Feed;
-import com.example.photoshare.thrift.FeedList;
 
 /**
  * Created by zhouxiaobo on 12/16/14.
