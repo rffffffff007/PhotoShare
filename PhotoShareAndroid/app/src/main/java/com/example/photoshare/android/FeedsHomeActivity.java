@@ -4,12 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.example.photoshare.android.net.RPCHelper;
 import com.example.photoshare.thrift.AException;
@@ -24,6 +26,7 @@ public class FeedsHomeActivity extends ActionBarActivity implements
     private EditText mImageUrl;
     private GridView mGridView;
     private View mBtnAdd;
+    private View mBtnMore;
     private ImageAdapter mImageAdapter;
 
     @Override
@@ -39,8 +42,11 @@ public class FeedsHomeActivity extends ActionBarActivity implements
         mImageUrl = (EditText) findViewById(R.id.image_url);
         mGridView = (GridView) findViewById(R.id.grid_view);
         mBtnAdd = findViewById(R.id.btn_add);
+        mBtnMore = findViewById(R.id.btn_more);
+
         mGridView.setOnItemClickListener(this);
         mBtnAdd.setOnClickListener(this);
+        mBtnMore.setOnClickListener(this);
     }
 
     private void initContent() {
@@ -63,6 +69,8 @@ public class FeedsHomeActivity extends ActionBarActivity implements
             feed.setPhoto_url(mImageUrl.getText().toString());
             mImageAdapter.addFeed(feed);
             mImageAdapter.notifyDataSetChanged();
+        } else if (v == mBtnMore) {
+            new AddFeedsTask(this).execute();
         }
     }
 
@@ -98,16 +106,14 @@ public class FeedsHomeActivity extends ActionBarActivity implements
     }
 
     class RefreshFeedsTask extends BaseTask {
-        private Context mContext;
         public RefreshFeedsTask(Context context) {
             super(context);
-            mContext = context;
         }
 
         @Override
         protected Object doInBackground(Void... params) {
             try {
-                return RPCHelper.getPhotoService().getFeedList(null, 100);
+                return RPCHelper.getPhotoService().getFeedList(null, 3);
             } catch (AException ae) {
                 return ae;
             } catch (TException e) {
@@ -119,9 +125,39 @@ public class FeedsHomeActivity extends ActionBarActivity implements
         protected void onPostExecute(Object o) {
             super.onPostExecute(o);
             if (o instanceof FeedList) {
-                mImageAdapter.setFeeds((FeedList)o);
-                CacheHelper.PutFeedsToCache((FeedList)o, mContext);
+                mImageAdapter.setFeeds((FeedList) o);
                 mImageAdapter.notifyDataSetChanged();
+            }
+        }
+    }
+
+    class AddFeedsTask extends BaseTask {
+        public AddFeedsTask(Context context) {
+            super(context);
+        }
+
+        @Override
+        protected Object doInBackground(Void... params) {
+            try {
+                return RPCHelper.getPhotoService().getFeedList(
+                        mImageAdapter.getLastFeedId(), 3);
+            } catch (AException ae) {
+                return ae;
+            } catch (TException e) {
+                return e;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Object o) {
+            super.onPostExecute(o);
+            if (o instanceof FeedList) {
+                if (!mImageAdapter.mergeFeeds((FeedList) o)) {
+                    Toast.makeText(
+                            FeedsHomeActivity.this, "No more photos.", Toast.LENGTH_SHORT).show();
+                } else {
+                    mImageAdapter.notifyDataSetChanged();
+                }
             }
         }
     }

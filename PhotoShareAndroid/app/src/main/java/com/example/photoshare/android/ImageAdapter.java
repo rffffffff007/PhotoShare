@@ -11,8 +11,6 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.example.photoshare.thrift.Feed;
 import com.example.photoshare.thrift.FeedList;
 
-import java.util.ArrayList;
-
 /**
  * Created by zhouxiaobo on 12/16/14.
  */
@@ -28,14 +26,11 @@ public class ImageAdapter extends BaseAdapter {
         mLayoutInflater = LayoutInflater.from(mContext);
         mImageLoader = imageLoader;
         mFeeds = CacheHelper.getFeedsFromCache(c);
-        if (mFeeds.getFeeds() == null) {
-            mFeeds.setFeeds(new ArrayList<Feed>());
-        }
     }
 
     @Override
     public int getCount() {
-        return mFeeds.getFeeds().size();
+        return mFeeds.getFeedsSize();
     }
 
     @Override
@@ -62,18 +57,33 @@ public class ImageAdapter extends BaseAdapter {
             imageView = (NetworkImageView) convertView.findViewById(R.id.image);
             imageView.setImageUrl(null, mImageLoader);
         }
-        String imageUrl = mFeeds.feeds.get(position).getPhoto_url();
+        String imageUrl = mFeeds.getFeeds().get(position).getPhoto_url();
         imageView.setImageUrl(imageUrl, mImageLoader);
         return convertView;
     }
 
     public void addFeed(Feed feed) {
-        mFeeds.feeds.add(feed);
+        mFeeds.addToFeeds(feed);
         CacheHelper.PutFeedsToCache(mFeeds, mContext);
     }
 
     public void setFeeds(FeedList feeds) {
         mFeeds = feeds;
         CacheHelper.PutFeedsToCache(mFeeds, mContext);
+    }
+
+    public String getLastFeedId() {
+        if (getCount() == 0) {
+            return null;
+        }
+        return mFeeds.getFeeds().get(getCount() - 1).getFeed_id();
+    }
+
+    public boolean mergeFeeds(FeedList feeds) {
+        if (feeds.getFeedsSize() == 0) {
+            return false;
+        }
+        mFeeds.getFeeds().addAll(feeds.getFeeds());
+        return true;
     }
 }
