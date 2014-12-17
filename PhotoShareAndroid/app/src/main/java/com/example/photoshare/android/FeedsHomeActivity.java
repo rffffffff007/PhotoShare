@@ -3,6 +3,7 @@ package com.example.photoshare.android;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -88,12 +89,9 @@ public class FeedsHomeActivity extends ActionBarActivity implements
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_pick) {
-            // TODO pick from gallery
-            Intent intent = new Intent(this, FeedUploadActivity.class);
-            startActivity(intent);
+            dispatchPickingImageFromGalleryIntent();
             return true;
         } else if (id == R.id.action_take) {
-            // TODO take camera photo
             photoUri = dispatchImageCaptureIntent();
             return true;
         } else if (id == R.id.action_change_name) {
@@ -111,6 +109,15 @@ public class FeedsHomeActivity extends ActionBarActivity implements
     private Uri photoUri;
 
     private static final int IMAGE_CAPTURE_REQUEST_CODE = 1;
+    private static final int IMAGE_PICKING_REQUEST_CODE = 2;
+
+    private void dispatchPickingImageFromGalleryIntent() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"),
+                IMAGE_PICKING_REQUEST_CODE);
+    }
 
     private Uri dispatchImageCaptureIntent() {
         Intent imageCaptureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -139,6 +146,19 @@ public class FeedsHomeActivity extends ActionBarActivity implements
                 Log.d("INFO", "User cancelled taking picture.");
             } else {
                 Toast.makeText(this, "Failed to start the camera.", Toast.LENGTH_LONG).show();
+            }
+        } else if (requestCode == IMAGE_PICKING_REQUEST_CODE) {
+            if(resultCode == RESULT_OK && returnedIntent != null && returnedIntent.getData() != null) {
+                Uri uri = returnedIntent.getData();
+                Log.d("INFO", "Image picked: " + uri.toString());
+                Intent intent = new Intent(this, FeedUploadActivity.class);
+                intent.putExtra("extra_image_uri", uri);
+                startActivity(intent);
+            } else if (resultCode == RESULT_CANCELED) {
+                Log.d("INFO", "User cancelled picture picking.");
+            } else {
+                Toast.makeText(this, "Error when trying to pick a picture from gallery.",
+                        Toast.LENGTH_LONG).show();
             }
         }
     }

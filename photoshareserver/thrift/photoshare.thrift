@@ -22,8 +22,19 @@ struct FeedUploadReq {
 }
 
 struct FeedList {
-	1: list<Feed> feeds;
-	2: bool has_more_data;
+	1: list<Feed> feeds,
+	2: bool has_more_data,
+}
+
+struct Comment {
+	1: string sender_user_name,
+	2: string feed_id,
+	3: string content,
+	4: i64 timestamp,
+}
+
+struct CommentList {
+	1: list<Comment> comments,
 }
 
 service IPhotoService {
@@ -35,4 +46,19 @@ service IPhotoService {
 
 	// Upload a feed to server.
 	Feed uploadFeed(1:FeedUploadReq feed) throws (1:AException ae),
+
+	// Send a comment to server. Server will fill the timestamp.
+	Comment sendComment(1: Comment comment) throws (1:AException ae),
+
+	// Get comment list for a feed
+	CommentList getCommentList(1: string feed_id) throws (1:AException ae),
+}
+
+// only for server.
+struct FeedsData {
+	1: list<Feed> feed,
+}
+
+struct CommentsData {
+	1: map<string, list<Comment>> feed_comments,
 }
