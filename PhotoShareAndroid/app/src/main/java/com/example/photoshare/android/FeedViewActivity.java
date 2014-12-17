@@ -53,19 +53,11 @@ public class FeedViewActivity extends ActionBarActivity  implements
     }
 
     private void initContent() {
-<<<<<<< HEAD
-        Feed feed = (Feed) getIntent().getSerializableExtra(EXTRA_FEED);
-        if (feed != null) {
-            mImage.setImageUrl(feed.getPhoto_url(), ImageLoaderHelper.getImageLoader());
-            if (feed.isSetFeed_desc()) {
-                mDesc.setText(feed.getFeed_desc());
-=======
         mFeed = (Feed) getIntent().getSerializableExtra(EXTRA_FEED);
         if (mFeed != null) {
-            mImage.setImageUrl(mFeed.getPhoto_url(), ImageLoaderHelper.getImageLoader(this));
+            mImage.setImageUrl(mFeed.getPhoto_url(), ImageLoaderHelper.getImageLoader());
             if (mFeed.isSetFeed_desc()) {
                 mDesc.setText(mFeed.getFeed_desc());
->>>>>>> 4c0e2f3767eacc6871fb3277cbd3bfd336f77765
             }
         }
 
