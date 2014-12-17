@@ -66,15 +66,6 @@ public class PhotoServiceTest extends TestCase {
         assertTrue(firstFeed.getFeed_desc().equals(feed.getFeed_desc()));
     }
 
-    public void testGetFeedList() throws AException, TException {
-        FeedList feedList = mPhotoClient.getFeedList(null, 3);
-        System.out.println("Get Feed List");
-        for (Feed feed : feedList.getFeeds()) {
-            System.out.println(feed.toString());
-        }
-        assertTrue(feedList.getFeedsSize() > 0);
-    }
-
     public void testSendAndGetComment() throws Exception {
         // send comment
         System.out.println("Send comment");

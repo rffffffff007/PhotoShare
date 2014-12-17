@@ -144,20 +144,19 @@ public class PhotoService extends BaseServlet {
                 throw new AException("page_count should be bigger than 0");
             }
             FeedList feedList = new FeedList();
-            int startPos = 0;
+            int feedsSize = feedsData.getFeedSize();
+	    int endPos = feedsSize - 1;
             if (last_feed_id != null) {
-                for (int i = 0; i < feedsData.getFeedSize(); ++i) {
+                for (int i = feedsSize - 1; i >= 0; --i) {
                     if (last_feed_id.compareTo(feedsData.getFeed().get(i)
-                            .getFeed_id()) < 0) {
-                        startPos = i;
+                            .getFeed_id()) > 0) {
+                        endPos = i;
                         break;
                     }
                 }
             }
-            int endPos = startPos + page_count;
-            endPos = endPos > feedsData.getFeedSize() ? feedsData.getFeedSize()
-                    : endPos;
-            for (int i = endPos - 1; i >= startPos; i--) {
+            int startPos = endPos + 1 - page_count;
+            for (int i = endPos; i >= startPos; i--) {
                 feedList.addToFeeds(feedsData.getFeed().get(i));
             }
             return feedList;
