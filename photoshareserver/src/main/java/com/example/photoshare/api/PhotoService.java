@@ -157,7 +157,7 @@ public class PhotoService extends BaseServlet {
             int endPos = startPos + page_count;
             endPos = endPos > feedsData.getFeedSize() ? feedsData.getFeedSize()
                     : endPos;
-            for (int i = startPos; i < endPos; i++) {
+            for (int i = endPos - 1; i >= startPos; i--) {
                 feedList.addToFeeds(feedsData.getFeed().get(i));
             }
             return feedList;
@@ -172,7 +172,7 @@ public class PhotoService extends BaseServlet {
             long timestamp = System.currentTimeMillis();
             feed.setFeed_id("" + timestamp);
             feed.setTimestamp(timestamp);
-            feedsData.getFeed().add(0, feed);
+            feedsData.getFeed().add(feed);
 
             if (feedReq.isSetPhoto_data()) {
                 try {
@@ -197,7 +197,7 @@ public class PhotoService extends BaseServlet {
             if (!commentMap.containsKey(feed_id)) {
                 commentMap.put(feed_id, new ArrayList<Comment>());
             }
-            commentMap.get(comment.feed_id).add(0, comment);
+            commentMap.get(comment.feed_id).add(comment);
             comment.setTimestamp(System.currentTimeMillis());
             return comment;
         }
@@ -209,8 +209,8 @@ public class PhotoService extends BaseServlet {
                     .getFeed_comments();
             List<Comment> comments = commentMap.get(feed_id);
 
-            CommentList commentList = new CommentList();
-            for (int i = 0; i < comments_count && i < comments.size(); i++) {
+            CommentList commentList = new CommentList(new ArrayList<Comment>());
+            for (int i = comments.size() - 1; i >= 0 && i >= comments.size() - comments_count; i--) {
                 commentList.addToComments(comments.get(i));
             }
             return commentList;
