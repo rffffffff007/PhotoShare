@@ -23,9 +23,7 @@ struct FeedUploadReq {
 
 struct FeedList {
 	1: list<Feed> feeds;
-	2: i32 page_num,
-	3: i32 page_count,
-	4: i32 total_page_num,
+	2: bool has_more_data;
 }
 
 service IPhotoService {
@@ -33,7 +31,7 @@ service IPhotoService {
 	string hello(1:string name) throws (1:AException ae),
 
 	// Get the feed list. Page start from 0.
-	FeedList getFeedList(1:i32 page_num, 2:i32 page_count) throws (1:AException ae),
+	FeedList getFeedList(1:string last_feed_id, 2:i32 page_count) throws (1:AException ae),
 
 	// Upload a feed to server.
 	Feed uploadFeed(1:FeedUploadReq feed) throws (1:AException ae),
