@@ -22,6 +22,7 @@ public class ImageAdapter extends BaseAdapter {
     private final LayoutInflater mLayoutInflater;
     private FeedList mFeeds;
 
+
     public ImageAdapter(Context c, ImageLoader imageLoader) {
         mContext = c;
         mLayoutInflater = LayoutInflater.from(mContext);
@@ -68,6 +69,11 @@ public class ImageAdapter extends BaseAdapter {
 
     public void addFeed(Feed feed) {
         mFeeds.feeds.add(feed);
+        CacheHelper.PutFeedsToCache(mFeeds, mContext);
+    }
+
+    public void setFeeds(FeedList feeds) {
+        mFeeds = feeds;
         CacheHelper.PutFeedsToCache(mFeeds, mContext);
     }
 }

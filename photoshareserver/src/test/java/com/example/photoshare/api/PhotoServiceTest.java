@@ -41,7 +41,7 @@ public class PhotoServiceTest extends TestCase {
     }
     
     public void testGetFeedList() throws AException, TException {
-        FeedList feedList = mPhotoClient.getFeedList(0, 10);
+        FeedList feedList = mPhotoClient.getFeedList(null, 10);
         for (Feed feed : feedList.getFeeds()) {
             System.out.println(feed.toString());
         }

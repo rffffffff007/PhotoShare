@@ -1,7 +1,10 @@
 package com.example.photoshare.android;
 
+<<<<<<< HEAD
 import android.content.ContentResolver;
 import android.content.ContentValues;
+=======
+>>>>>>> 1d10780d982b36cf87b5e1c4529a6fbb08e6a682
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -20,7 +23,12 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import com.example.photoshare.android.net.RPCHelper;
+import com.example.photoshare.thrift.AException;
 import com.example.photoshare.thrift.Feed;
+import com.example.photoshare.thrift.FeedList;
+
+import org.apache.thrift.TException;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -38,7 +46,7 @@ public class FeedsHomeActivity extends ActionBarActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("Feeds Home");
+        setTitle("Soap Fun");
         setContentView(R.layout.activity_feeds_home);
         initElements();
         initContent();
@@ -98,11 +106,14 @@ public class FeedsHomeActivity extends ActionBarActivity implements
             return true;
         } else if (id == R.id.action_refresh) {
             // TODO refresh the feedlist.
+            new RefreshFeedsTask(this).execute();
             return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 
+<<<<<<< HEAD
     private Uri photoUri;
 
     private static final int IMAGE_CAPTURE_REQUEST_CODE = 1;
@@ -140,3 +151,34 @@ public class FeedsHomeActivity extends ActionBarActivity implements
 
 
 }
+=======
+    class RefreshFeedsTask extends BaseTask {
+        private Context mContext;
+        public RefreshFeedsTask(Context context) {
+            super(context);
+            mContext = context;
+        }
+
+        @Override
+        protected Object doInBackground(Void... params) {
+            try {
+                return RPCHelper.getPhotoService().getFeedList(null, 100);
+            } catch (AException ae) {
+                return ae;
+            } catch (TException e) {
+                return e;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Object o) {
+            super.onPostExecute(o);
+            if (o instanceof FeedList) {
+                mImageAdapter.setFeeds((FeedList)o);
+                CacheHelper.PutFeedsToCache((FeedList)o, mContext);
+                mImageAdapter.notifyDataSetChanged();
+            }
+        }
+    }
+}
+>>>>>>> 1d10780d982b36cf87b5e1c4529a6fbb08e6a682

@@ -25,12 +25,14 @@ public class PhotoService extends BaseServlet {
         
         protected PhotoServiceImpl() {
             feeds = new ArrayList<Feed>();
-            Feed feed = new Feed();
-            feed.setFeed_id("test1");
+            FeedUploadReq feed = new FeedUploadReq();
             feed.setUser_name("robot");
             feed.setFeed_desc("This is for test");
-            feed.setPhoto_url("http://211.155.92.122:8080/images/test.jpg");
-            feeds.add(feed);
+            try {
+                uploadFeed(feed);
+            } catch (TException e) {
+                e.printStackTrace();
+            }
         }
         
         @Override
@@ -39,22 +41,23 @@ public class PhotoService extends BaseServlet {
         }
 
         @Override
-        public FeedList getFeedList(int page_num, int page_count)
+        public FeedList getFeedList(String last_feed_id, int page_count)
                 throws AException, TException {
             if (page_count <= 0) {
                 throw new AException("page_count should be bigger than 0");
             }
             FeedList feedList = new FeedList();
-            feedList.setPage_num(page_num);
-            feedList.setPage_count(page_count);
-            int totalPageNum = (feeds.size() + page_count - 1) / page_count;
-            feedList.setTotal_page_num(totalPageNum);
-            if (page_num > totalPageNum) {
-                throw new AException("There are only " + totalPageNum + " pages.");
+            int startPos = 0;
+            if (last_feed_id != null) {
+                for (int i = 0; i < feeds.size(); ++i) {
+                    if (last_feed_id.compareTo(feeds.get(i).getFeed_id()) <= 0) {
+                        startPos = i;
+                        break;
+                    }
+                }
             }
-            int endPos = feeds.size() - page_num * page_count;
-            int startPos = endPos - page_count;
-            startPos = startPos < 0 ? 0 : startPos;
+            int endPos = startPos + page_count;
+            endPos = endPos > feeds.size() ? feeds.size() : 0;
             feedList.setFeeds(feeds.subList(startPos, endPos));
             return feedList;
         }
@@ -65,7 +68,9 @@ public class PhotoService extends BaseServlet {
             Feed feed = new Feed();
             feed.setFeed_desc(feedReq.getFeed_desc());
             feed.setUser_name(feedReq.getUser_name());
-            feed.setFeed_id("" + System.currentTimeMillis());
+            long timestamp = System.currentTimeMillis();
+            feed.setFeed_id("" + timestamp);
+            feed.setTimestamp(timestamp);
             feeds.add(feed);
             return feed;
         }
