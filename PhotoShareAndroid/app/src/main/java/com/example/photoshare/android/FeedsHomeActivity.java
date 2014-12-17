@@ -1,20 +1,35 @@
 package com.example.photoshare.android;
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.example.photoshare.thrift.Feed;
 
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+
 public class FeedsHomeActivity extends ActionBarActivity implements
         GridView.OnItemClickListener, View.OnClickListener {
-
+    private static final String LOG_TAG = "FeedsHOmeActivity";
     private EditText mImageUrl;
     private GridView mGridView;
     private View mBtnAdd;
@@ -76,8 +91,7 @@ public class FeedsHomeActivity extends ActionBarActivity implements
             return true;
         } else if (id == R.id.action_take) {
             // TODO take camera photo
-            Intent intent = new Intent(this, FeedViewActivity.class);
-            startActivity(intent);
+            photoUri = dispatchImageCaptureIntent();
             return true;
         } else if (id == R.id.action_change_name) {
             // TODO open a dialog to random pick name.
@@ -88,5 +102,41 @@ public class FeedsHomeActivity extends ActionBarActivity implements
         }
         return super.onOptionsItemSelected(item);
     }
+
+    private Uri photoUri;
+
+    private static final int IMAGE_CAPTURE_REQUEST_CODE = 1;
+
+    private Uri dispatchImageCaptureIntent() {
+        Intent imageCaptureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        Uri resultUri = null;
+        if (imageCaptureIntent.resolveActivity(getPackageManager()) != null) {
+            resultUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                    new ContentValues());
+            Log.d(LOG_TAG, "Original image will be saved to:\n" + resultUri);
+            imageCaptureIntent.putExtra(MediaStore.EXTRA_OUTPUT, resultUri);
+            startActivityForResult(imageCaptureIntent, IMAGE_CAPTURE_REQUEST_CODE);
+        } else {
+            Toast.makeText(
+                    this, "Camera not available", Toast.LENGTH_LONG).show();
+        }
+        return resultUri;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent returnedIntent) {
+        if (requestCode == IMAGE_CAPTURE_REQUEST_CODE) {
+            if (resultCode == RESULT_OK && photoUri != null) {
+                Intent intent = new Intent(this, FeedUploadActivity.class);
+                intent.putExtra("extra_image_uri", photoUri);
+                startActivity(intent);
+            } else if (resultCode == RESULT_CANCELED) {
+                Log.d("INFO", "User cancelled taking picture.");
+            } else {
+                Toast.makeText(this, "Failed to start the camera.", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
 
 }
