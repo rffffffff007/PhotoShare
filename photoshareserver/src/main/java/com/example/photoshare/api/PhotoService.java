@@ -80,6 +80,7 @@ public class PhotoService extends BaseServlet {
                 try {
                     writeImage(feedReq.getPhoto_data());
                 } catch (IOException e) {
+                    e.printStackTrace();
                     throw new AException("Error in writing image file.");
                 }
             }
