@@ -8,9 +8,10 @@ import android.widget.BaseAdapter;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
+import com.example.photoshare.thrift.Feed;
+import com.example.photoshare.thrift.FeedList;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by zhouxiaobo on 12/16/14.
@@ -19,29 +20,29 @@ public class ImageAdapter extends BaseAdapter {
     private final Context mContext;
     private final ImageLoader mImageLoader;
     private final LayoutInflater mLayoutInflater;
-    private List<String> mImageUrls = new ArrayList<String>();
+    private FeedList mFeeds;
 
     public ImageAdapter(Context c, ImageLoader imageLoader) {
         mContext = c;
         mLayoutInflater = LayoutInflater.from(mContext);
         mImageLoader = imageLoader;
-    }
-
-    public List<String> getImageUrls() {
-        return mImageUrls;
+        mFeeds = CacheHelper.getFeedsFromCache(c);
+        if (mFeeds.getFeeds() == null) {
+            mFeeds.setFeeds(new ArrayList<Feed>());
+        }
     }
 
     @Override
     public int getCount() {
-        return mImageUrls.size();
+        return mFeeds.getFeeds().size();
     }
 
     @Override
     public Object getItem(int position) {
-        if (position >= mImageUrls.size()) {
+        if (position >= getCount()) {
             return null;
         }
-        return mImageUrls.get(position);
+        return mFeeds.getFeeds().get(position);
     }
 
     @Override
@@ -60,12 +61,13 @@ public class ImageAdapter extends BaseAdapter {
             imageView = (NetworkImageView) convertView.findViewById(R.id.image);
             imageView.setImageUrl(null, mImageLoader);
         }
-        String imageUrl = mImageUrls.get(position);
+        String imageUrl = mFeeds.feeds.get(position).getPhoto_url();
         imageView.setImageUrl(imageUrl, mImageLoader);
         return convertView;
     }
 
-    public void setImageUrls(List<String> imageUrls) {
-        mImageUrls = imageUrls;
+    public void addFeed(Feed feed) {
+        mFeeds.feeds.add(feed);
+        CacheHelper.PutFeedsToCache(mFeeds, mContext);
     }
 }

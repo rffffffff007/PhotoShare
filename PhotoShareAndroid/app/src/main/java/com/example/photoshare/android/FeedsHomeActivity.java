@@ -12,8 +12,6 @@ import android.widget.GridView;
 
 import com.example.photoshare.thrift.Feed;
 
-import java.util.ArrayList;
-
 public class FeedsHomeActivity extends ActionBarActivity implements
         GridView.OnItemClickListener, View.OnClickListener {
 
@@ -40,16 +38,14 @@ public class FeedsHomeActivity extends ActionBarActivity implements
     }
 
     private void initContent() {
-        mImageAdapter = new ImageAdapter(this, VolleyUtils.getImageLoader(this));
-        mImageAdapter.setImageUrls(new ArrayList<String>());
+        mImageAdapter = new ImageAdapter(this, ImageLoaderHelper.getImageLoader(this));
         mGridView.setAdapter(mImageAdapter);
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(getBaseContext(), FeedViewActivity.class);
-        Feed feed = new Feed();
-        feed.setPhoto_url(mImageAdapter.getImageUrls().get(position));
+        Feed feed = (Feed) mImageAdapter.getItem(position);
         intent.putExtra(FeedViewActivity.EXTRA_FEED, feed);
         startActivity(intent);
     }
@@ -57,7 +53,9 @@ public class FeedsHomeActivity extends ActionBarActivity implements
     @Override
     public void onClick(View v) {
         if (v == mBtnAdd) {
-            mImageAdapter.getImageUrls().add(mImageUrl.getText().toString());
+            Feed feed = new Feed();
+            feed.setPhoto_url(mImageUrl.getText().toString());
+            mImageAdapter.addFeed(feed);
             mImageAdapter.notifyDataSetChanged();
         }
     }
