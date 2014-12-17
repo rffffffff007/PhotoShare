@@ -9,6 +9,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -113,8 +114,9 @@ public class PhotoService extends BaseServlet {
         private long lastSaveTime = 0;
 
         protected PhotoServiceImpl() {
-            feedsData = new FeedsData();
-            commentsData = new CommentsData();
+            feedsData = new FeedsData(new ArrayList<Feed>());
+            commentsData = new CommentsData(
+                    new HashMap<String, List<Comment>>());
             restoreData(DATA_KEY_FEEDS, feedsData);
             restoreData(DATA_KEY_COMMENTS, commentsData);
         }
