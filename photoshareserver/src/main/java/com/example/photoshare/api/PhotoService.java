@@ -66,6 +66,8 @@ public class PhotoService extends BaseServlet {
             return feedList;
         }
 
+        private static final String IMAGE_URL = "http://211.155.92.122/images/";
+        
         @Override
         public Feed uploadFeed(FeedUploadReq feedReq) throws AException,
                 TException {
@@ -78,8 +80,10 @@ public class PhotoService extends BaseServlet {
             feeds.add(feed);
             if (feedReq.isSetPhoto_data()) {
                 try {
-                    writeImage(feedReq.getPhoto_data());
+                    File file = writeImage(feedReq.getPhoto_data());
+                    feed.setPhoto_url(IMAGE_URL + file.getName());
                 } catch (IOException e) {
+                    e.printStackTrace();
                     throw new AException("Error in writing image file.");
                 }
             }
