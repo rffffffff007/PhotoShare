@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 
 /**
@@ -38,6 +39,10 @@ public class CommentsAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.list_item_comment, parent, false);
         }
         // TODO set name and content
+        TextView commentUName = (TextView)convertView.findViewById(R.id.comment_uname);
+        commentUName.setText("Lao He:");
+        TextView commentContent = (TextView)convertView.findViewById(R.id.comment_content);
+        commentContent.setText("Lao He's comment. -----------");
         return convertView;
     }
 }
