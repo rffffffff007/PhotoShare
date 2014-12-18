@@ -5,9 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
+import com.example.photoshare.thrift.Feed;
 
 /**
  * Created by zhouxiaobo on 12/16/14.
@@ -50,8 +52,16 @@ public class ImageAdapter extends BaseAdapter {
             imageView = (NetworkImageView) convertView.findViewById(R.id.image);
             imageView.setImageUrl(null, mImageLoader);
         }
-        String imageUrl = FeedListHelper.getFeedList().getFeeds().get(position).getPhoto_url();
-        imageView.setImageUrl(imageUrl, mImageLoader);
+        Feed feed = FeedListHelper.getFeedList().getFeeds().get(position);
+        imageView.setImageUrl(feed.getPhoto_url(), mImageLoader);
+        if (feed.isSetUser_name()) {
+            TextView nameView = (TextView) convertView.findViewById(R.id.name);
+            nameView.setText(feed.getUser_name());
+        }
+        if (feed.isSetTimestamp()) {
+            TextView timeView = (TextView) convertView.findViewById(R.id.time);
+            timeView.setText(Utils.GetReadableDate(feed.getTimestamp()));
+        }
         return convertView;
     }
 }
