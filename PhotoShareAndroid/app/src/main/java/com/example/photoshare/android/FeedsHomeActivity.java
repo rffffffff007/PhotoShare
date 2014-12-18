@@ -94,7 +94,7 @@ public class FeedsHomeActivity extends ActionBarActivity implements
         if (Utils.GetUserName(this).isEmpty()) {
             inputUserName();
         } else {
-            mHomeActivity.setTitle(Utils.GetUserName(mHomeActivity) + "'s Soap Fun");
+            mHomeActivity.setTitle(Utils.GetUserName(this) + "'s Soap Fun");
             Log.d("INFO", "User name fetched: " + Utils.GetUserName(mHomeActivity));
         }
     }
