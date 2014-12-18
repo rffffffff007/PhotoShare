@@ -35,7 +35,6 @@ public class FeedsHomeActivity extends ActionBarActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mHomeActivity = this;
-        setTitle("Soap Fun");
         setContentView(R.layout.activity_feeds_home);
         initElements();
         initContent();
@@ -95,6 +94,7 @@ public class FeedsHomeActivity extends ActionBarActivity implements
         if (Utils.GetUserName(this).isEmpty()) {
             inputUserName();
         } else {
+            mHomeActivity.setTitle(Utils.GetUserName(mHomeActivity) + "'s Soap Fun");
             Log.d("INFO", "User name fetched: " + Utils.GetUserName(mHomeActivity));
         }
     }
