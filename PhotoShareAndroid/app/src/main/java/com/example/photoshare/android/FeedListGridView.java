@@ -2,14 +2,13 @@ package com.example.photoshare.android;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.widget.GridView;
 
 /**
  * Created by zhouxiaobo on 12/18/14.
  */
 public class FeedListGridView extends GridView {
-    private static int mMaxYOverScrollDistance = 200;
+    private static int mMaxYOverScrollDistance = 400;
 
     Context mContext;
 

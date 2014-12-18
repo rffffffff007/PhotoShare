@@ -2,8 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="20dp">
+    android:orientation="vertical">
 
     <com.example.photoshare.android.FeedListGridView
         android:id="@+id/grid_view"
@@ -14,6 +13,8 @@
         android:gravity="center"
         android:horizontalSpacing="@dimen/grid_view_horizontal_spacing"
         android:numColumns="auto_fit"
+        android:overScrollMode="always"
+        android:padding="20dp"
         android:verticalSpacing="@dimen/grid_view_vertical_spacing" />
 
 </LinearLayout>
