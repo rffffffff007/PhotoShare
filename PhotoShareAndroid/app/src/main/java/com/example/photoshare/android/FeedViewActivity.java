@@ -114,6 +114,7 @@ public class FeedViewActivity extends ActionBarActivity  implements
         return super.onOptionsItemSelected(item);
     }
 
+
     @Override
     public void onClick(View v) {
         if (v == mSubmitCommentBtn) {

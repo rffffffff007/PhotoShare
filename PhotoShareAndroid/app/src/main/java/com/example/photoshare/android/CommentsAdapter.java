@@ -20,7 +20,6 @@ import java.util.ArrayList;
 
 import static junit.framework.Assert.assertNotNull;
 
-
 /**
  * Created by faylon on 12/17/14.
  */
@@ -78,5 +77,6 @@ public class CommentsAdapter extends BaseAdapter {
     public void setCommentList(CommentList commentList) {
         assertNotNull(commentList);
         mCommentList = commentList;
+        assertNotNull(mCommentList);
     }
 }
