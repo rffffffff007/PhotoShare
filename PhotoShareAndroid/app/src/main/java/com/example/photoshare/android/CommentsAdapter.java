@@ -66,7 +66,7 @@ public class CommentsAdapter extends BaseAdapter {
         }
         TextView commentUName = (TextView)convertView.findViewById(R.id.comment_uname);
         commentUName.setTypeface(null, Typeface.BOLD);
-        commentUName.setText(comment.getSender_user_name());
+        commentUName.setText(comment.getSender_user_name() + ":");
         TextView commentContent = (TextView)convertView.findViewById(R.id.comment_content);
         commentContent.setText(comment.getContent());
         return convertView;
