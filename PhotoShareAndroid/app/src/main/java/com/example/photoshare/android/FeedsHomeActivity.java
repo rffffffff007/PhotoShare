@@ -40,7 +40,9 @@ public class FeedsHomeActivity extends ActionBarActivity implements
         initContent();
     }
 
-    static final String[] adj = new String[] { "风骚", "下贱", "短小", "猥琐", "呆滞", "贫贱"};
+    static final String[] adj = new String[] { "风骚", "下贱", "短小", "猥琐", "呆滞", "贫贱",
+            "硕大", "年轻", "机智", "英俊", "搞笑", "丰满", "热情", "可口", "最牛逼", "霸气","粉嫩",
+            "迷茫", "失足", "没节操", "痛苦", "迷人", "性感", "扭动", "美男子", "精悍", "撅起", "狂野"};
 
     private String getAdj() {
         int pick = new Random().nextInt(adj.length);
