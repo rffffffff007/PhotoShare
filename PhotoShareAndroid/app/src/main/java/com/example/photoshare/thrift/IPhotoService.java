@@ -42,7 +42,7 @@ public class IPhotoService {
 
     public Comment sendComment(Comment comment) throws AException, org.apache.thrift.TException;
 
-    public CommentList getCommentList(String feed_id) throws AException, org.apache.thrift.TException;
+    public CommentList getCommentList(String feed_id, int comments_count) throws AException, org.apache.thrift.TException;
 
   }
 
@@ -56,7 +56,7 @@ public class IPhotoService {
 
     public void sendComment(Comment comment, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.sendComment_call> resultHandler) throws org.apache.thrift.TException;
 
-    public void getCommentList(String feed_id, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.getCommentList_call> resultHandler) throws org.apache.thrift.TException;
+    public void getCommentList(String feed_id, int comments_count, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.getCommentList_call> resultHandler) throws org.apache.thrift.TException;
 
   }
 
@@ -185,16 +185,17 @@ public class IPhotoService {
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "sendComment failed: unknown result");
     }
 
-    public CommentList getCommentList(String feed_id) throws AException, org.apache.thrift.TException
+    public CommentList getCommentList(String feed_id, int comments_count) throws AException, org.apache.thrift.TException
     {
-      send_getCommentList(feed_id);
+      send_getCommentList(feed_id, comments_count);
       return recv_getCommentList();
     }
 
-    public void send_getCommentList(String feed_id) throws org.apache.thrift.TException
+    public void send_getCommentList(String feed_id, int comments_count) throws org.apache.thrift.TException
     {
       getCommentList_args args = new getCommentList_args();
       args.setFeed_id(feed_id);
+      args.setComments_count(comments_count);
       sendBase("getCommentList", args);
     }
 
@@ -360,24 +361,27 @@ public class IPhotoService {
       }
     }
 
-    public void getCommentList(String feed_id, org.apache.thrift.async.AsyncMethodCallback<getCommentList_call> resultHandler) throws org.apache.thrift.TException {
+    public void getCommentList(String feed_id, int comments_count, org.apache.thrift.async.AsyncMethodCallback<getCommentList_call> resultHandler) throws org.apache.thrift.TException {
       checkReady();
-      getCommentList_call method_call = new getCommentList_call(feed_id, resultHandler, this, ___protocolFactory, ___transport);
+      getCommentList_call method_call = new getCommentList_call(feed_id, comments_count, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
       ___manager.call(method_call);
     }
 
     public static class getCommentList_call extends org.apache.thrift.async.TAsyncMethodCall {
       private String feed_id;
-      public getCommentList_call(String feed_id, org.apache.thrift.async.AsyncMethodCallback<getCommentList_call> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+      private int comments_count;
+      public getCommentList_call(String feed_id, int comments_count, org.apache.thrift.async.AsyncMethodCallback<getCommentList_call> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
         this.feed_id = feed_id;
+        this.comments_count = comments_count;
       }
 
       public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
         prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("getCommentList", org.apache.thrift.protocol.TMessageType.CALL, 0));
         getCommentList_args args = new getCommentList_args();
         args.setFeed_id(feed_id);
+        args.setComments_count(comments_count);
         args.write(prot);
         prot.writeMessageEnd();
       }
@@ -525,7 +529,7 @@ public class IPhotoService {
       public getCommentList_result getResult(I iface, getCommentList_args args) throws org.apache.thrift.TException {
         getCommentList_result result = new getCommentList_result();
         try {
-          result.success = iface.getCommentList(args.feed_id);
+          result.success = iface.getCommentList(args.feed_id, args.comments_count);
         } catch (AException ae) {
           result.ae = ae;
         }
@@ -3902,6 +3906,7 @@ public class IPhotoService {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("getCommentList_args");
 
     private static final org.apache.thrift.protocol.TField FEED_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("feed_id", org.apache.thrift.protocol.TType.STRING, (short)1);
+    private static final org.apache.thrift.protocol.TField COMMENTS_COUNT_FIELD_DESC = new org.apache.thrift.protocol.TField("comments_count", org.apache.thrift.protocol.TType.I32, (short)2);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
     static {
@@ -3910,10 +3915,12 @@ public class IPhotoService {
     }
 
     public String feed_id; // required
+    public int comments_count; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-      FEED_ID((short)1, "feed_id");
+      FEED_ID((short)1, "feed_id"),
+      COMMENTS_COUNT((short)2, "comments_count");
 
       private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -3930,6 +3937,8 @@ public class IPhotoService {
         switch(fieldId) {
           case 1: // FEED_ID
             return FEED_ID;
+          case 2: // COMMENTS_COUNT
+            return COMMENTS_COUNT;
           default:
             return null;
         }
@@ -3970,11 +3979,15 @@ public class IPhotoService {
     }
 
     // isset id assignments
+    private static final int __COMMENTS_COUNT_ISSET_ID = 0;
+    private byte __isset_bitfield = 0;
     public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
     static {
       Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
       tmpMap.put(_Fields.FEED_ID, new org.apache.thrift.meta_data.FieldMetaData("feed_id", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      tmpMap.put(_Fields.COMMENTS_COUNT, new org.apache.thrift.meta_data.FieldMetaData("comments_count", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32)));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(getCommentList_args.class, metaDataMap);
     }
@@ -3983,19 +3996,24 @@ public class IPhotoService {
     }
 
     public getCommentList_args(
-      String feed_id)
+      String feed_id,
+      int comments_count)
     {
       this();
       this.feed_id = feed_id;
+      this.comments_count = comments_count;
+      setComments_countIsSet(true);
     }
 
     /**
      * Performs a deep copy on <i>other</i>.
      */
     public getCommentList_args(getCommentList_args other) {
+      __isset_bitfield = other.__isset_bitfield;
       if (other.isSetFeed_id()) {
         this.feed_id = other.feed_id;
       }
+      this.comments_count = other.comments_count;
     }
 
     public getCommentList_args deepCopy() {
@@ -4005,6 +4023,8 @@ public class IPhotoService {
     @Override
     public void clear() {
       this.feed_id = null;
+      setComments_countIsSet(false);
+      this.comments_count = 0;
     }
 
     public String getFeed_id() {
@@ -4031,6 +4051,29 @@ public class IPhotoService {
       }
     }
 
+    public int getComments_count() {
+      return this.comments_count;
+    }
+
+    public getCommentList_args setComments_count(int comments_count) {
+      this.comments_count = comments_count;
+      setComments_countIsSet(true);
+      return this;
+    }
+
+    public void unsetComments_count() {
+      __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __COMMENTS_COUNT_ISSET_ID);
+    }
+
+    /** Returns true if field comments_count is set (has been assigned a value) and false otherwise */
+    public boolean isSetComments_count() {
+      return EncodingUtils.testBit(__isset_bitfield, __COMMENTS_COUNT_ISSET_ID);
+    }
+
+    public void setComments_countIsSet(boolean value) {
+      __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __COMMENTS_COUNT_ISSET_ID, value);
+    }
+
     public void setFieldValue(_Fields field, Object value) {
       switch (field) {
       case FEED_ID:
@@ -4041,6 +4084,14 @@ public class IPhotoService {
         }
         break;
 
+      case COMMENTS_COUNT:
+        if (value == null) {
+          unsetComments_count();
+        } else {
+          setComments_count((Integer)value);
+        }
+        break;
+
       }
     }
 
@@ -4048,6 +4099,9 @@ public class IPhotoService {
       switch (field) {
       case FEED_ID:
         return getFeed_id();
+
+      case COMMENTS_COUNT:
+        return Integer.valueOf(getComments_count());
 
       }
       throw new IllegalStateException();
@@ -4062,6 +4116,8 @@ public class IPhotoService {
       switch (field) {
       case FEED_ID:
         return isSetFeed_id();
+      case COMMENTS_COUNT:
+        return isSetComments_count();
       }
       throw new IllegalStateException();
     }
@@ -4088,6 +4144,15 @@ public class IPhotoService {
           return false;
       }
 
+      boolean this_present_comments_count = true;
+      boolean that_present_comments_count = true;
+      if (this_present_comments_count || that_present_comments_count) {
+        if (!(this_present_comments_count && that_present_comments_count))
+          return false;
+        if (this.comments_count != that.comments_count)
+          return false;
+      }
+
       return true;
     }
 
@@ -4110,6 +4175,16 @@ public class IPhotoService {
       }
       if (isSetFeed_id()) {
         lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.feed_id, typedOther.feed_id);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetComments_count()).compareTo(typedOther.isSetComments_count());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetComments_count()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.comments_count, typedOther.comments_count);
         if (lastComparison != 0) {
           return lastComparison;
         }
@@ -4141,6 +4216,10 @@ public class IPhotoService {
         sb.append(this.feed_id);
       }
       first = false;
+      if (!first) sb.append(", ");
+      sb.append("comments_count:");
+      sb.append(this.comments_count);
+      first = false;
       sb.append(")");
       return sb.toString();
     }
@@ -4160,6 +4239,8 @@ public class IPhotoService {
 
     private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
       try {
+        // it doesn't seem like you should have to do this, but java serialization is wacky, and doesn't call the default constructor.
+        __isset_bitfield = 0;
         read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
       } catch (org.apache.thrift.TException te) {
         throw new java.io.IOException(te);
@@ -4192,6 +4273,14 @@ public class IPhotoService {
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
+            case 2: // COMMENTS_COUNT
+              if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
+                struct.comments_count = iprot.readI32();
+                struct.setComments_countIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
             default:
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
           }
@@ -4212,6 +4301,9 @@ public class IPhotoService {
           oprot.writeString(struct.feed_id);
           oprot.writeFieldEnd();
         }
+        oprot.writeFieldBegin(COMMENTS_COUNT_FIELD_DESC);
+        oprot.writeI32(struct.comments_count);
+        oprot.writeFieldEnd();
         oprot.writeFieldStop();
         oprot.writeStructEnd();
       }
@@ -4233,19 +4325,29 @@ public class IPhotoService {
         if (struct.isSetFeed_id()) {
           optionals.set(0);
         }
-        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetComments_count()) {
+          optionals.set(1);
+        }
+        oprot.writeBitSet(optionals, 2);
         if (struct.isSetFeed_id()) {
           oprot.writeString(struct.feed_id);
+        }
+        if (struct.isSetComments_count()) {
+          oprot.writeI32(struct.comments_count);
         }
       }
 
       @Override
       public void read(org.apache.thrift.protocol.TProtocol prot, getCommentList_args struct) throws org.apache.thrift.TException {
         TTupleProtocol iprot = (TTupleProtocol) prot;
-        BitSet incoming = iprot.readBitSet(1);
+        BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
           struct.feed_id = iprot.readString();
           struct.setFeed_idIsSet(true);
+        }
+        if (incoming.get(1)) {
+          struct.comments_count = iprot.readI32();
+          struct.setComments_countIsSet(true);
         }
       }
     }
