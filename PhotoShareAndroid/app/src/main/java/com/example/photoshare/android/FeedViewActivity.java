@@ -3,11 +3,11 @@ package com.example.photoshare.android;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
@@ -16,13 +16,12 @@ import com.example.photoshare.thrift.AException;
 import com.example.photoshare.thrift.Comment;
 import com.example.photoshare.thrift.CommentList;
 import com.example.photoshare.thrift.Feed;
-import com.example.photoshare.thrift.FeedList;
 
 import org.apache.thrift.TException;
 
 import static junit.framework.Assert.assertNotNull;
 
-public class FeedViewActivity extends ActionBarActivity  implements
+public class FeedViewActivity extends ActionBarActivity implements
         View.OnClickListener {
     public static final String EXTRA_FEED = "extra_feed";
     private TextView mDesc;
@@ -36,7 +35,6 @@ public class FeedViewActivity extends ActionBarActivity  implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("Image by XXX");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_feed_view);
 
@@ -54,6 +52,7 @@ public class FeedViewActivity extends ActionBarActivity  implements
 
     private void initContent() {
         mFeed = (Feed) getIntent().getSerializableExtra(EXTRA_FEED);
+        setTitle("Image by " + mFeed.getUser_name() + ": ");
         if (mFeed != null) {
             mImage.setImageUrl(mFeed.getPhoto_url(), ImageLoaderHelper.getImageLoader());
             if (mFeed.isSetFeed_desc()) {
@@ -67,6 +66,7 @@ public class FeedViewActivity extends ActionBarActivity  implements
 
     class GetCommentListTask extends BaseTask {
         private Context mContext;
+
         public GetCommentListTask(Context context) {
             super(context);
             mContext = context;
@@ -87,14 +87,19 @@ public class FeedViewActivity extends ActionBarActivity  implements
         protected void onPostExecute(Object o) {
             super.onPostExecute(o);
             if (o instanceof CommentList) {
-                mCommentList = (CommentList)o;
+                mCommentList = (CommentList) o;
                 assertNotNull(mCommentList);
                 mCommentsAdapter.setCommentList(mCommentList);
-                for (int i = 0; i < mCommentsAdapter.getCount(); i++) {
-                    View child = mCommentsAdapter.getView(i, null, null);
-                    mCommentsContainer.addView(child, 0);
-                }
+                RefreshCommentContainer();
             }
+        }
+    }
+
+    private void RefreshCommentContainer() {
+        mCommentsContainer.removeAllViews();
+        for (int i = 0; i < mCommentsAdapter.getCount(); i++) {
+            View child = mCommentsAdapter.getView(i, null, null);
+            mCommentsContainer.addView(child, 0);
         }
     }
 
@@ -114,14 +119,21 @@ public class FeedViewActivity extends ActionBarActivity  implements
         return super.onOptionsItemSelected(item);
     }
 
+
     @Override
     public void onClick(View v) {
         if (v == mSubmitCommentBtn) {
             // Submit the comment.
             Comment comment = new Comment();
-            comment.setContent("Test Content after submit.");
-            comment.setSender_user_name("Lao he test submit name.");
+
+
+            String uName = Utils.GetUserName(this);
+            if (uName == null || uName.isEmpty())
+                uName = "NoName";
+            comment.setSender_user_name(uName);
             comment.setFeed_id(mFeed.getFeed_id());
+            TextView commentContent = (TextView) this.findViewById(R.id.comment_edit);
+            comment.setContent(commentContent.getText().toString());
             new SubmitCommentTask(this, comment).execute();
         }
     }
@@ -129,6 +141,7 @@ public class FeedViewActivity extends ActionBarActivity  implements
     class SubmitCommentTask extends BaseTask {
         private Context mContext;
         private Comment mComment;
+
         public SubmitCommentTask(Context context, Comment comment) {
             super(context);
             mContext = context;
@@ -138,6 +151,7 @@ public class FeedViewActivity extends ActionBarActivity  implements
         @Override
         protected Object doInBackground(Void... params) {
             try {
+                Log.i("Submit comment", " do in background");
                 return RPCHelper.getPhotoService().sendComment(mComment);
             } catch (AException ae) {
                 return ae;
@@ -149,9 +163,11 @@ public class FeedViewActivity extends ActionBarActivity  implements
         @Override
         protected void onPostExecute(Object o) {
             super.onPostExecute(o);
+            Log.i("Submit comment", "in onPostExecute");
             if (o instanceof Comment) {
-                mCommentsAdapter.addComment((Comment)o);
-                mCommentsAdapter.notifyDataSetChanged();
+                Log.i("Submit comment", "Yes, it is comment");
+                mCommentsAdapter.addComment((Comment) o);
+                RefreshCommentContainer();
             }
         }
     }

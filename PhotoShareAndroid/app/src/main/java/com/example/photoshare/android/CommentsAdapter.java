@@ -20,7 +20,6 @@ import java.util.ArrayList;
 
 import static junit.framework.Assert.assertNotNull;
 
-
 /**
  * Created by faylon on 12/17/14.
  */
@@ -44,8 +43,10 @@ public class CommentsAdapter extends BaseAdapter {
 
 
     @Override
-    public Object getItem(int position) {
-        return null;
+    public Comment getItem(int position) {
+        if (position >= getCount())
+            return null;
+        return mCommentList.getComments().get(position);
     }
 
     @Override
@@ -59,10 +60,14 @@ public class CommentsAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.list_item_comment, parent, false);
         }
         // TODO set name and content
+        Comment comment = getItem(position);
+        if (comment == null) {
+            return convertView;
+        }
         TextView commentUName = (TextView)convertView.findViewById(R.id.comment_uname);
-        commentUName.setText("Lao He:");
+        commentUName.setText(comment.getSender_user_name());
         TextView commentContent = (TextView)convertView.findViewById(R.id.comment_content);
-        commentContent.setText("Lao He's comment. -----------");
+        commentContent.setText(comment.getContent());
         return convertView;
     }
 
@@ -73,10 +78,12 @@ public class CommentsAdapter extends BaseAdapter {
             mCommentList.setComments(new ArrayList<Comment>());
         }
         mCommentList.comments.add(comment);
+
     }
 
     public void setCommentList(CommentList commentList) {
         assertNotNull(commentList);
         mCommentList = commentList;
+        assertNotNull(mCommentList);
     }
 }
