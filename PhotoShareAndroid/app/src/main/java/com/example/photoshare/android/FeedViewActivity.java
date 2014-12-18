@@ -21,7 +21,6 @@ public class FeedViewActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("Image by XXX");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_feed_view);
 
@@ -37,6 +36,7 @@ public class FeedViewActivity extends ActionBarActivity {
 
     private void initContent() {
         Feed feed = (Feed) getIntent().getSerializableExtra(EXTRA_FEED);
+        setTitle("Image by " + feed.getUser_name() + ": ");
         if (feed != null) {
             mImage.setImageUrl(feed.getPhoto_url(), ImageLoaderHelper.getImageLoader(this));
             if (feed.isSetFeed_desc()) {

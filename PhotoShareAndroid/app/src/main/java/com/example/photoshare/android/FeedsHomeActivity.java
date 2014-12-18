@@ -21,7 +21,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.photoshare.android.net.RPCHelper;
@@ -40,7 +39,6 @@ public class FeedsHomeActivity extends ActionBarActivity implements
     private View mBtnAdd;
     private ImageAdapter mImageAdapter;
     private Activity mHomeActivity;
-    private String mUserName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +53,7 @@ public class FeedsHomeActivity extends ActionBarActivity implements
         } else {
             Log.d("INFO", "User name fetched: " + Utils.GetUserName(mHomeActivity));
         }
+        setTitle(Utils.GetUserName(this) + "'s Soap Fun");
     }
 
     private void inputUserName() {
