@@ -40,11 +40,11 @@ public class FeedsHomeActivity extends ActionBarActivity implements
         initContent();
     }
 
-    static final String[] adj = new String[] { "风骚", "下贱", "短小", "猥琐", "呆滞", "贫贱"};
+    static final String[] mNamePrefix = new String[] { "风骚", "下贱", "短小", "猥琐", "呆滞", "贫贱"};
 
-    private String getAdj() {
-        int pick = new Random().nextInt(adj.length);
-        return adj[pick];
+    private String getNamePrefix() {
+        int pick = new Random().nextInt(mNamePrefix.length);
+        return mNamePrefix[pick];
     }
 
     private void inputUserName() {
@@ -61,14 +61,12 @@ public class FeedsHomeActivity extends ActionBarActivity implements
         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String value = input.getEditableText().toString();
-                Log.d("INFO", "on click: " + value);
                 if (value.isEmpty()) {
                     Toast.makeText(
                             mHomeActivity, "User name cannot be empty", Toast.LENGTH_SHORT).show();
                     inputUserName();
                 } else {
-                    Utils.SetUserName(mHomeActivity, getAdj() + "的" + value);
-                    Log.d("INFO", "User name: " + Utils.GetUserName(mHomeActivity));
+                    Utils.SetUserName(mHomeActivity, getNamePrefix() + "的" + value);
                     mHomeActivity.setTitle(Utils.GetUserName(mHomeActivity) + "'s Soap Fun");
                 }
             }
@@ -95,7 +93,6 @@ public class FeedsHomeActivity extends ActionBarActivity implements
             inputUserName();
         } else {
             mHomeActivity.setTitle(Utils.GetUserName(this) + "'s Soap Fun");
-            Log.d("INFO", "User name fetched: " + Utils.GetUserName(mHomeActivity));
         }
     }
 
