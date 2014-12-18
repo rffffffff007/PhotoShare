@@ -18,9 +18,13 @@ abstract class BaseTask extends AsyncTask<Void, Void, Object> {
     protected Context mContext;
 
     public BaseTask(Context context) {
+        this(context, "Loading");
+    }
+
+    public BaseTask(Context context, String description) {
         mContext = context;
         mProgress = new ProgressDialog(context);
-        mProgress.setTitle("Loading");
+        mProgress.setTitle(description);
     }
 
     @Override

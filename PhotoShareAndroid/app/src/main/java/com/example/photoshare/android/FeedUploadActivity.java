@@ -33,6 +33,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.nio.ByteBuffer;
+import java.util.Objects;
 
 public class FeedUploadActivity extends ActionBarActivity {
 
@@ -46,7 +47,7 @@ public class FeedUploadActivity extends ActionBarActivity {
         Log.e("INFO", imageUri.toString());
         thisActivity = this;
         imageView  = (ImageView) findViewById(R.id.image);
-        new DownSampleImageAsyncTask().execute(imageUri);
+        new DownSampleImageAsyncTask(this, imageUri).execute();
         description = (EditText) findViewById(R.id.desc_edit);
     }
 
@@ -68,12 +69,15 @@ public class FeedUploadActivity extends ActionBarActivity {
             onBackPressed();
             return true;
         } else if (id == R.id.action_upload) {
-            new UploadImageAsyncTask().execute();
+            new UploadImageAsyncTask(this).execute();
         }
         return super.onOptionsItemSelected(item);
     }
 
-    class UploadImageAsyncTask extends AsyncTask<Void, Void, Feed> {
+    class UploadImageAsyncTask extends BaseTask {
+        public UploadImageAsyncTask(Context context) {
+            super(context, "Uploading your feed...");
+        }
         @Override
         protected Feed doInBackground(Void... params) {
             Bitmap toUpload = image;
@@ -93,7 +97,7 @@ public class FeedUploadActivity extends ActionBarActivity {
         }
 
         @Override
-        protected void onPostExecute(Feed result) {
+        protected void onPostExecute(Object result) {
             if (result != null) {
                 Toast.makeText(thisActivity, "Your image has been uploaded!",
                         Toast.LENGTH_LONG).show();
@@ -105,18 +109,20 @@ public class FeedUploadActivity extends ActionBarActivity {
         }
     }
 
-    class DownSampleImageAsyncTask extends AsyncTask<Uri, Void, Bitmap> {
-        private Uri uri;
+    class DownSampleImageAsyncTask extends BaseTask {
+        private Uri mUri;
+        public DownSampleImageAsyncTask(Context context, Uri uri) {
+            super(context, "Loading image...");
+            mUri = uri;
+        }
 
         private final int imageWidth = 200; // getResources().getDimensionPixelOffset(R.dimen.meme_width);
         private final int imageHeight = 200; // getResources().getDimensionPixelOffset(R.dimen.meme_height);
 
         @Override
-        protected Bitmap doInBackground(Uri... params) {
-
-            uri = params[0];
+        protected Bitmap doInBackground(Void... params) {
             try {
-                return decodeBitmapBounded(getInputStream(FeedUploadActivity.this, uri));
+                return decodeBitmapBounded(getInputStream(FeedUploadActivity.this, mUri));
             } catch (IOException e) {
                 Log.e("INFO", "Error reading bitmap", e);
             }
@@ -124,11 +130,13 @@ public class FeedUploadActivity extends ActionBarActivity {
         }
 
         @Override
-        protected void onPostExecute(Bitmap result) {
+        protected void onPostExecute(Object result) {
+
             if (result != null) {
-                image = result;
-                imageView.setImageBitmap(result);
+                image = (Bitmap) result;
+                imageView.setImageBitmap(image);
             }
+            super.onPostExecute(result);
         }
 
         private InputStream getInputStream(Context context, Uri uri) throws IOException {
