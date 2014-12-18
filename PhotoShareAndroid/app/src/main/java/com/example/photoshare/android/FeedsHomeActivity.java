@@ -39,12 +39,6 @@ public class FeedsHomeActivity extends ActionBarActivity implements
         setContentView(R.layout.activity_feeds_home);
         initElements();
         initContent();
-        if (Utils.GetUserName(this).isEmpty()) {
-            inputUserName();
-        } else {
-            Log.d("INFO", "User name fetched: " + Utils.GetUserName(mHomeActivity));
-        }
-        setTitle(Utils.GetUserName(this) + "'s Soap Fun");
     }
 
     static final String[] adj = new String[] { "风骚", "下贱", "短小", "猥琐", "呆滞", "贫贱"};
@@ -68,15 +62,15 @@ public class FeedsHomeActivity extends ActionBarActivity implements
         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String value = input.getEditableText().toString();
+                Log.d("INFO", "on click: " + value);
                 if (value.isEmpty()) {
                     Toast.makeText(
                             mHomeActivity, "User name cannot be empty", Toast.LENGTH_SHORT).show();
                     inputUserName();
                 } else {
-                    Toast.makeText(
-                            mHomeActivity, "User name set: " + value, Toast.LENGTH_SHORT).show();
                     Utils.SetUserName(mHomeActivity, getAdj() + "的" + value);
                     Log.d("INFO", "User name: " + Utils.GetUserName(mHomeActivity));
+                    mHomeActivity.setTitle(Utils.GetUserName(mHomeActivity) + "'s Soap Fun");
                 }
             }
 
@@ -127,9 +121,6 @@ public class FeedsHomeActivity extends ActionBarActivity implements
             return true;
         } else if (id == R.id.action_take) {
             photoUri = dispatchImageCaptureIntent();
-            return true;
-        } else if (id == R.id.action_change_name) {
-            // TODO open a dialog to random pick name.
             return true;
         }
 
