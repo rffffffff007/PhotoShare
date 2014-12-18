@@ -20,7 +20,7 @@ public class RefreshFeedsTask extends BaseTask {
     BaseAdapter mImageAdapter;
 
     public RefreshFeedsTask(Context context, BaseAdapter imageAdapter) {
-        super(context);
+        super(context, "Refreshing");
         mContext = context;
         mImageAdapter = imageAdapter;
     }

@@ -54,7 +54,6 @@ public class FeedViewActivity extends ActionBarActivity implements
 
     private void initContent() {
         mFeed = (Feed) getIntent().getSerializableExtra(EXTRA_FEED);
-        setTitle("Image by " + mFeed.getUser_name() + ": ");
         if (mFeed != null) {
             mImage.setImageUrl(mFeed.getPhoto_url(), ImageLoaderHelper.getImageLoader());
             if (mFeed.isSetFeed_desc()) {
