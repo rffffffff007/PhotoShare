@@ -1,6 +1,7 @@
 package com.example.photoshare.android;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,7 +65,8 @@ public class CommentsAdapter extends BaseAdapter {
             return convertView;
         }
         TextView commentUName = (TextView)convertView.findViewById(R.id.comment_uname);
-        commentUName.setText(comment.getSender_user_name());
+        commentUName.setTypeface(null, Typeface.BOLD);
+        commentUName.setText(comment.getSender_user_name() + ":");
         TextView commentContent = (TextView)convertView.findViewById(R.id.comment_content);
         commentContent.setText(comment.getContent());
         return convertView;
