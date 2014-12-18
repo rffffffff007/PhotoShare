@@ -7,13 +7,14 @@
 
     <com.example.photoshare.android.FeedListGridView
         android:id="@+id/grid_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:clipToPadding="false"
         android:columnWidth="@dimen/grid_view_column_width"
         android:gravity="center"
         android:horizontalSpacing="@dimen/grid_view_horizontal_spacing"
         android:numColumns="auto_fit"
-        android:verticalSpacing="@dimen/grid_view_vertical_spacing" />
+        android:verticalSpacing="@dimen/grid_view_vertical_spacing"
+        android:overScrollMode="always" />
 
 </LinearLayout>
