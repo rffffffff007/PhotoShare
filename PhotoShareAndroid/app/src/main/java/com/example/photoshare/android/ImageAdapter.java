@@ -8,34 +8,22 @@ import android.widget.BaseAdapter;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
-import com.example.photoshare.thrift.Feed;
-import com.example.photoshare.thrift.FeedList;
-
-import java.util.ArrayList;
 
 /**
  * Created by zhouxiaobo on 12/16/14.
  */
 public class ImageAdapter extends BaseAdapter {
-    private final Context mContext;
     private final ImageLoader mImageLoader;
     private final LayoutInflater mLayoutInflater;
-    private FeedList mFeeds;
 
-
-    public ImageAdapter(Context c, ImageLoader imageLoader) {
-        mContext = c;
-        mLayoutInflater = LayoutInflater.from(mContext);
+    public ImageAdapter(Context context, ImageLoader imageLoader) {
+        mLayoutInflater = LayoutInflater.from(context);
         mImageLoader = imageLoader;
-        mFeeds = CacheHelper.getFeedsFromCache(c);
-        if (mFeeds.getFeeds() == null) {
-            mFeeds.setFeeds(new ArrayList<Feed>());
-        }
     }
 
     @Override
     public int getCount() {
-        return mFeeds.getFeeds().size();
+        return FeedListHelper.getFeedList().getFeedsSize();
     }
 
     @Override
@@ -43,7 +31,7 @@ public class ImageAdapter extends BaseAdapter {
         if (position >= getCount()) {
             return null;
         }
-        return mFeeds.getFeeds().get(position);
+        return FeedListHelper.getFeedList().getFeeds().get(position);
     }
 
     @Override
@@ -62,18 +50,8 @@ public class ImageAdapter extends BaseAdapter {
             imageView = (NetworkImageView) convertView.findViewById(R.id.image);
             imageView.setImageUrl(null, mImageLoader);
         }
-        String imageUrl = mFeeds.feeds.get(position).getPhoto_url();
+        String imageUrl = FeedListHelper.getFeedList().getFeeds().get(position).getPhoto_url();
         imageView.setImageUrl(imageUrl, mImageLoader);
         return convertView;
-    }
-
-    public void addFeed(Feed feed) {
-        mFeeds.feeds.add(feed);
-        CacheHelper.PutFeedsToCache(mFeeds, mContext);
-    }
-
-    public void setFeeds(FeedList feeds) {
-        mFeeds = feeds;
-        CacheHelper.PutFeedsToCache(mFeeds, mContext);
     }
 }
