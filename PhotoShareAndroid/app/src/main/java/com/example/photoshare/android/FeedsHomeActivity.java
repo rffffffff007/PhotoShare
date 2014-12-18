@@ -38,11 +38,7 @@ public class FeedsHomeActivity extends ActionBarActivity implements
         setContentView(R.layout.activity_feeds_home);
         initElements();
         initContent();
-        if (Utils.GetUserName(this).isEmpty()) {
-            inputUserName();
-        } else {
-            Log.d("INFO", "User name fetched: " + Utils.GetUserName(mHomeActivity));
-        }
+
     }
 
     private void inputUserName() {
@@ -54,7 +50,7 @@ public class FeedsHomeActivity extends ActionBarActivity implements
         View inputView = LayoutInflater.from(mHomeActivity).inflate(
                 R.layout.input_username, null, false /* attachToRoot */);
         alert.setView(inputView);
-        final EditText input = (EditText) inputView.findViewById(R.id.input_username_edit);;
+        final EditText input = (EditText) inputView.findViewById(R.id.input_username_edit);
 
         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
@@ -87,6 +83,12 @@ public class FeedsHomeActivity extends ActionBarActivity implements
 
         if (FeedListHelper.getFeedList().getFeedsSize() == 0) {
             new LoadMoreFeedsTask(this, mImageAdapter).execute();
+        }
+
+        if (Utils.GetUserName(this).isEmpty()) {
+            inputUserName();
+        } else {
+            Log.d("INFO", "User name fetched: " + Utils.GetUserName(mHomeActivity));
         }
     }
 
@@ -163,7 +165,7 @@ public class FeedsHomeActivity extends ActionBarActivity implements
                 Toast.makeText(this, "Failed to start the camera.", Toast.LENGTH_LONG).show();
             }
         } else if (requestCode == IMAGE_PICKING_REQUEST_CODE) {
-            if(resultCode == RESULT_OK && returnedIntent != null && returnedIntent.getData() != null) {
+            if (resultCode == RESULT_OK && returnedIntent != null && returnedIntent.getData() != null) {
                 Uri uri = returnedIntent.getData();
                 Log.d("INFO", "Image picked: " + uri.toString());
                 Intent intent = new Intent(this, FeedUploadActivity.class);

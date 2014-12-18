@@ -145,12 +145,13 @@ public class PhotoService extends BaseServlet {
             }
             FeedList feedList = new FeedList();
             int feedsSize = feedsData.getFeedSize();
-	    int endPos = feedsSize - 1;
+            int endPos = feedsSize - 1;
             if (last_feed_id != null) {
                 for (endPos = feedsSize - 1; endPos >= 0; --endPos) {
                     if (last_feed_id.compareTo(feedsData.getFeed().get(endPos)
                             .getFeed_id()) > 0) {
-                        System.out.println(last_feed_id + "," + endPos + "," + feedsData.getFeed().get(endPos).getFeed_id());
+                        System.out.println(last_feed_id + "," + endPos + ","
+                                + feedsData.getFeed().get(endPos).getFeed_id());
                         break;
                     }
                 }
@@ -219,8 +220,11 @@ public class PhotoService extends BaseServlet {
             List<Comment> comments = commentMap.get(feed_id);
 
             CommentList commentList = new CommentList(new ArrayList<Comment>());
-            for (int i = comments.size() - 1; i >= 0 && i >= comments.size() - comments_count; i--) {
-                commentList.addToComments(comments.get(i));
+            if (comments != null) {
+                for (int i = comments.size() - 1; i >= 0
+                        && i >= comments.size() - comments_count; i--) {
+                    commentList.addToComments(comments.get(i));
+                }
             }
             return commentList;
         }
