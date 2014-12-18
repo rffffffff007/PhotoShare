@@ -8,7 +8,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
@@ -17,7 +16,6 @@ import com.example.photoshare.thrift.AException;
 import com.example.photoshare.thrift.Comment;
 import com.example.photoshare.thrift.CommentList;
 import com.example.photoshare.thrift.Feed;
-import com.example.photoshare.thrift.FeedList;
 
 import org.apache.thrift.TException;
 
@@ -37,7 +35,6 @@ public class FeedViewActivity extends ActionBarActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("Image by XXX");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_feed_view);
 
@@ -55,6 +52,7 @@ public class FeedViewActivity extends ActionBarActivity implements
 
     private void initContent() {
         mFeed = (Feed) getIntent().getSerializableExtra(EXTRA_FEED);
+        setTitle("Image by " + mFeed.getUser_name() + ": ");
         if (mFeed != null) {
             mImage.setImageUrl(mFeed.getPhoto_url(), ImageLoaderHelper.getImageLoader());
             if (mFeed.isSetFeed_desc()) {

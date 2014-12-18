@@ -82,6 +82,7 @@ public class FeedUploadActivity extends ActionBarActivity {
             ByteBuffer buffer = ByteBuffer.wrap(out.toByteArray());
             FeedUploadReq req = new FeedUploadReq();
             req.setPhoto_data(buffer);
+            req.setUser_name(Utils.GetUserName(thisActivity));
             req.setFeed_desc(description.getText().toString());
             try {
                 return RPCHelper.getPhotoService().uploadFeed(req);
