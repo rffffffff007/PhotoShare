@@ -63,7 +63,7 @@ public class ImageAdapter extends BaseAdapter {
         }
         TextView timeView = (TextView) convertView.findViewById(R.id.time);
         if (feed.isSetTimestamp()) {
-            timeView.setText(Utils.GetReadableDate(feed.getTimestamp()));
+            timeView.setText(Utils.GetShortReadableDate(feed.getTimestamp()));
         } else {
             timeView.setText("");
         }
