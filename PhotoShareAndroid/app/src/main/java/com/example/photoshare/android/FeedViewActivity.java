@@ -30,6 +30,7 @@ public class FeedViewActivity extends ActionBarActivity implements
     private CommentsAdapter mCommentsAdapter;
     private View mSubmitCommentBtn;
     private Feed mFeed;
+    private TextView mTime;
     private CommentList mCommentList;
 
     @Override
@@ -44,6 +45,7 @@ public class FeedViewActivity extends ActionBarActivity implements
 
     private void initElements() {
         mDesc = (TextView) findViewById(R.id.desc);
+        mTime = (TextView) findViewById(R.id.time);
         mImage = (NetworkImageView) findViewById(R.id.image);
         mCommentsContainer = (ViewGroup) findViewById(R.id.comments_container);
         mSubmitCommentBtn = findViewById(R.id.comment_submit);
@@ -57,6 +59,12 @@ public class FeedViewActivity extends ActionBarActivity implements
             mImage.setImageUrl(mFeed.getPhoto_url(), ImageLoaderHelper.getImageLoader());
             if (mFeed.isSetFeed_desc()) {
                 mDesc.setText(mFeed.getFeed_desc());
+            }
+            if (mFeed.isSetUser_name()) {
+                setTitle("Image by " + mFeed.getUser_name());
+            }
+            if (mFeed.isSetTimestamp()) {
+                mTime.setText(Utils.GetReadableDate(mFeed.getTimestamp()));
             }
         }
 
@@ -75,7 +83,7 @@ public class FeedViewActivity extends ActionBarActivity implements
         @Override
         protected Object doInBackground(Void... params) {
             try {
-                return RPCHelper.getPhotoService().getCommentList(mFeed.getFeed_id());
+                return RPCHelper.getPhotoService().getCommentList(mFeed.getFeed_id(), 20);
             } catch (AException ae) {
                 return ae;
             } catch (TException e) {
@@ -90,6 +98,8 @@ public class FeedViewActivity extends ActionBarActivity implements
                 mCommentList = (CommentList) o;
                 assertNotNull(mCommentList);
                 mCommentsAdapter.setCommentList(mCommentList);
+                Log.i("GetCommentList-Feed_ID", mFeed.getFeed_id());
+                Log.i("GetCommentList", mCommentList.toString());
                 RefreshCommentContainer();
             }
         }

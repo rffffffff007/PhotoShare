@@ -30,4 +30,9 @@ public class Utils {
         prefEditor.putString("username", name);
         prefEditor.commit();
     }
+
+    public static String GetReadableDate(long timestamp) {
+        return new java.text.SimpleDateFormat("HH:mm:ss").format(
+                new java.util.Date (timestamp));
+    }
 }
