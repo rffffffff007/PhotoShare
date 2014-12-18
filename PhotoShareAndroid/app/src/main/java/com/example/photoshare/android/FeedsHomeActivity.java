@@ -21,6 +21,8 @@ import android.widget.Toast;
 
 import com.example.photoshare.thrift.Feed;
 
+import java.util.Random;
+
 public class FeedsHomeActivity extends ActionBarActivity implements
         GridView.OnItemClickListener {
 
@@ -28,7 +30,6 @@ public class FeedsHomeActivity extends ActionBarActivity implements
     private GridView mGridView;
     private ImageAdapter mImageAdapter;
     private Activity mHomeActivity;
-    private String mUserName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +39,19 @@ public class FeedsHomeActivity extends ActionBarActivity implements
         setContentView(R.layout.activity_feeds_home);
         initElements();
         initContent();
+        if (Utils.GetUserName(this).isEmpty()) {
+            inputUserName();
+        } else {
+            Log.d("INFO", "User name fetched: " + Utils.GetUserName(mHomeActivity));
+        }
+        setTitle(Utils.GetUserName(this) + "'s Soap Fun");
+    }
 
+    static final String[] adj = new String[] { "风骚", "下贱", "短小", "猥琐", "呆滞", "贫贱"};
+
+    private String getAdj() {
+        int pick = new Random().nextInt(adj.length);
+        return adj[pick];
     }
 
     private void inputUserName() {
@@ -62,7 +75,7 @@ public class FeedsHomeActivity extends ActionBarActivity implements
                 } else {
                     Toast.makeText(
                             mHomeActivity, "User name set: " + value, Toast.LENGTH_SHORT).show();
-                    Utils.SetUserName(mHomeActivity, value);
+                    Utils.SetUserName(mHomeActivity, getAdj() + "的" + value);
                     Log.d("INFO", "User name: " + Utils.GetUserName(mHomeActivity));
                 }
             }
