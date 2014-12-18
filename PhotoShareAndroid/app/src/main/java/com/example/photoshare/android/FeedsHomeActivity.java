@@ -1,15 +1,11 @@
 package com.example.photoshare.android;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
@@ -23,20 +19,15 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.Toast;
 
-import com.example.photoshare.android.net.RPCHelper;
-import com.example.photoshare.thrift.AException;
 import com.example.photoshare.thrift.Feed;
-import com.example.photoshare.thrift.FeedList;
 
-import org.apache.thrift.TException;
+import java.util.Random;
 
 public class FeedsHomeActivity extends ActionBarActivity implements
-        GridView.OnItemClickListener, View.OnClickListener {
+        GridView.OnItemClickListener {
 
-    private static final String LOG_TAG = "FeedsHOmeActivity";
-    private EditText mImageUrl;
+    private static final String LOG_TAG = "FeedsHomeActivity";
     private GridView mGridView;
-    private View mBtnAdd;
     private ImageAdapter mImageAdapter;
     private Activity mHomeActivity;
 
@@ -56,6 +47,13 @@ public class FeedsHomeActivity extends ActionBarActivity implements
         setTitle(Utils.GetUserName(this) + "'s Soap Fun");
     }
 
+    static final String[] adj = new String[] { "风骚", "下贱", "短小", "猥琐", "呆滞", "贫贱"};
+
+    private String getAdj() {
+        int pick = new Random().nextInt(adj.length);
+        return adj[pick];
+    }
+
     private void inputUserName() {
         final AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
@@ -65,7 +63,7 @@ public class FeedsHomeActivity extends ActionBarActivity implements
         View inputView = LayoutInflater.from(mHomeActivity).inflate(
                 R.layout.input_username, null, false /* attachToRoot */);
         alert.setView(inputView);
-        final EditText input = (EditText) inputView.findViewById(R.id.input_username_edit);;
+        final EditText input = (EditText) inputView.findViewById(R.id.input_username_edit);
 
         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
@@ -77,7 +75,7 @@ public class FeedsHomeActivity extends ActionBarActivity implements
                 } else {
                     Toast.makeText(
                             mHomeActivity, "User name set: " + value, Toast.LENGTH_SHORT).show();
-                    Utils.SetUserName(mHomeActivity, value);
+                    Utils.SetUserName(mHomeActivity, getAdj() + "的" + value);
                     Log.d("INFO", "User name: " + Utils.GetUserName(mHomeActivity));
                 }
             }
@@ -88,16 +86,23 @@ public class FeedsHomeActivity extends ActionBarActivity implements
     }
 
     private void initElements() {
-        mImageUrl = (EditText) findViewById(R.id.image_url);
         mGridView = (GridView) findViewById(R.id.grid_view);
-        mBtnAdd = findViewById(R.id.btn_add);
         mGridView.setOnItemClickListener(this);
-        mBtnAdd.setOnClickListener(this);
     }
 
     private void initContent() {
-        mImageAdapter = new ImageAdapter(this, ImageLoaderHelper.getImageLoader(this));
+        mImageAdapter = new ImageAdapter(this, ImageLoaderHelper.getImageLoader());
         mGridView.setAdapter(mImageAdapter);
+
+        if (FeedListHelper.getFeedList().getFeedsSize() == 0) {
+            new LoadMoreFeedsTask(this, mImageAdapter).execute();
+        }
+
+        if (Utils.GetUserName(this).isEmpty()) {
+            inputUserName();
+        } else {
+            Log.d("INFO", "User name fetched: " + Utils.GetUserName(mHomeActivity));
+        }
     }
 
     @Override
@@ -106,16 +111,6 @@ public class FeedsHomeActivity extends ActionBarActivity implements
         Feed feed = (Feed) mImageAdapter.getItem(position);
         intent.putExtra(FeedViewActivity.EXTRA_FEED, feed);
         startActivity(intent);
-    }
-
-    @Override
-    public void onClick(View v) {
-        if (v == mBtnAdd) {
-            Feed feed = new Feed();
-            feed.setPhoto_url(mImageUrl.getText().toString());
-            mImageAdapter.addFeed(feed);
-            mImageAdapter.notifyDataSetChanged();
-        }
     }
 
     @Override
@@ -135,10 +130,6 @@ public class FeedsHomeActivity extends ActionBarActivity implements
             return true;
         } else if (id == R.id.action_change_name) {
             // TODO open a dialog to random pick name.
-            return true;
-        } else if (id == R.id.action_refresh) {
-            // TODO refresh the feedlist.
-            new RefreshFeedsTask(this).execute();
             return true;
         }
 
@@ -187,7 +178,7 @@ public class FeedsHomeActivity extends ActionBarActivity implements
                 Toast.makeText(this, "Failed to start the camera.", Toast.LENGTH_LONG).show();
             }
         } else if (requestCode == IMAGE_PICKING_REQUEST_CODE) {
-            if(resultCode == RESULT_OK && returnedIntent != null && returnedIntent.getData() != null) {
+            if (resultCode == RESULT_OK && returnedIntent != null && returnedIntent.getData() != null) {
                 Uri uri = returnedIntent.getData();
                 Log.d("INFO", "Image picked: " + uri.toString());
                 Intent intent = new Intent(this, FeedUploadActivity.class);
@@ -202,32 +193,4 @@ public class FeedsHomeActivity extends ActionBarActivity implements
         }
     }
 
-    class RefreshFeedsTask extends BaseTask {
-        private Context mContext;
-        public RefreshFeedsTask(Context context) {
-            super(context);
-            mContext = context;
-        }
-
-        @Override
-        protected Object doInBackground(Void... params) {
-            try {
-                return RPCHelper.getPhotoService().getFeedList(null, 100);
-            } catch (AException ae) {
-                return ae;
-            } catch (TException e) {
-                return e;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(Object o) {
-            super.onPostExecute(o);
-            if (o instanceof FeedList) {
-                mImageAdapter.setFeeds((FeedList)o);
-                CacheHelper.PutFeedsToCache((FeedList)o, mContext);
-                mImageAdapter.notifyDataSetChanged();
-            }
-        }
-    }
 }
