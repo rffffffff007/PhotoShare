@@ -82,7 +82,7 @@ public class FeedViewActivity extends ActionBarActivity implements
         @Override
         protected Object doInBackground(Void... params) {
             try {
-                return RPCHelper.getPhotoService().getCommentList(mFeed.getFeed_id());
+                return RPCHelper.getPhotoService().getCommentList(mFeed.getFeed_id(), 20);
             } catch (AException ae) {
                 return ae;
             } catch (TException e) {
@@ -97,6 +97,8 @@ public class FeedViewActivity extends ActionBarActivity implements
                 mCommentList = (CommentList) o;
                 assertNotNull(mCommentList);
                 mCommentsAdapter.setCommentList(mCommentList);
+                Log.i("GetCommentList-Feed_ID", mFeed.getFeed_id());
+                Log.i("GetCommentList", mCommentList.toString());
                 RefreshCommentContainer();
             }
         }
