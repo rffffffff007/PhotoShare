@@ -30,8 +30,7 @@ public class CommentsAdapter extends BaseAdapter {
 
     public CommentsAdapter(Context context) {
         mContext = context;
-        //mCommentList = new CommentList();
-        //mCommentList.setComments(new ArrayList<Comment>());
+        mCommentList = new CommentList(new ArrayList<Comment>());
     }
 
 

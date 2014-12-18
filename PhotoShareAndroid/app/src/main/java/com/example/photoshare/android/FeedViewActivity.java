@@ -92,6 +92,8 @@ public class FeedViewActivity extends ActionBarActivity implements
                 mCommentList = (CommentList) o;
                 assertNotNull(mCommentList);
                 mCommentsAdapter.setCommentList(mCommentList);
+                Log.i("GetCommentList-Feed_ID", mFeed.getFeed_id());
+                Log.i("GetCommentList", mCommentList.toString());
                 RefreshCommentContainer();
             }
         }
