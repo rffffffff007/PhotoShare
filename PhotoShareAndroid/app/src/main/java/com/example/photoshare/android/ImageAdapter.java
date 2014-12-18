@@ -54,13 +54,18 @@ public class ImageAdapter extends BaseAdapter {
         }
         Feed feed = FeedListHelper.getFeedList().getFeeds().get(position);
         imageView.setImageUrl(feed.getPhoto_url(), mImageLoader);
+
+        TextView nameView = (TextView) convertView.findViewById(R.id.name);
         if (feed.isSetUser_name()) {
-            TextView nameView = (TextView) convertView.findViewById(R.id.name);
             nameView.setText(feed.getUser_name());
+        } else {
+            nameView.setText("XXX");
         }
+        TextView timeView = (TextView) convertView.findViewById(R.id.time);
         if (feed.isSetTimestamp()) {
-            TextView timeView = (TextView) convertView.findViewById(R.id.time);
             timeView.setText(Utils.GetReadableDate(feed.getTimestamp()));
+        } else {
+            timeView.setText("");
         }
         return convertView;
     }
