@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.toolbox.NetworkImageView;
 import com.example.photoshare.android.net.RPCHelper;
@@ -110,6 +111,8 @@ public class FeedViewActivity extends ActionBarActivity implements
             View child = mCommentsAdapter.getView(i, null, null);
             mCommentsContainer.addView(child, 0);
         }
+        TextView commentContent = (TextView) this.findViewById(R.id.comment_edit);
+        commentContent.setText("");
     }
 
     @Override
@@ -133,15 +136,19 @@ public class FeedViewActivity extends ActionBarActivity implements
     public void onClick(View v) {
         if (v == mSubmitCommentBtn) {
             // Submit the comment.
+            TextView commentContent = (TextView) this.findViewById(R.id.comment_edit);
+            if (commentContent.getText().toString().isEmpty()) {
+                Toast.makeText(
+                        this, "骚年，评论不能空", Toast.LENGTH_SHORT).show();
+                return;
+            }
             Comment comment = new Comment();
-
-
             String uName = Utils.GetUserName(this);
             if (uName == null || uName.isEmpty())
                 uName = "NoName";
             comment.setSender_user_name(uName);
             comment.setFeed_id(mFeed.getFeed_id());
-            TextView commentContent = (TextView) this.findViewById(R.id.comment_edit);
+
             comment.setContent(commentContent.getText().toString());
             new SubmitCommentTask(this, comment).execute();
         }
