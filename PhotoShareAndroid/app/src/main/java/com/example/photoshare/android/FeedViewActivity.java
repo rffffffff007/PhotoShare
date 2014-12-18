@@ -75,7 +75,7 @@ public class FeedViewActivity extends ActionBarActivity implements
         @Override
         protected Object doInBackground(Void... params) {
             try {
-                return RPCHelper.getPhotoService().getCommentList(mFeed.getFeed_id());
+                return RPCHelper.getPhotoService().getCommentList(mFeed.getFeed_id(), 20);
             } catch (AException ae) {
                 return ae;
             } catch (TException e) {
