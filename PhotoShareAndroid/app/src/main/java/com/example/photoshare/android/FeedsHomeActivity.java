@@ -178,7 +178,7 @@ public class FeedsHomeActivity extends ActionBarActivity implements
                 Log.d("INFO", "User cancelled picture picking.");
             } else {
                 Toast.makeText(this, "Error when trying to pick a picture from gallery.",
-                        Toast.LENGTH_LONG).show();
+                        Toast.LENGTH_SHORT).show();
             }
         }
     }

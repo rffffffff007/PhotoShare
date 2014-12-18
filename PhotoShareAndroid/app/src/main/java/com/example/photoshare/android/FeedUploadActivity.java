@@ -95,11 +95,11 @@ public class FeedUploadActivity extends ActionBarActivity {
         protected void onPostExecute(Object result) {
             if (result != null) {
                 Toast.makeText(thisActivity, "Your image has been uploaded!",
-                        Toast.LENGTH_LONG).show();
+                        Toast.LENGTH_SHORT).show();
                 thisActivity.finish();
             } else {
                 Toast.makeText(thisActivity, "Uploading failed!",
-                        Toast.LENGTH_LONG).show();
+                        Toast.LENGTH_SHORT).show();
             }
         }
     }
