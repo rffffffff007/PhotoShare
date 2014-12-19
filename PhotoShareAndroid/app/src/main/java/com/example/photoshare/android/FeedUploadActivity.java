@@ -23,14 +23,13 @@ import org.apache.thrift.TException;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.nio.ByteBuffer;
-import java.util.Objects;
 
 public class FeedUploadActivity extends ActionBarActivity {
+    private static final String LOG_TAG = "FeedUploadActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +38,9 @@ public class FeedUploadActivity extends ActionBarActivity {
         setTitle("Upload Feed");
         setContentView(R.layout.activity_feed_upload);
         Uri imageUri = getIntent().getParcelableExtra("extra_image_uri");
-        Log.e("INFO", imageUri.toString());
+        Log.e(LOG_TAG, imageUri.toString());
         thisActivity = this;
-        imageView  = (ImageView) findViewById(R.id.image);
+        imageView = (ImageView) findViewById(R.id.image);
         new DownSampleImageAsyncTask(this, imageUri).execute();
         description = (EditText) findViewById(R.id.desc_edit);
     }
@@ -73,12 +72,15 @@ public class FeedUploadActivity extends ActionBarActivity {
         public UploadImageAsyncTask(Context context) {
             super(context, "Uploading your feed...");
         }
+
         @Override
         protected Feed doInBackground(Void... params) {
             Bitmap toUpload = image;
             ByteArrayOutputStream out = new ByteArrayOutputStream();
-            toUpload.compress(Bitmap.CompressFormat.PNG, 100, out);
-            ByteBuffer buffer = ByteBuffer.wrap(out.toByteArray());
+            toUpload.compress(Bitmap.CompressFormat.JPEG, 60, out);
+            byte[] imageData = out.toByteArray();
+            Log.i(LOG_TAG, "Image Size:" + (imageData.length / 1024 )+ " kb");
+            ByteBuffer buffer = ByteBuffer.wrap(imageData);
             FeedUploadReq req = new FeedUploadReq();
             req.setPhoto_data(buffer);
             req.setUser_name(Utils.GetUserName(thisActivity));
@@ -106,18 +108,19 @@ public class FeedUploadActivity extends ActionBarActivity {
 
     class DownSampleImageAsyncTask extends BaseTask {
         private Uri mUri;
+
         public DownSampleImageAsyncTask(Context context, Uri uri) {
             super(context, "Loading image...");
             mUri = uri;
         }
 
-        private final int imageWidth = 200; // getResources().getDimensionPixelOffset(R.dimen.meme_width);
-        private final int imageHeight = 200; // getResources().getDimensionPixelOffset(R.dimen.meme_height);
+        private final int imageWidth = 400;
+        private final int imageHeight = 400;
 
         @Override
         protected Bitmap doInBackground(Void... params) {
             try {
-                return decodeBitmapBounded(getInputStream(FeedUploadActivity.this, mUri));
+                return decodeBitmapBounded(mUri);
             } catch (IOException e) {
                 Log.e("INFO", "Error reading bitmap", e);
             }
@@ -126,10 +129,10 @@ public class FeedUploadActivity extends ActionBarActivity {
 
         @Override
         protected void onPostExecute(Object result) {
-
             if (result != null) {
                 image = (Bitmap) result;
                 imageView.setImageBitmap(image);
+                Log.i(LOG_TAG, "Image:" + image.getWidth() + "," + image.getHeight());
             }
             super.onPostExecute(result);
         }
@@ -142,27 +145,32 @@ public class FeedUploadActivity extends ActionBarActivity {
             }
         }
 
-        private Bitmap decodeBitmapBounded(InputStream is)
+        private Bitmap decodeBitmapBounded(Uri uri)
                 throws IOException {
-            BufferedInputStream bufferedInputStream = new BufferedInputStream(is, STREAM_BUFFER_SIZE);
+            BufferedInputStream bufferedInputStream = null;
+            BitmapFactory.Options bmOptions = new BitmapFactory.Options();
             try {
-                bufferedInputStream.mark(STREAM_BUFFER_SIZE);
-                BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+                bufferedInputStream = new BufferedInputStream(getInputStream(mContext, uri), STREAM_BUFFER_SIZE);
                 bmOptions.inJustDecodeBounds = true;
                 BitmapFactory.decodeStream(bufferedInputStream, null, bmOptions);
-                bufferedInputStream.reset();
-
+            } finally {
+                if (bufferedInputStream != null)
+                    bufferedInputStream.close();
+            }
+            try {
+                bufferedInputStream = new BufferedInputStream(getInputStream(mContext, uri), STREAM_BUFFER_SIZE);
                 bmOptions.inJustDecodeBounds = false;
                 bmOptions.inSampleSize = calculateInSampleSize(bmOptions.outWidth, bmOptions.outHeight,
                         imageWidth, imageHeight);
                 return BitmapFactory.decodeStream(bufferedInputStream, null, bmOptions);
             } finally {
-                bufferedInputStream.close();
+                if (bufferedInputStream != null)
+                    bufferedInputStream.close();
             }
         }
 
         private int calculateInSampleSize(int srcWidth, int srcHeight,
-                                                int reqWidth, int reqHeight) {
+                                          int reqWidth, int reqHeight) {
             if ((reqHeight > 0) && (reqWidth > 0) && (srcHeight > reqHeight) && (srcWidth > reqWidth)) {
                 return Math.min(srcWidth / reqWidth, srcHeight / reqHeight);
             } else {
