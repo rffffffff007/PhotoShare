@@ -51,6 +51,6 @@ public class Utils {
         if (sameDay)
             return new java.text.SimpleDateFormat("HH:mm").format(date);
         else
-            return new java.text.SimpleDateFormat("MM/DD").format(date);
+            return new java.text.SimpleDateFormat("MM/dd").format(date);
     }
 }
